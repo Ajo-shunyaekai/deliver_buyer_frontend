@@ -148,7 +148,7 @@ const OrderDetails = () => {
                                 <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.address}</div>
                             </div>
                         </div>
-                        <hr className='order-details-right-pickupdata-hr' />
+                        {/* <hr className='order-details-right-pickupdata-hr' />
                         <div className='order-details-right-details-row-one'>
                             <div className='order-details-right-pickupdata'>
                                 <div className='order-details-right-pickdata-head'>Consignor Name</div>
@@ -162,7 +162,7 @@ const OrderDetails = () => {
                                 <div className='order-details-right-pickdata-head'>Address</div>
                                 <div className='order-details-right-pickdata-text'>Financial Center Rd, Along Sheik zayed road, Dubai 22155.</div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* <hr className='order-details-right-pickupdata-hr' /> */}
                         {/* <div className='order-details-payment-right-section-heading'>Drop Details</div>
                         <div className='order-details-right-details-row-one'>

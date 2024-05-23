@@ -20,6 +20,7 @@ const ProductDetails = () => {
             }
           })
     },[])
+
     return (
         <>
             <div className='main-product-details-container'>
@@ -155,7 +156,7 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="product-details-county">
                                     <div className='product-details-four-left-text'>Tags :</div>
-                                    <div className='product-details-four-right-text'>Dymadon, Lemsip, Panadol, Panamax, Tylenol</div>
+                                    <div className='product-details-four-right-text'>{data?.supplier?.tags}</div>
                                 </div>
                                 <div className="product-details-county">
                                     <div className='product-details-four-left-text'>Available for :</div>
@@ -183,25 +184,25 @@ const ProductDetails = () => {
                             <div className='product-details-company-conatiner'>
                                 <div className='product-details-inner-company'>
                                     <div className='product-details-inner-copmany-head'>Supplier Name :</div>
-                                    <div className='product-details-inner-copmany-text'>ABC Pvt. Ltd.</div>
+                                    <div className='product-details-inner-copmany-text'>{data?.supplier?.supplier_name}</div>
                                 </div>
                                 <div className='product-details-inner-company'>
                                     <div className='product-details-inner-copmany-head'>License No. :</div>
-                                    <div className='product-details-inner-copmany-text'>2541IT</div>
+                                    <div className='product-details-inner-copmany-text'>{data?.supplier?.license_no}</div>
                                 </div>
                                 <div className='product-details-inner-company'>
                                     <div className='product-details-inner-copmany-head'>Address :</div>
-                                    <div className='product-details-inner-copmany-text'>City Place Abu Dhabi</div>
+                                    <div className='product-details-inner-copmany-text'>{data?.supplier?.supplier_address}</div>
                                 </div>
                             </div>
                             <div className='product-details-company-conatiner'>
                                 <div className='product-details-inner-company'>
                                     <div className='product-details-inner-copmany-head'>Payment Terms :</div>
-                                    <div className='product-details-inner-copmany-text'>Credit, Debit</div>
+                                    <div className='product-details-inner-copmany-text'>{data?.supplier?.payment_terms}</div>
                                 </div>
                                 <div className='product-details-inner-company'>
                                     <div className='product-details-inner-copmany-head'>Est. Delivery Time :</div>
-                                    <div className='product-details-inner-copmany-text'>12 Days</div></div>
+                                    <div className='product-details-inner-copmany-text'>{data?.supplier?.estimated_delivery_time}</div></div>
                             </div>
                         </div>
                         {/* start the ecommerce card */}

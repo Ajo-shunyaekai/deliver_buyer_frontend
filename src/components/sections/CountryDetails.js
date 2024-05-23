@@ -61,7 +61,7 @@ console.log('countryData', countryData);
 
     // Filter countries based on countryData prop
     useEffect(() => {
-        if (countries.length > 0 && countryData.length > 0) {
+        if (countries.length > 0 && countryData?.length > 0) {
             const filtered = countries.filter(country => countryData.includes(country.name.common));
             setFilteredCountries(filtered);
         }

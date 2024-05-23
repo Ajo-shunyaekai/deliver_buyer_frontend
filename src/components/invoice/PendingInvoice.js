@@ -49,11 +49,11 @@ const PendingInvoice = ({invoiceList}) => {
                             </td>
                             <td className='pending-invoices-td'>
                                 <div className='invoice-details-button-row'>
-                                    <div className='invoice-details-button-column-pay'>
+                                    <div className='invoice-details-button-column-pay' onClick={handleShowModal}>
                                         <span
                                             className='invoices-details-button-pay'
                                             variant="primary"
-                                            onClick={handleShowModal}
+                                            
                                         >
                                             Pay
                                         </span>

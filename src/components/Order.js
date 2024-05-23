@@ -14,10 +14,15 @@ import { postRequestWithToken } from '../api/Requests';
 const Order = () => {
 
     // Active class apply
-    const [activeLink, setActiveLink] = useState('active'); // Default active link is 'alloted'
+    const [activeLink, setActiveLink]   = useState('active'); 
+    const [orderList, setOrderList]     = useState([])
+    const [totalOrders, setTotalOrders] = useState()
+    const [currentPage, setCurrentPage] = useState(1); 
+    const ordersPerPage = 1;
 
     const handleLinkClick = (link) => {
         setActiveLink(link);
+        setCurrentPage(1)
         // Here you can set the respective orders state variable based on the link clicked
         switch (link) {
             case 'alloted':
@@ -40,10 +45,7 @@ const Order = () => {
     };
     // pagination end
 
-    const [orderList, setOrderList]     = useState([])
-    const [totalOrders, setTotalOrders] = useState()
-    const [currentPage, setCurrentPage] = useState(1); 
-    const ordersPerPage = 1;
+
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -66,6 +68,7 @@ const Order = () => {
             }
           })
     },[activeLink, currentPage])
+
     return (
         <>
             <div className='order-main-container'>
