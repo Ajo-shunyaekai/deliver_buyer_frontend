@@ -4,7 +4,7 @@ import UploadImage from '../../assest/uplaod.svg';
 import CrossIcon from '../../assest/Icon.svg';
 import styles from '../../style/imageuploader.module.css';
 
-const ImageUploader = () => {
+const ImageUploader = ({onUploadStatusChange}) => {
     const [imagePreview, setImagePreview] = useState('');
     const [imageName, setImageName] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,7 @@ const ImageUploader = () => {
             setUploading(true);
             setIsLoading(true);
             setImageName(file.name);
+            onUploadStatusChange(true, file);
             reader.readAsDataURL(file);
         }
     };
@@ -33,6 +34,7 @@ const ImageUploader = () => {
         setImagePreview('');
         setImageName('');
         fileInputRef.current.value = '';
+        onUploadStatusChange(true, null);
     };
 
     const handleImageClick = () => {

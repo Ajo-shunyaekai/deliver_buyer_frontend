@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/buy.css';
 import BuySeller from '../components/sections/BuySeller';
 import BuyProduct from './sections/BuyProduct';
+import { postRequestWithToken } from '../api/Requests';
 
 const Buy = () => {
     const [activeButton, setActiveButton] = useState('seller'); // Initialize activeButton with 'seller'
@@ -10,6 +11,17 @@ const Buy = () => {
     const handleButtonClick = (button) => {
         setActiveButton(button);
     };
+
+     // useEffect(() => {
+    //     const obj = {buyer_id: 'BUY-p480xquscz'}
+    //     postRequestWithToken('buyer/supplier-list', obj, async (response) => {
+    //         if (response.code === 200) {
+    //             setSupplierList(response.result)
+    //         } else {
+    //            console.log();
+    //         }
+    //       })
+    // },[])
 
     return (
         <>
@@ -25,9 +37,9 @@ const Buy = () => {
                     </div>
                 </div>
                 {/* Conditional rendering based on activeButton state */}
-                {activeButton === 'seller' && <BuySeller />}
+                {activeButton === 'seller' && <BuySeller active={activeButton}/>}
                 {activeButton === 'product' && <div>
-                    <BuyProduct />
+                    <BuyProduct active = {activeButton}/>
                 </div>}
             </div>
         </>

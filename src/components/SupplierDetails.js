@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Supplierdetails from '../style/supplierdetails.css'
 import SupplyOrderList from './orders/SupplyOrderList'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneInTalkOutlinedIcon from '@mui/icons-material/PhoneInTalkOutlined';
+import { useParams } from 'react-router-dom';
+import { postRequestWithToken } from '../api/Requests';
 
 const SupplierDetails = () => {
+    const {supplierId} = useParams()
+    const [supplier, setSupplier] = useState()
+
+    useEffect(() => {
+        const obj = {supplier_id: supplierId}
+        postRequestWithToken('buyer/supplier-details', obj, async (response) => {
+            if (response.code === 200) {
+                setSupplier(response.result)
+            } else {
+               console.log();
+            }
+          })
+    },[])
+
 
     return (
         <>
@@ -12,58 +28,58 @@ const SupplierDetails = () => {
                 <div className='supplier-details-inner-conatiner'>
                     <div className='supplier-details-left-inner-container'>
                         <div className='supplier-details-left-uppar-section'>
-                            <div className='supplier-details-left-uppar-head'>Pharmaceuticals Pvt Ltd</div>
+                            <div className='supplier-details-left-uppar-head'>{supplier?.supplier_name}</div>
                             <div className='supplier-details-left-inner-section'>
-                                <div className='supplier-details-left-inner-sec-text'>Supplier ID: SP12345657</div>
+                                <div className='supplier-details-left-inner-sec-text'>Supplier ID: {supplier?.supplier_id}</div>
                                 <div className='supplier-details-left-inner-img-container'>
                                     <div className='supplier-details-left-inner-mobile-button'>
                                         <PhoneInTalkOutlinedIcon className='supplier-details-left-inner-icon' />
-                                        <span className='tooltip'>123-456-7890</span>
+                                        <span className='tooltip'>{supplier?.country_code} {supplier?.mobile}</span>
                                     </div>
                                     <div className='supplier-details-left-inner-email-button'>
                                         <MailOutlineIcon className='supplier-details-left-inner-icon' />
-                                        <span className='tooltip'>example@example.com</span>
+                                        <span className='tooltip'>{supplier?.email}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className='supplier-details-description-section'>
                             <div className='supplier-details-description-head'>Description</div>
-                            <div className='supplier-details-description-content'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</div>
+                            <div className='supplier-details-description-content'>{supplier?.description}</div>
                         </div>
                         <div className='supllier-details-section'>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>License No.</div>
-                                <div className='supplier-details-inner-text'>455SD78954</div>
+                                <div className='supplier-details-inner-text'>{supplier?.license_no}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Address</div>
-                                <div className='supplier-details-inner-text'>476 Udyog Vihar Gurugaon</div>
+                                <div className='supplier-details-inner-text'>{supplier?.supplier_address}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Country of Origin</div>
-                                <div className='supplier-details-inner-text'>Dubai</div>
+                                <div className='supplier-details-inner-text'>{supplier?.country_of_origin}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Contact Person Name:</div>
-                                <div className='supplier-details-inner-text'>Mr. Satish Kumar</div>
+                                <div className='supplier-details-inner-text'>{supplier?.contact_person_name}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Designation</div>
-                                <div className='supplier-details-inner-text'>Market General Manager</div>
+                                <div className='supplier-details-inner-text'>{supplier?.designation}</div>
                             </div>
 
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Payment Terms</div>
-                                <div className='supplier-details-inner-text'>Credit, Debit, COD</div>
+                                <div className='supplier-details-inner-text'>{supplier?.payment_terms}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Est. Delivery Time</div>
-                                <div className='supplier-details-inner-text'> Any discounts</div>
+                                <div className='supplier-details-inner-text'>{supplier?.estimated_delivery_time}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Tags</div>
-                                <div className='supplier-details-inner-text'>Abilify, Acanya, Acthar Gel</div>
+                                <div className='supplier-details-inner-text'>{supplier?.tags}</div>
                             </div>
                         </div>
                     </div>

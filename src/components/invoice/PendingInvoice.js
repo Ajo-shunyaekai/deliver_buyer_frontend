@@ -4,7 +4,9 @@ import styles from '../../style/pendingInvoice.css';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 import PayModal from '../pay/PayModal';
-const PendingInvoice = () => {
+
+
+const PendingInvoice = ({invoiceList}) => {
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
@@ -23,24 +25,27 @@ const PendingInvoice = () => {
                         </tr>
                     </thead>
                     <tbody className='pending-invoies-tbody-section'>
+                    {
+                            invoiceList?.map((invoice,i) => {
+                                return (
                         <tr data-id="9" className='table-row v-middle'>
                             <td>
-                                <span className="item-title">18452025</span>
+                                <span className="item-title">{invoice.invoice_number}</span>
                             </td>
                             <td>
-                                <span className="item-title">OR145236</span>
+                                <span className="item-title">{invoice.order_id}</span>
                             </td>
                             <td>
                                 <div className="mx-0">
-                                    <span className="item-title text-color">Mohammad Karim</span>
+                                    <span className="item-title text-color">{invoice.shipping_details.consignor_name}</span>
                                 </div>
                             </td>
 
                             <td className="flex">
-                                <span className="item-title text-color">450 AED</span>
+                                <span className="item-title text-color">{invoice.totalPrice} AED</span>
                             </td>
                             <td className="flex">
-                                <span className="item-title text-color">Pending</span>
+                                <span className="item-title text-color">{invoice.order_status === 'pending'? 'pending': ''}</span>
                             </td>
                             <td className='pending-invoices-td'>
                                 <div className='invoice-details-button-row'>
@@ -67,7 +72,10 @@ const PendingInvoice = () => {
                                 </div>
                             </td>
                         </tr>
-
+                      )
+                    })
+                }
+                
                     </tbody>
 
 

@@ -65,10 +65,10 @@ function App() {
               <Route path="/ordercancel" element={<OrderCancel />} />
               <Route path="/line-chart" element={<LineChart />} />
               <Route path="/progress-bar" element={<ProgressBar />} />
-              <Route path="/order-details" element={<OrderDetails />} />
-              <Route path="/pending-details" element={<PendingDetails />} />
-              <Route path="/product-details" element={<ProductDetails />} />
-              <Route path="/supplier-details" element={<SupplierDetails />} />
+              <Route path="/order-details/:orderId" element={<OrderDetails />} />
+              <Route path="/pending-details/:orderId" element={<PendingDetails />} />
+              <Route path="/medicine-details/:medicineId" element={<ProductDetails />} />
+              <Route path="/supplier-details/:supplierId" element={<SupplierDetails />} />
               <Route path="/completed-orders" element={<CompletedOrders />} />
               <Route path="/ongoing-orders" element={<OngoingOrders />} />
               <Route path="/supply-order-list" element={<SupplyOrderList />} />

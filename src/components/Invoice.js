@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../style/invoice.module.css';
 import { Link } from 'react-router-dom';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PendingInvoice from '../components/invoice/PendingInvoice';
 import PaidInvoice from '../components/invoice/CompleteInvoice';
 import OngoingInvoice from '../components/invoice/OngoingInvoice';
+import { postRequestWithToken } from '../api/Requests';
 
 const Invoice = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -14,6 +15,33 @@ const Invoice = () => {
     const handleItemClick = (index) => {
         setActiveIndex(index);
     };
+
+    const [invoiceList, setInvoiceList] = useState([])
+    const [totalInvoices, setTotalInvoices] = useState()
+    const [currentPage, setCurrentPage] = useState(1); 
+    const invoicesPerPage = 1;
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    useEffect(() => {
+        const obj = {
+            buyer_id  : "BUY-jmn98sdanx",
+            filterKey : activeIndex === 0 ? 'pending' : activeIndex === 1 ? 'completed' : '',
+            page_no   : currentPage, 
+            limit     : invoicesPerPage,
+        }
+
+        postRequestWithToken('buyer/order/buyer-invoice-list', obj, async (response) => {
+            if (response.code === 200) {
+                setInvoiceList(response.result.data)
+                // setTotalOrders(response.result.totalItems)
+            } else {
+               console.log('error in invoice list api',response);
+            }
+          })
+    },[activeIndex])
 
     return (
         <>
@@ -29,8 +57,8 @@ const Invoice = () => {
                         ))}
                     </div>
                     <div className={styles[`invoice-wrapper-right`]}>
-                        {activeIndex === 0 && <PendingInvoice />}
-                        {activeIndex === 1 && <PaidInvoice />}
+                        {activeIndex === 0 && <PendingInvoice invoiceList = {invoiceList}/>}
+                        {activeIndex === 1 && <PaidInvoice invoiceList = {invoiceList}/>}
                         {/* {activeIndex === 2 && } */}
                     </div>
                 </div>

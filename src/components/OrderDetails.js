@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Orderdetails from '../style/orderdetails.css'
 import AssignDriver from './details/AssignDriver';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { postRequestWithToken } from '../api/Requests';
 
 const OrderDetails = () => {
+    const { orderId } = useParams()
+
     const [activeButton, setActiveButton] = useState('1h');
+
     const handleButtonClick = (value) => {
         setActiveButton(value);
     };
+    const [orderDetails, setOrderDetails] = useState()
+
+    useEffect(() => {
+        const obj = {order_id: orderId}
+
+        postRequestWithToken('buyer/order/order-details', obj, async (response) => {
+            if (response.code === 200) {
+                setOrderDetails(response.result)
+            } else {
+               console.log('error in order details api');
+            }
+          })
+    },[])
     return (
         <div className='order-details-container'>
-            <div className='order-details-conatiner-heading'>Order ID: <span>987456321</span></div>
+            <div className='order-details-conatiner-heading'>Order ID: <span>{orderDetails?.order_id}</span></div>
             <div className='order-details-section'>
                 <div className='order-details-left-section'>
                     <div className='order-details-top-inner-section'>
@@ -19,12 +36,12 @@ const OrderDetails = () => {
                                 <Link to='/supplier-details'>
                                     <div className='order-details-top-order-cont'>
                                         <div className='order-details-left-top-main-heading'> Seller Name</div>
-                                        <div className='order-details-left-top-main-contents'> Pharmaceuticals Pvt Ltd</div>
+                                        <div className='order-details-left-top-main-contents'> {orderDetails?.supplier?.supplier_name}</div>
                                     </div>
                                 </Link>
                                 <div className='order-details-top-order-cont'>
                                     <div className='order-details-left-top-main-heading'> Order Status</div>
-                                    <div className='order-details-left-top-main-contents'> In-Transit</div>
+                                    <div className='order-details-left-top-main-contents'> {orderDetails?.order_status}</div>
                                 </div>
                                 <div className='order-details-top-order-cont'>
                                     <div className='order-details-left-top-main-heading-button'> Tracking</div>
@@ -84,7 +101,7 @@ const OrderDetails = () => {
             </div>
             {/* start the assign driver section */}
             <div className='order-details-assign-driver-section'>
-                <AssignDriver />
+                <AssignDriver orderItems = {orderDetails?.items}/>
             </div>
             {/* end the assign driver section */}
             {/* Start the end section */}
@@ -93,11 +110,11 @@ const OrderDetails = () => {
                     <div className='order-details-payment-terms-cont'>
                         <div className='order-details-payment-first-terms-cont'>
                             <div className='order-details-payment-first-terms-heading'>Payment Terms</div>
-                            <div className='order-details-payment-first-terms-text'>23 Days</div>
+                            <div className='order-details-payment-first-terms-text'>{orderDetails?.payment_terms}</div>
                         </div>
                         <div className='order-details-payment-first-terms-cont'>
                             <div className='order-details-payment-first-terms-heading'>Est. Delivery Time</div>
-                            <div className='order-details-payment-first-terms-text'>15 Days</div>
+                            <div className='order-details-payment-first-terms-text'>{orderDetails?.est_delivery_time}</div>
                         </div>
                     </div>
                     <div className='order-details-payment-detention-cont'>
@@ -110,7 +127,7 @@ const OrderDetails = () => {
                     <div className='order-details-payment-remark-cont'>
                         <div className='order-details-payment-remark-head'>Remarks</div>
                         {/* <div className='order-details-payment-remark-text'>Marketing and TV ads</div> */}
-                        <div className='order-details-payment-remark-text'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                        <div className='order-details-payment-remark-text'>{orderDetails?.remarks ? orderDetails?.remarks : 'N/A'}</div>
                         {/* <div className='order-details-payment-remark-text'>E-marketing maintenance</div> */}
                     </div>
                 </div>
@@ -120,15 +137,15 @@ const OrderDetails = () => {
                         <div className='order-details-right-details-row-one'>
                             <div className='order-details-right-pickupdata'>
                                 <div className='order-details-right-pickdata-head'>Consignor Name</div>
-                                <div className='order-details-right-pickdata-text'>Surya Kumar sharma</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.consignor_name}</div>
                             </div>
                             <div className='order-details-right-pickupdata'>
                                 <div className='order-details-right-pickdata-head'>Phone No.</div>
-                                <div className='order-details-right-pickdata-text'>+971 563658956</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.mobile_no}</div>
                             </div>
                             <div className='order-details-right-pickupdata-address'>
                                 <div className='order-details-right-pickdata-head'>Address</div>
-                                <div className='order-details-right-pickdata-text'>Financial Center Rd, Along Sheik zayed road, Dubai 22155.</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.address}</div>
                             </div>
                         </div>
                         <hr className='order-details-right-pickupdata-hr' />

@@ -8,6 +8,7 @@ import ActiveOrders from '../components/orders/ActiveOrder';
 import CompletedOrders from '../components/orders/CompleteOrder';
 import PendingOrders from '../components/orders/DeletedOrder';
 import Sidebar from '../components/Sidebar';
+import { postRequestWithToken } from '../api/Requests';
 
 
 const Order = () => {
@@ -37,8 +38,34 @@ const Order = () => {
                 break;
         }
     };
-
     // pagination end
+
+    const [orderList, setOrderList]     = useState([])
+    const [totalOrders, setTotalOrders] = useState()
+    const [currentPage, setCurrentPage] = useState(1); 
+    const ordersPerPage = 1;
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    useEffect(() => {
+        const obj = {
+            buyer_id  : "BUY-jmn98sdanx",
+            filterKey : activeLink,
+            page_no   : currentPage, 
+            limit     : ordersPerPage,
+        }
+
+        postRequestWithToken('buyer/order/buyer-order-list', obj, async (response) => {
+            if (response.code === 200) {
+                setOrderList(response.result.data)
+                setTotalOrders(response.result.totalItems)
+            } else {
+               console.log('error in order list api',response);
+            }
+          })
+    },[activeLink, currentPage])
     return (
         <>
             <div className='order-main-container'>
@@ -83,7 +110,33 @@ const Order = () => {
                         <div responsive="xl" className='order-table-responsive'>
 
                             {
-                                activeLink === 'active' ? <ActiveOrders /> : activeLink === 'completed' ? <CompletedOrders /> : activeLink === 'pending' ? <PendingOrders /> : ''
+                                activeLink === 'active' ? 
+                                <ActiveOrders 
+                                orderList        = {orderList} 
+                                totalOrders      = {totalOrders} 
+                                currentPage      = {currentPage}
+                                ordersPerPage    = {ordersPerPage}
+                                handlePageChange = {handlePageChange}
+                                activeLink       = {activeLink}
+                                /> 
+                                : activeLink === 'completed' ?
+                                 <CompletedOrders 
+                                 orderList        = {orderList} 
+                                 totalOrders      = {totalOrders} 
+                                 currentPage      = {currentPage}
+                                 ordersPerPage    = {ordersPerPage}
+                                 handlePageChange = {handlePageChange}
+                                 activeLink       = {activeLink}
+                                 /> : 
+                                 activeLink === 'pending' ? 
+                                 <PendingOrders
+                                 orderList        = {orderList} 
+                                 totalOrders      = {totalOrders} 
+                                 currentPage      = {currentPage}
+                                 ordersPerPage    = {ordersPerPage}
+                                 handlePageChange = {handlePageChange}
+                                 activeLink       = {activeLink}
+                                  /> : ''
                             }
 
 

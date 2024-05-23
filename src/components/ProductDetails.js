@@ -1,25 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import productDetails from '../style/productDetails.css';
 import para from '../assest/para.webp'
 import CountryDetails from '../components/sections/CountryDetails';
 import ProductDetailsCard from './ProductDetailsCard';
+import { useParams } from 'react-router-dom';
+import { postRequestWithToken } from '../api/Requests';
 const ProductDetails = () => {
 
+    const { medicineId }        = useParams()
+    const [details, setDetails] = useState()
+
+    useEffect(() => {
+        const obj = {medicine_id: medicineId}
+        postRequestWithToken('buyer/medicine/medicine-details', obj, async (response) => {
+            if (response.code === 200) {
+                setDetails(response.result)
+            } else {
+               console.log('error in med details api');
+            }
+          })
+    },[])
     return (
         <>
             <div className='main-product-details-container'>
 
-
+            {
+                    details?.map((data,i) => {
+                        const strengths = data.inventory.strength?.join(', ');
+                        return (
                 <div className="product-details-cover">
 
                     <div className='product-details-container-main'>
                         <div className="product-details-section-one">
                             <div className="product-details-sec-one-left">
                                 <h4 >
-                                    Paracetamol
+                                 {data.medicine_name}
                                 </h4>
                                 <p class="font-semibold text-[12px] leading-[21px] md:text-[16px] md:leading-[28px] text-gray-700 m-0">
-                                    Suppositories 125 mg, 250 mg,
+                                   {data.dosage_form}  {strengths}
                                 </p>
                             </div>
 
@@ -35,31 +53,39 @@ const ProductDetails = () => {
                                 <div className="product-details-sec-two-left">
                                     <div className="product-details-two">
                                         <div className='product-details-two-left-text'>Shipping time :</div>
-                                        <div className='product-details-two-right-text'>12 Days</div>
+                                        <div className='product-details-two-right-text'>{data?.supplier?.estimated_delivery_time}</div>
                                     </div>
                                     <div className="product-details-two">
                                         <div className='product-details-two-left-text'>Dossier type :</div>
-                                        <div className='product-details-two-right-text'>EU CTD</div>
+                                        <div className='product-details-two-right-text'>{data.dossier_type}</div>
                                     </div>
                                     <div className="product-details-two">
                                         <div className='product-details-two-left-text'>Dossier status :</div>
-                                        <div className='product-details-two-right-text'>Ready to file</div>
+                                        <div className='product-details-two-right-text'>{data.dossier_status}</div>
                                     </div>
                                 </div>
                                 <div className="product-details-sec-two-left">
                                     <div className="product-details-two">
                                         <div className='product-details-two-left-text'>Country of origin :</div>
-                                        <div className='product-details-two-right-text'>European Union</div>
+                                        <div className='product-details-two-right-text'>{data.country_of_origin}</div>
                                     </div>
                                     <div className="product-details-two">
                                         <div className='product-details-two-left-text'>GMP approvals :</div>
-                                        <div className='product-details-two-right-text'>EU GMP</div>
+                                        <div className='product-details-two-right-text'>{data.gmp_approvals}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className='product-details-container'>
+                        {/* <div className="product-details-section-two-img"> */}
+                                {/* {data.medicine_image?.map((image, j) => (
+                                    <div className="product-details-sec-img-left" key={j}>
+                                        <img src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${image}`} alt={`${data.medicine_name} ${j}`} className="responsive-image" />
+                                    </div>
+                           
+                                ))} */}
+                                {/* </div> */}
                             <div className="product-details-section-two-img">
                                 <div className="product-details-sec-img-left">
                                     <img src={para} alt="" className="responsive-image" />
@@ -82,7 +108,20 @@ const ProductDetails = () => {
                                 <div className="product-range-heading">Price</div>
                                 <div className="product-range-heading">Est. Delivery Time</div>
                             </div>
-                            <div className="product-range-details">
+
+                            {
+                                        data.inventory.delivery_info?.map((info,k) => {
+                                            return (
+                                                <div className="product-range-details">
+                                                    <div className="product-range-text"> <input className="product-range-input" type=" text" value={info.quantity} /> </div>
+                                                    <div className="product-range-text"><input className="product-range-input" type="text" value={info.price} /> </div>
+                                                    <div className="product-range-text"> <input className="product-range-input" type="text" value={info.est_delivery_days} /></div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+
+                            {/* <div className="product-range-details">
                                 <div className="product-range-text"> <input className="product-range-input" type=" text" value='0 to 500' /> </div>
                                 <div className="product-range-text"><input className="product-range-input" type="text" value="192 AED" /> </div>
                                 <div className="product-range-text"> <input className="product-range-input" type="text" value="10 Days" /></div>
@@ -104,7 +143,7 @@ const ProductDetails = () => {
                                 <div className="product-range-text"> <input className="product-range-input" type=" text" value='2000 to 5000' /> </div>
                                 <div className="product-range-text"><input className="product-range-input" type="text" value="469 AED" /> </div>
                                 <div className="product-range-text"> <input className="product-range-input" type="text" value="18 Days" /></div>
-                            </div>
+                            </div> */}
 
 
                         </div>
@@ -112,7 +151,7 @@ const ProductDetails = () => {
                             <div className="product-details-country-section">
                                 <div className="product-details-county">
                                     <div className='product-details-four-left-text'>Registered in :</div>
-                                    <div className='product-details-four-right-text'> <CountryDetails /></div>
+                                    <div className='product-details-four-right-text'> <CountryDetails countryData = {data.registered_in} /></div>
                                 </div>
                                 <div className="product-details-county">
                                     <div className='product-details-four-left-text'>Tags :</div>
@@ -125,8 +164,7 @@ const ProductDetails = () => {
                                 <div className="product-details-county">
                                     <div className='product-details-four-left-text'>Comments :</div>
                                     <div className='product-details-four-right-text'>
-                                        Full documentation, WEU non-generic dossier.
-                                        Tablets 250 mg - OTC,available for markets worldwide, except the countries already registered in
+                                    {data.comments}
                                     </div>
                                 </div>
 
@@ -135,12 +173,8 @@ const ProductDetails = () => {
                         <div className='product-details-containers'>
 
                             <div className="product-details-mfg-container">
-                                <div className="product-details-mfg-heading">Manufacture #12024</div>
-                                <div className="product-details-mfg-details">A pharmaceutical manufacturer based in the EU that is active in 40+ countries selling its products in Europe,
-                                    Africa, Middle East, CIS, North America, LATAM, and Asia for 50+ years.
-                                    Key production lines are RX products, OTC, cosmetics, food supplements, and veterinary products.
-                                    They are produced in GMP-compliant manufacture. The main dosage forms are liquid, solid, and semi-solid.
-                                    The main therapeutic areas are dermatology, metabolic diseases, and respiratory. The company possesses a branch in Africa.</div>
+                                <div className="product-details-mfg-heading">{data?.supplier?.supplier_name}</div>
+                                <div className="product-details-mfg-details">{data?.supplier?.description}</div>
                             </div>
 
                         </div>
@@ -177,6 +211,9 @@ const ProductDetails = () => {
                         {/* end the ecommerce card */}
                     </div>
                 </div>
+                  )
+                })
+            }
             </div>
         </>
     )

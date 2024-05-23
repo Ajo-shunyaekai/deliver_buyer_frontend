@@ -12,18 +12,20 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import OrderCancel from './OrderCancel';
 import OrderDetails from '../OrderDetails'
+import moment from 'moment/moment';
 
 
-
-const CompleteOrder = () => {
+const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handlePageChange, activeLink}) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const [modal, setModal] = useState(false)
+    const [selectedOrderId, setSelectedOrderId] = useState()
 
-    const showModal = () => {
+    const showModal = (orderId) => {
+        setSelectedOrderId(orderId)
         setModal(!modal)
     }
 
@@ -101,17 +103,17 @@ const CompleteOrder = () => {
     ]);
 
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const ordersPerPage = 2; // Change this to set the number of orders per page
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const ordersPerPage = 2; 
     // Logic to calculate pagination indexes
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
     // Handle page change
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
 
     // Calculate total pages
     const totalPages = Math.ceil(activeOrders.length / ordersPerPage);
@@ -139,71 +141,50 @@ const CompleteOrder = () => {
                                     </tr>
                                 </thead>
                                 <tbody className='order-container-tbody'>
-                                    <tr className="order-section-tr">
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">18452025</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">12/12/2019</div>
-                                        </td>
-                                        <td className='order-section-tds'>
-                                            <div className="order-section-heading">Pharmaceuticals Pvt. Ltd Company</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">4</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">Delivered</div>
-                                        </td>
-                                        <td className='order-section-button-cont'>
-                                            <div className='order-section-button'>
-                                                <Link to='/order-details'>
-                                                    <div className='order-section-view'>
-                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
-                                                    </div>
-                                                </Link>
+                                {
+                                    orderList?.map((order,i) => {
+                                        const totalQuantity = order.items.reduce((total, item) => {
+                                            return total + item.quantity;
+                                          }, 0);
+                                          const orderedDate = moment(order.created_at).format("DD/MM/YYYY")
+                                        return (
+                                            <tr className="order-section-tr">
+                                                <td className='order-section-td'>
+                                                    <div className="order-section-heading">{order.order_id}</div>
+                                                </td>
+                                                <td className='order-section-td'>
+                                                    <div className="order-section-heading">{orderedDate}</div>
+                                                </td>
+                                                <td className='order-section-tds'>
+                                                    <div className="order-section-heading">{order.supplier?.supplier_name}</div>
+                                                </td>
+                                                <td className='order-section-td'>
+                                                    <div className="order-section-heading">{totalQuantity}</div>
+                                                </td>
+                                                <td className='order-section-td'>
+                                                    <div className="order-section-heading">{order.order_status === 'completed' ? 'Delivered': ''}</div>
+                                                </td>
+                                                <td className='order-section-button-cont'>
+                                                    <div className='order-section-button'>
+                                                        <Link to={`/order-details/${order.order_id}`}>
+                                                            <div className='order-section-view'>
+                                                                <RemoveRedEyeOutlinedIcon className='order-section-eye' />
+                                                            </div>
+                                                        </Link>
 
-                                                <div className='order-section-delete'>
-                                                    <HighlightOffIcon className='order-section-off' />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                        <div className='order-section-delete' onClick={() => showModal(order.order_id)}>
+                                                            <HighlightOffIcon className='order-section-off' />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                    
                                 </tbody>
 
-                                <tbody className='order-container-tbody'>
-                                    <tr className="order-section-tr">
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">18452025</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">12/12/2019</div>
-                                        </td>
-                                        <td className='order-section-tds'>
-                                            <div className="order-section-heading">Pharmaceuticals Pvt. Ltd Company</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">4</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">Delivered</div>
-                                        </td>
-                                        <td className='order-section-button-cont'>
-                                            <div className='order-section-button'>
-                                                <Link to='/order-details'>
-                                                    <div className='order-section-view'>
-                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
-                                                    </div>
-                                                </Link>
-                                                <div className='order-section-delete'>
-                                                    <HighlightOffIcon className='order-section-off' />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                                <tbody className='order-container-tbody'>
+                                {/* <tbody className='order-container-tbody'>
                                     <tr className="order-section-tr">
                                         <td className='order-section-td'>
                                             <div className="order-section-heading">18452025</div>
@@ -233,18 +214,50 @@ const CompleteOrder = () => {
                                             </div>
                                         </td>
                                     </tr>
-                                </tbody>
+                                </tbody> */}
+
+                                {/* <tbody className='order-container-tbody'>
+                                    <tr className="order-section-tr">
+                                        <td className='order-section-td'>
+                                            <div className="order-section-heading">18452025</div>
+                                        </td>
+                                        <td className='order-section-td'>
+                                            <div className="order-section-heading">12/12/2019</div>
+                                        </td>
+                                        <td className='order-section-tds'>
+                                            <div className="order-section-heading">Pharmaceuticals Pvt. Ltd Company</div>
+                                        </td>
+                                        <td className='order-section-td'>
+                                            <div className="order-section-heading">4</div>
+                                        </td>
+                                        <td className='order-section-td'>
+                                            <div className="order-section-heading">Delivered</div>
+                                        </td>
+                                        <td className='order-section-button-cont'>
+                                            <div className='order-section-button'>
+                                                <Link to='/order-details'>
+                                                    <div className='order-section-view'>
+                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
+                                                    </div>
+                                                </Link>
+                                                <div className='order-section-delete'>
+                                                    <HighlightOffIcon className='order-section-off' />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody> */}
                             </table>
                         </div>
                         {/* End the table section code */}
                         {
-                            modal === true ? <OrderCancel setModal={setModal} /> : ''
+                            modal === true ? <OrderCancel setModal={setModal} orderId={selectedOrderId} activeLink ={activeLink}/> : ''
                         }
                         <div className='pagi-container'>
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={ordersPerPage}
-                                totalItemsCount={activeOrders.length}
+                                totalItemsCount={totalOrders}
                                 pageRangeDisplayed={5}
                                 onChange={handlePageChange}
                                 itemClass="page-item"
@@ -255,7 +268,7 @@ const CompleteOrder = () => {
                             />
                             <div className='pagi-total'>
                                 <div className='pagi-total'>
-                                    Total Items: {activeOrders.length}
+                                   Total Items: {totalOrders}
                                 </div>
                             </div>
                         </div>

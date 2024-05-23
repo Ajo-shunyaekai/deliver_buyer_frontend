@@ -3,7 +3,9 @@ import styles from '../../style/pendingInvoice.css';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 import { Link } from 'react-router-dom';
-const CompleteInvoice = () => {
+
+
+const CompleteInvoice = ({invoiceList}) => {
     return (
         <>
             <div className='pending-invo-container' >
@@ -22,6 +24,51 @@ const CompleteInvoice = () => {
                             </tr>
                         </thead>
                         <tbody className='pending-invoies-tbody-section'>
+                        {invoiceList && invoiceList.length > 0 ? (
+                            invoiceList.map((invoice, i) => (
+                            <tr data-id="9" className='table-row v-middle'>
+                                <td>
+                                    <span className="item-title">{invoice.invoice_number}</span>
+                                </td>
+                                <td>
+                                    <span className="item-title">{invoice.order_id}</span>
+                                </td>
+                                <td>
+                                    <span className="item-title">{invoice.shipping_details.consignor_name}</span>
+                                </td>
+                                <td>
+                                    <div className="mx-0">
+                                        <span className="item-title text-color">{invoice.totalPrice} AED</span>
+                                    </div>
+                                </td>
+
+                                <td className="flex">
+                                    <span className="item-title text-color">COD</span>
+                                </td>
+                                <td className="flex">
+                                    <span className="item-title text-color">{invoice.order_status === 'completed' ? 'Paid' : ''}</span>
+                                </td>
+                                <td>
+                                    <div className='invoice-details-button-row'>
+                                        <Link to='/invoice-design'>
+                                            <div className='invoice-details-button-column'>
+                                                <VisibilityOutlinedIcon className='invoice-view' />
+                                            </div>
+                                        </Link>
+                                        <div className='invoice-details-button-column-download'>
+                                            <CloudDownloadOutlinedIcon className='invoice-view' />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                          ))
+                          ) : (
+                              <tr>
+                                  <td colSpan="7" className="text-center">No data available</td>
+                              </tr>
+                          )}
+                        </tbody>
+                        {/* <tbody className='pending-invoies-tbody-section'>
                             <tr data-id="9" className='table-row v-middle'>
                                 <td>
                                     <span className="item-title">18452025</span>
@@ -96,45 +143,7 @@ const CompleteInvoice = () => {
                                 </td>
                             </tr>
 
-                        </tbody>
-                        <tbody className='pending-invoies-tbody-section'>
-                            <tr data-id="9" className='table-row v-middle'>
-                                <td>
-                                    <span className="item-title">18452025</span>
-                                </td>
-                                <td>
-                                    <span className="item-title">OR125456</span>
-                                </td>
-                                <td>
-                                    <span className="item-title">Abdul Mohammad</span>
-                                </td>
-                                <td>
-                                    <div className="mx-0">
-                                        <span className="item-title text-color">2748 AED</span>
-                                    </div>
-                                </td>
-
-                                <td className="flex">
-                                    <span className="item-title text-color">COD</span>
-                                </td>
-                                <td className="flex">
-                                    <span className="item-title text-color">Paid</span>
-                                </td>
-                                <td>
-                                    <div className='invoice-details-button-row'>
-                                        <Link to='/invoice-design'>
-                                            <div className='invoice-details-button-column'>
-                                                <VisibilityOutlinedIcon className='invoice-view' />
-                                            </div>
-                                        </Link>
-                                        <div className='invoice-details-button-column-download'>
-                                            <CloudDownloadOutlinedIcon className='invoice-view' />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
+                        </tbody> */}
                     </table>
                 </div>
             </div>
