@@ -45,55 +45,54 @@ const Support = () => {
       const [feedbackErrors, setFeedbackErrors]   = useState(initialFeedbackErrors);
       const [complaintErrors, setComplaintErrors] = useState(initialComplaintErrors);
 
-
     const validateFeedbackForm = () => {
-        const errors = {};
-        if (!feedbackData.order_id) {
-          errors.orderId = 'Order ID is required';
-        }
-        if (!feedbackData.feedback) {
+      const errors = {};
+      if (!feedbackData.order_id) {
+          errors.order_id = 'Order ID is required';
+      }
+      if (!feedbackData.feedback) {
           errors.feedback = 'Feedback text is required';
-        }
-        setFeedbackErrors(errors);
-        return Object.keys(errors).length === 0;
-      };
-    
-      const validateFeedbackOrderId = (order_id) => {
-        const error = !order_id ? 'Order Id is required' : null;
+      }
+      setFeedbackErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
+
+    const validateFeedbackOrderId = (order_id) => {
+        const error = !order_id ? 'Order ID is required' : null;
         setFeedbackErrors((prevErrors) => ({ ...prevErrors, order_id: error }));
         setIsTypingFeedOrderId(false);
-      };
-    
-      const validateFeedback = (feedback) => {
+    };
+
+    const validateFeedback = (feedback) => {
         const error = !feedback ? 'Feedback text is required' : null;
         setFeedbackErrors((prevErrors) => ({ ...prevErrors, feedback: error }));
         setIsTypingFeedback(false);
-      };
-    
-      const validateComplaintOrderId = (order_id) => {
-        const error = !order_id ? 'Order Id is required' : null;
+    };
+
+    const validateComplaintOrderId = (order_id) => {
+        const error = !order_id ? 'Order ID is required' : null;
         setComplaintErrors((prevErrors) => ({ ...prevErrors, order_id: error }));
         setIsTypingOrderId(false);
-      };
-    
-      const validateComplaint = (complaint) => {
+    };
+
+    const validateComplaint = (complaint) => {
         const error = !complaint ? 'Complaint text is required' : null;
         setComplaintErrors((prevErrors) => ({ ...prevErrors, complaint: error }));
         setIsTypingComplaint(false);
-      };
-    
-      const validateComplaintForm = () => {
+    };
+
+    const validateComplaintForm = () => {
         const errors = {};
         if (!complaintData.order_id) {
-          errors.orderId = 'Order ID is required';
+            errors.order_id = 'Order ID is required';
         }
         if (!complaintData.complaint) {
-          errors.complaint = 'Complaint text is required';
+            errors.complaint = 'Complaint text is required';
         }
         setComplaintErrors(errors);
         return Object.keys(errors).length === 0;
-      };
-    
+    };
+
       const handleFeedback = (e) => {
         e.preventDefault();
         feedbackData.buyer_id     = 'BUY-jmn98sdanx';
@@ -148,18 +147,9 @@ const Support = () => {
                                     </div>
                                 </div>
                             </div>
-                            {
+                            {/* {
                                 feedbackVisible && (
-                                    // <div className={styles[`form-container`]}>
-                                    //     <div className={styles[`form-heading`]}>Feedback Form</div>
-                                    //     <form>
-                                    //         <div className={styles[`form-container`]}>
-                                    //             <input type="text" placeholder="Enter your order Id" className={styles[`form-input`]} />
-                                    //             <textarea placeholder="Enter your feedback" className={styles[`form-input`]} />
-                                    //             <input type="submit" value="Submit" className={styles[`form-submit-btn`]} />
-                                    //         </div>
-                                    //     </form>
-                                    // </div>
+                                  
                                     <div className={styles[`form-container`]}>
                                     <div className={styles[`form-heading`]}>Feedback Form</div>
                                     <form onSubmit={(e) => {
@@ -188,6 +178,42 @@ const Support = () => {
                                         </div>
                                     </form>
                                    </div>
+                                )
+                            } */}
+                            {
+                                feedbackVisible && (
+                                    <div className={styles['form-container']}>
+                                        <div className={styles['form-heading']}>Feedback Form</div>
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            if (validateFeedbackForm()) {
+                                                handleFeedback(e);
+                                            }
+                                        }}>
+                                            <div className={styles['form-container']}>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter your order Id"
+                                                    className={styles['form-input']}
+                                                    value={feedbackData.order_id}
+                                                    onChange={(e) => setFeedbackData({ ...feedbackData, order_id: e.target.value })}
+                                                    onInput={() => setIsTypingFeedOrderId(true)}
+                                                    onBlur={(e) => validateFeedbackOrderId(e.target.value)}
+                                                />
+                                                {feedbackErrors.order_id && !isTypingFeedOrderId && <div className="error-message" style={{ color: 'red' }}>{feedbackErrors.order_id}</div>}
+                                                <textarea
+                                                    placeholder="Enter your feedback"
+                                                    className={styles['form-input']}
+                                                    value={feedbackData.feedback}
+                                                    onChange={(e) => setFeedbackData({ ...feedbackData, feedback: e.target.value })}
+                                                    onInput={() => setIsTypingFeedback(true)}
+                                                    onBlur={(e) => validateFeedback(e.target.value)}
+                                                />
+                                                {feedbackErrors.feedback && !isTypingFeedback && <p className="error-message" style={{ color: 'red' }}>{feedbackErrors.feedback}</p>}
+                                                <input type="submit" value="Submit" className={styles['form-submit-btn']} />
+                                            </div>
+                                        </form>
+                                    </div>
                                 )
                             }
                             {

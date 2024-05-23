@@ -168,7 +168,6 @@ const ProductDetails = () => {
                                     {data.comments}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div className='product-details-containers'>
