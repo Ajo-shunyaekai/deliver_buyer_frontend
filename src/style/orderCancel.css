@@ -1,0 +1,72 @@
+.order-cancel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 20px;
+    color: #5e676f;
+    cursor: pointer;
+}
+
+.order-cancel-content {
+    padding: 20px;
+    font-size: 16px;
+    color: #5e676f;
+    font-weight: 500;
+}
+
+.order-textarea-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding: 10px 20px;
+}
+
+.order-textarea-heading span {
+    font-size: 15px;
+    padding: 5px;
+    color: #5e676f;
+}
+
+textarea.order-textarea {
+    width: 300px;
+    border-color: rgba(135, 150, 165, 0.15);
+    border-radius: 5px;
+}
+
+.order-btn-container {
+    width: 100%;
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0px 20px;
+    cursor: pointer;
+}
+
+.order-close-btn {
+    padding: 3px 25px;
+    border: 1px solid #f4c414;
+    border-radius: 5px;
+    color: #f4c414;
+}
+
+.order-close-btn:hover {
+    background-color: #f4c414;
+    color: #000000;
+}
+
+.order-submit-btn {
+    padding: 3px 30px;
+    border: 1px solid #448bff;
+    border-radius: 5px;
+    color: #448bff;
+}
+
+.order-submit-btn:hover {
+    background-color: #448bff;
+    color: #ffffff;
+}
