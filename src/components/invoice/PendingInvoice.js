@@ -1,15 +1,45 @@
 import { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import styles from '../../style/pendingInvoice.css';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 import PayModal from '../pay/PayModal';
+import html2pdf from 'html2pdf.js';
+import InvoiceTemplate from '../pay/invoiceDesign';
 
 
 const PendingInvoice = ({invoiceList}) => {
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
+
+    const handleDownload = (invoice) => {
+        // Create a temporary container for the invoice
+        const element = document.createElement('div');
+        document.body.appendChild(element);
+
+        // Render the InvoiceTemplate with the given invoice data
+        ReactDOM.render(<InvoiceTemplate invoice={invoice} />, element);
+
+
+        // Set options for html2pdf
+        const options = {
+            margin: 0.5,
+            filename: `invoice_${invoice.invoice_number}.pdf`,
+            image: { type: 'jpeg', quality: 1.00 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        // Generate PDF
+        html2pdf().from(document.getElementById('invoice-content')).set(options).save().then(() => {
+            // Clean up the temporary container
+            ReactDOM.unmountComponentAtNode(element);
+            document.body.removeChild(element);
+        });
+    };
+
     return (
         <div className='pending-invo-container' >
             <div className='table-responsive mh-2 50'>
@@ -60,12 +90,12 @@ const PendingInvoice = ({invoiceList}) => {
                                     </div>
 
                                     <PayModal showModal={showModal} handleClose={handleCloseModal} />
-                                    <Link to='/invoice-design'>
+                                    <Link to={`/invoice-design/${invoice.order_id}`}>
                                         <div className='invoice-details-button-column'>
                                             <VisibilityOutlinedIcon className='invoice-view' />
                                         </div>
                                     </Link>
-                                    <div className='invoice-details-button-column-download'>
+                                    <div className='invoice-details-button-column-download' onClick={() => handleDownload(invoice)}>
                                         <CloudDownloadOutlinedIcon className='invoice-view' />
                                     </div>
 

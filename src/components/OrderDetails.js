@@ -25,6 +25,7 @@ const OrderDetails = () => {
             }
           })
     },[])
+    
     return (
         <div className='order-details-container'>
             <div className='order-details-conatiner-heading'>Order ID: <span>{orderDetails?.order_id}</span></div>

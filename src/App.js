@@ -78,7 +78,7 @@ function App() {
               <Route path="/ongoing-invoice" element={<OngoingInvoice />} />
               <Route path="/pending-invoice" element={<PendingInvoice />} />
               <Route path="/upload-document" element={<UploadDocument />} />
-              <Route path="/invoice-design" element={<InvoiceDesign />} />
+              <Route path="/invoice-design/:orderId" element={<InvoiceDesign />} />
               <Route path="/custom-modal" element={<CustomModal />} />
               <Route path="/invoice-card-design" element={<InvoiceCardDesign />} />
               <Route path="/product-details-card" element={<ProductDetailsCard />} />

@@ -4,18 +4,22 @@ import Tablet from '../assest/tablet.png'
 import { Link } from 'react-router-dom';
 
 const ProductDetailsCard = ({similarMedicines, onMedicineClick}) => {
+
+    // const handleMedicineClick = (medicineId) =>{
+    //     onMedicineClick(medicineId)
+    // }
     return (
         <>
             <div className='product-details-card-section-heading'>Similar products</div>
             {
                 similarMedicines?.map((medicine,i) => (
-                    <div className='product-details-card-section'>
+                    <div className='product-details-card-section' key={i}>
                     <div className='product-details-card-img-container'>
                         <div className='product-details-card-img-cont-sec'>
                             <img src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${medicine.medicine_image[0]}`}  />
                             {/* <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${firstImage}`}  alt="Medicine" />  */}
                         </div>
-                        <div className='product-details-card-image-button-cont'>
+                        <div className='product-details-card-image-button-cont' onClick={() => onMedicineClick(medicine.medicine_id)}>
                             View Details
                         </div>
                     </div>
@@ -45,9 +49,9 @@ const ProductDetailsCard = ({similarMedicines, onMedicineClick}) => {
                             <div className='product-details-card-test-text'>{medicine.gmp_approvals}</div>
                         </div>
                         {/* <Link to={`/medicine-details/${medicine.medicine_id}`}> */}
-                        <div className='product-details-inner-card-button-sec' onClick={() => onMedicineClick(medicine.medicine_id)}>
+                        {/* <div className='product-details-inner-card-button-sec' >
                             <span className='product-details-inner-view-card-details'>View Details</span>
-                        </div>
+                        </div> */}
                         {/* </Link> */}
                     </div>
                 </div>

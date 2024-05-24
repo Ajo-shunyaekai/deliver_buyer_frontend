@@ -39,7 +39,7 @@ const ProductDetails = () => {
                console.log('error in similar-medicine-list api');
             }
           })
-    },[medicineName])
+    },[medicineName,medId])
 
     const handleMedicineClick = (newMedicineId) => {
         console.log('newMedicineId',newMedicineId);

@@ -8,9 +8,16 @@
   display: flex;
   gap: 20px;
 }
+.page-break-avoid {
+  page-break-inside: avoid;
+  break-inside: avoid; /* For newer browsers */
+}
+
 @media (max-width: 768px) {
   .invopice-card-section-design {
     display: flex;
     flex-direction: column;
   }
 }
+
+

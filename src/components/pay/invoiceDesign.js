@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import InvoiceCardDesign from './InvoiceCardDesign';
 import InvoiceDesign from '../../style/invoiceDesign.css'
-function InvoiceTemplate() {
+import html2pdf from 'html2pdf.js';
+import { postRequestWithToken } from '../../api/Requests';
+import { useParams } from 'react-router-dom';
+import moment from 'moment/moment';
+
+
+function InvoiceTemplate({invoice}) {
+    const { orderId }                     = useParams()
+    const [orderDetails, setOrderDetails] = useState()
+
+    useEffect(() => {
+        const obj = {order_id: orderId}
+
+        postRequestWithToken('buyer/order/invoice-details', obj, async (response) => {
+            if (response.code === 200) {
+                setOrderDetails(response.result)
+            } else {
+               console.log('error in order details api');
+            }
+          })
+    },[])
+
+    const orderedDate = moment(orderDetails?.created_at).format("DD/MM/YYYY")
+
+    const handleDownload = () => {
+        const element = document.getElementById('invoice-content');
+        const options = {
+            margin: 0.5,
+            filename: 'invoice.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().from(element).set(options).save();
+    };
+    
+
     return (
-        <div className='invoice-template-design'>
-            <div className='scroll-wrapper'>
+        <div className='invoice-template-design '>
+            <div className='scroll-wrapper' id='invoice-content'>
                 <div className='invoice-template-download'>
-                    <div className='invoice-template-button'>Download</div>
+                    <div className='invoice-template-button' onClick={handleDownload}>Download</div>
                 </div>
                 <div style={{ maxWidth: '800px', margin: 'auto', padding: '30px', border: '1px solid #eee', fontSize: '16px', lineHeight: '24px', color: '#555', backgroundColor: '#FFFFFF' }}>
                     <div style={{ textAlign: 'center', fontWeight: '500', fontSize: '30px', margin: '0px 0px 20px 0px' }}>Invoice</div>
@@ -15,11 +52,11 @@ function InvoiceTemplate() {
                             <tr style={{ borderBottom: '1px dotted #99a0ac' }}>
                                 <td style={{ display: 'flex', justifyContent: 'end' }}>
                                     <p style={{ fontSize: '16px', fontWeight: '500' }}>Invoice Number : </p>
-                                    <p style={{ fontSize: '16px', fontWeight: '500' }}>&nbsp;1234567890123</p>
+                                    <p style={{ fontSize: '16px', fontWeight: '500' }}>&nbsp;{orderDetails?.invoice_number || invoice?.invoice_no}</p>
                                 </td>
                                 <td style={{ display: 'flex', justifyContent: 'end', paddingBottom: '10px' }}>
                                     <p style={{ fontSize: '15px', fontWeight: '500' }}>Date : </p>
-                                    <p style={{ fontSize: '15px', fontWeight: '500' }}>&nbsp;12/04/2024</p>
+                                    <p style={{ fontSize: '15px', fontWeight: '500' }}>&nbsp;{orderedDate || moment(invoice?.created_at).format("DD/MM/YYYY")}</p>
                                 </td>
                             </tr>
                         </thead>
@@ -31,8 +68,8 @@ function InvoiceTemplate() {
                                             <tr style={{ borderBottom: '1px dotted #99a0ac' }}>
                                                 <td style={{ verticalAlign: 'top', width: '60%', paddingRight: '20px', paddingBottom: '20px' }}>
                                                     <h1 style={{ fontSize: '14px', fontWeight: 500, paddingBottom: '3px' }}>From :</h1>
-                                                    <p style={{ fontSize: '16px', fontWeight: 500, paddingBottom: '6px' }}>SABC Pharma Agency</p>
-                                                    <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac' }}>Khalid Bin Al Waleed Rd-Al Raffa-Dubai</p>
+                                                    <p style={{ fontSize: '16px', fontWeight: 500, paddingBottom: '6px' }}>{orderDetails?.supplier?.supplier_name || invoice?.supplier?.supplier_name}</p>
+                                                    <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac' }}>{orderDetails?.supplier?.supplier_address || invoice?.supplier?.supplier_address}</p>
                                                     <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac', paddingTop: '6px' }}>United Arab Emirates</p>
                                                     <td style={{ display: 'flex', justifyContent: 'start' }}>
                                                         <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac', paddingTop: '6px' }}>VAT Reg No :</p>
@@ -63,24 +100,50 @@ function InvoiceTemplate() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '14px' }}>1.</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '14px' }}>Paracetamol (500mg)</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>50</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>50 AED</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>5000 AED </p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
+                                                            
+                                                            {
+                                                                (orderDetails && orderDetails?.items && orderDetails?.items?.length) ?
+                                                                orderDetails?.items?.map((item, i) => (
+                                                                    <tr key={i}>
+                                                                    <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '14px' }}>{i + 1}.</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '14px' }}>{item.product_name} (500mg)</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>{item.quantity}</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>50 AED</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>5000 AED</p>
+                                                                    </td>
+                                                                    </tr>
+                                                                )) :
+                                                                invoice?.items?.map((item, i) => (
+                                                                    <tr key={i}>
+                                                                    <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '14px' }}>{i + 1}.</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '14px' }}>{item.product_name} (500mg)</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>{item.quantity}</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>50 AED</p>
+                                                                    </td>
+                                                                    <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>5000 AED</p>
+                                                                    </td>
+                                                                    </tr>
+                                                                ))
+                                                            }
+                                                            
+                                                            {/* <tr>
                                                                 <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
                                                                     <p style={{ fontWeight: 500, fontSize: '14px' }}>2.</p>
                                                                 </td>
@@ -96,7 +159,7 @@ function InvoiceTemplate() {
                                                                 <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
                                                                     <p style={{ fontWeight: 500, fontSize: '13px' }}>6000 AED</p>
                                                                 </td>
-                                                            </tr>
+                                                            </tr> */}
                                                         </tbody>
                                                     </table>
                                                     <table>
