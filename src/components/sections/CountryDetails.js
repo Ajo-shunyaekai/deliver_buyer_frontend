@@ -37,7 +37,6 @@ const CountryDetails = ({ countryData }) => {
 //         </ >
 //     );
 // }
-console.log('countryData', countryData);
 
     // State to store the fetched country data
     const [countries, setCountries] = useState([]);

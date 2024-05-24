@@ -5,21 +5,49 @@ import CountryDetails from '../components/sections/CountryDetails';
 import ProductDetailsCard from './ProductDetailsCard';
 import { useParams } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
-const ProductDetails = () => {
 
+
+const ProductDetails = () => {
     const { medicineId }        = useParams()
     const [details, setDetails] = useState()
+    const [medId, setMedId]     = useState(medicineId)
+    const [medicineName, setMedicineName] = useState()
+    const [similarMedicinesList, setSimilarMedicinesList] = useState([])
 
     useEffect(() => {
-        const obj = {medicine_id: medicineId}
+        const obj = {medicine_id: medId}
         postRequestWithToken('buyer/medicine/medicine-details', obj, async (response) => {
             if (response.code === 200) {
                 setDetails(response.result)
+                setMedicineName(response.result[0]?.medicine_name)
+
             } else {
                console.log('error in med details api');
             }
           })
-    },[])
+    },[medId])
+
+    useEffect(() => {
+        const obj = {
+            medicine_id   : medicineId, 
+            medicine_name : medicineName
+        }
+        postRequestWithToken('buyer/medicine/similar-medicine-list', obj, async (response) => {
+            if (response.code === 200) {
+                setSimilarMedicinesList(response.result)
+            } else {
+               console.log('error in similar-medicine-list api');
+            }
+          })
+    },[medicineName])
+
+    const handleMedicineClick = (newMedicineId) => {
+        console.log('newMedicineId',newMedicineId);
+        // history.push(`/medicine-details/${newMedicineId}`);
+        setMedId(newMedicineId)
+      };
+
+    //   console.log('medID',medId);
 
     return (
         <>
@@ -206,7 +234,7 @@ const ProductDetails = () => {
                         </div>
                         {/* start the ecommerce card */}
                         <div className='product-details-card-container'>
-                            <ProductDetailsCard />
+                            <ProductDetailsCard similarMedicines = {similarMedicinesList} onMedicineClick={handleMedicineClick}/>
                         </div>
                         {/* end the ecommerce card */}
                     </div>

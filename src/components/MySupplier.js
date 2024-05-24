@@ -38,7 +38,7 @@ const MySuplier = () => {
                         <div className='mysupplier-card-first-uppar-section'>
                             <div className='mysupplier-card-content-section'>
                                 <div className='mysupplier-name-head'>{supplier.supplier_name}</div>
-                                <div className='mysupplier-description'>When looking at its layout.</div>
+                                <div className='mysupplier-description'>License No: {supplier.license_no}</div>
                             </div>
                             <div className='mysupplier-image-section'>
                                 {/* <img src={card1} /> */}

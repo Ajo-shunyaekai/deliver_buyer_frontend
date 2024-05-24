@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const SupplierDetails = () => {
-    const {supplierId} = useParams()
+    const { supplierId } = useParams()
     const [supplier, setSupplier] = useState()
 
     useEffect(() => {
