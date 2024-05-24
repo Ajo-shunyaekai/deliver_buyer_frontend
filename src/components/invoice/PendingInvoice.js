@@ -14,14 +14,13 @@ const PendingInvoice = ({invoiceList}) => {
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
+    //invoice download
     const handleDownload = (invoice) => {
-        // Create a temporary container for the invoice
         const element = document.createElement('div');
         document.body.appendChild(element);
 
         // Render the InvoiceTemplate with the given invoice data
         ReactDOM.render(<InvoiceTemplate invoice={invoice} />, element);
-
 
         // Set options for html2pdf
         const options = {

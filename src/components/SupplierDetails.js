@@ -8,7 +8,10 @@ import { postRequestWithToken } from '../api/Requests';
 
 const SupplierDetails = () => {
     const { supplierId } = useParams()
-    const [supplier, setSupplier] = useState()
+
+    const [supplier, setSupplier]                     = useState()
+    const [buyerSupplierOrder, setBuyerSupplierOrder] = useState()
+    // const [orderCount, setOrderCount]                 = useState()
 
     useEffect(() => {
         const obj = {supplier_id: supplierId}
@@ -16,10 +19,33 @@ const SupplierDetails = () => {
             if (response.code === 200) {
                 setSupplier(response.result)
             } else {
-               console.log();
+               console.log('error in supplier-details api');
             }
           })
     },[])
+
+    useEffect(() => {
+        const fetchBuyerSupplierOrder = () => {
+            const obj = {
+                buyer_id    : 'BUY-jmn98sdanx',
+                supplier_id : supplierId
+            }
+    
+            postRequestWithToken('buyer/buyer-supplier-orders', obj, async(response) => {
+                if(response.code === 200) {
+                    // setOrderCount(response.result)
+                    setBuyerSupplierOrder(response.result)
+                } else {
+                    console.log('error in buyer-supplier-orders api');
+                }
+            })
+        }
+
+        fetchBuyerSupplierOrder()
+    },[])
+
+    console.log('buyerSupplierOrder',buyerSupplierOrder);
+    // console.log('orderCount',orderCount);
 
 
     return (
@@ -89,21 +115,21 @@ const SupplierDetails = () => {
                                 <div className='supplier-details-card-container'>
                                     <div className='supplier-details-card-container-contents'>
                                         <div className='supplier-details-card-conteianer-head'>Completed Orders</div>
-                                        <div className='supplier-details-card-conteianer-text'>45</div>
+                                        <div className='supplier-details-card-conteianer-text'>{buyerSupplierOrder?.completedCount || 20}</div>
                                     </div>
 
                                 </div>
                                 <div className='supplier-details-card-container'>
                                     <div className='supplier-details-card-container-contents'>
                                         <div className='supplier-details-card-conteianer-head'>Active Orders</div>
-                                        <div className='supplier-details-card-conteianer-text'>45</div>
+                                        <div className='supplier-details-card-conteianer-text'>{buyerSupplierOrder?.activeCount || 10}</div>
                                     </div>
 
                                 </div>
                                 <div className='supplier-details-card-container'>
                                     <div className='supplier-details-card-container-contents'>
                                         <div className='supplier-details-card-conteianer-head'>Pending Orders</div>
-                                        <div className='supplier-details-card-conteianer-text'>45</div>
+                                        <div className='supplier-details-card-conteianer-text'>{buyerSupplierOrder?.pendingCount || 25}</div>
                                     </div>
                                 </div>
                             </div>

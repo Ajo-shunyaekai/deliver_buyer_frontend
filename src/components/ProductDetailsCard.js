@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 
 const ProductDetailsCard = ({similarMedicines, onMedicineClick}) => {
 
-    // const handleMedicineClick = (medicineId) =>{
-    //     onMedicineClick(medicineId)
-    // }
     return (
         <>
             <div className='product-details-card-section-heading'>Similar products</div>
@@ -17,9 +14,8 @@ const ProductDetailsCard = ({similarMedicines, onMedicineClick}) => {
                     <div className='product-details-card-img-container'>
                         <div className='product-details-card-img-cont-sec'>
                             <img src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${medicine.medicine_image[0]}`}  />
-                            {/* <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${firstImage}`}  alt="Medicine" />  */}
                         </div>
-                        <div className='product-details-card-image-button-cont' onClick={() => onMedicineClick(medicine.medicine_id)}>
+                        <div className='product-details-card-image-button-cont' onClick={() => onMedicineClick(medicine.medicine_id,medicine.medicine_name)}>
                             View Details
                         </div>
                     </div>

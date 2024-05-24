@@ -49,7 +49,7 @@ const SupplyOrderList = () => {
                             </td>
                             <td className='supply-button-td'>
                                 <div className="table-supply-section-content">
-                                    <Link to='/order-details'>
+                                    <Link to='/order-details/4234'>
                                         <div className='table-supply-section-view'>
                                             <RemoveRedEyeOutlinedIcon className='table-supply-section-eye' />
                                         </div>
@@ -80,7 +80,7 @@ const SupplyOrderList = () => {
                             </td>
                             <td className='supply-button-td'>
                                 <div className="table-supply-section-content">
-                                    <Link to='/order-details'>
+                                    <Link to='/order-details/345345'>
                                         <div className='table-supply-section-view'>
                                             <RemoveRedEyeOutlinedIcon className='table-supply-section-eye' />
                                         </div>
@@ -111,7 +111,7 @@ const SupplyOrderList = () => {
                             </td>
                             <td className='supply-button-td'>
                                 <div className="table-supply-section-content">
-                                    <Link to='/order-details'>
+                                    <Link to='/order-details/23424'>
                                         <div className='table-supply-section-view'>
                                             <RemoveRedEyeOutlinedIcon className='table-supply-section-eye' />
                                         </div>
@@ -142,7 +142,7 @@ const SupplyOrderList = () => {
                             </td>
                             <td className='supply-button-td'>
                                 <div className="table-supply-section-content">
-                                    <Link to='/order-details'>
+                                    <Link to='/order-details/234324'>
                                         <div className='table-supply-section-view'>
                                             <RemoveRedEyeOutlinedIcon className='table-supply-section-eye' />
                                         </div>

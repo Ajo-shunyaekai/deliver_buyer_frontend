@@ -3,12 +3,13 @@ import InvoiceCardDesign from './InvoiceCardDesign';
 import InvoiceDesign from '../../style/invoiceDesign.css'
 import html2pdf from 'html2pdf.js';
 import { postRequestWithToken } from '../../api/Requests';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import moment from 'moment/moment';
 
 
 function InvoiceTemplate({invoice}) {
     const { orderId }                     = useParams()
+    // const navigate = useNavigate()
     const [orderDetails, setOrderDetails] = useState()
 
     useEffect(() => {
@@ -35,16 +36,20 @@ function InvoiceTemplate({invoice}) {
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-        html2pdf().from(element).set(options).save();
+        html2pdf().from(element).set(options).save()
+        
     };
     
+    let subtotal  = 0;
+    let vatAmount = 0
 
     return (
         <div className='invoice-template-design '>
-            <div className='scroll-wrapper' id='invoice-content'>
+            <div className='scroll-wrapper'>
                 <div className='invoice-template-download'>
                     <div className='invoice-template-button' onClick={handleDownload}>Download</div>
                 </div>
+                <div id='invoice-content'>
                 <div style={{ maxWidth: '800px', margin: 'auto', padding: '30px', border: '1px solid #eee', fontSize: '16px', lineHeight: '24px', color: '#555', backgroundColor: '#FFFFFF' }}>
                     <div style={{ textAlign: 'center', fontWeight: '500', fontSize: '30px', margin: '0px 0px 20px 0px' }}>Invoice</div>
                     <table style={{ fontSize: '12px' }}>
@@ -78,8 +83,8 @@ function InvoiceTemplate({invoice}) {
                                                 </td>
                                                 <td style={{ verticalAlign: 'top', width: '40%', paddingBottom: '20px' }}>
                                                     <h1 style={{ fontSize: '14px', fontWeight: 500, paddingBottom: '3px', textAlign: 'end' }}>To :</h1>
-                                                    <p style={{ fontSize: '16px', fontWeight: 500, paddingBottom: '6px', textAlign: 'end' }}>Sheetal Medical Store</p>
-                                                    <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac', lineHeight: '16px', textAlign: 'end' }}>House No. 12 City Place Dubai</p>
+                                                    <p style={{ fontSize: '16px', fontWeight: 500, paddingBottom: '6px', textAlign: 'end' }}>{orderDetails?.buyer_company || invoice?.buyer_company}</p>
+                                                    <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac', lineHeight: '16px', textAlign: 'end' }}>{orderDetails?.shipping_details?.address || invoice?.shipping_details?.address}</p>
                                                     <p style={{ fontSize: '13px', color: '#99a0ac', lineHeight: '16px', textAlign: 'end', paddingTop: '6px' }}>Dubai (United Arab Emirates)</p>
                                                     <td style={{ display: 'flex', justifyContent: 'end' }}>
                                                         <p style={{ fontSize: '13px', lineHeight: '16px', color: '#99a0ac', paddingTop: '6px' }}>VAT Reg No :</p>
@@ -103,7 +108,11 @@ function InvoiceTemplate({invoice}) {
                                                             
                                                             {
                                                                 (orderDetails && orderDetails?.items && orderDetails?.items?.length) ?
-                                                                orderDetails?.items?.map((item, i) => (
+                                                                  orderDetails?.items?.map((item, i) => {
+                                                                    const totalPrice = item.quantity * 50; 
+                                                                    subtotal += totalPrice;
+                                                                    vatAmount = subtotal * 0.20
+                                                                    return (
                                                                     <tr key={i}>
                                                                     <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
                                                                         <p style={{ fontWeight: 500, fontSize: '14px' }}>{i + 1}.</p>
@@ -118,11 +127,17 @@ function InvoiceTemplate({invoice}) {
                                                                         <p style={{ fontWeight: 500, fontSize: '13px' }}>50 AED</p>
                                                                     </td>
                                                                     <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>5000 AED</p>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>{item.quantity * 50} AED</p>
                                                                     </td>
                                                                     </tr>
-                                                                )) :
-                                                                invoice?.items?.map((item, i) => (
+                                                                     );
+                                                                    })
+                                                                 :
+                                                                invoice?.items?.map((item, i) => {
+                                                                    const totalPrice = item.quantity * 50; 
+                                                                    subtotal += totalPrice;
+                                                                    vatAmount = subtotal * 0.20
+                                                                    return (
                                                                     <tr key={i}>
                                                                     <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
                                                                         <p style={{ fontWeight: 500, fontSize: '14px' }}>{i + 1}.</p>
@@ -137,29 +152,13 @@ function InvoiceTemplate({invoice}) {
                                                                         <p style={{ fontWeight: 500, fontSize: '13px' }}>50 AED</p>
                                                                     </td>
                                                                     <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>5000 AED</p>
+                                                                        <p style={{ fontWeight: 500, fontSize: '13px' }}>{item.quantity * 50} AED</p>
                                                                     </td>
                                                                     </tr>
-                                                                ))
+                                                                    );
+                                                                })
                                                             }
                                                             
-                                                            {/* <tr>
-                                                                <td style={{ paddingBlock: '12px', display: 'flex', alignItems: 'baseline' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '14px' }}>2.</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '14px' }}>Migon (650mg)</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>100</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>60 AED</p>
-                                                                </td>
-                                                                <td style={{ paddingBlock: '12px', textAlign: 'end' }}>
-                                                                    <p style={{ fontWeight: 500, fontSize: '13px' }}>6000 AED</p>
-                                                                </td>
-                                                            </tr> */}
                                                         </tbody>
                                                     </table>
                                                     <table>
@@ -181,15 +180,15 @@ function InvoiceTemplate({invoice}) {
                                                                         <tbody>
                                                                             <tr style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', columnGap: '10px', marginTop: '8px' }}>
                                                                                 <p style={{ textAlign: 'end', fontSize: '14px', fontWeight: '500' }}>Subtotal :</p>
-                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', width: '100px' }}>200 AED</p>
+                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', width: '100px' }}>{subtotal} AED</p>
                                                                             </tr>
                                                                             <tr style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', columnGap: '10px', paddingTop: '8px' }}>
                                                                                 <p style={{ textAlign: 'end', fontSize: '14px', fontWeight: '500' }}>VAT @ 20% :</p>
-                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', width: '100px' }}>4400 AED</p>
+                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', width: '100px' }}>{vatAmount} AED</p>
                                                                             </tr>
                                                                             <tr style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', columnGap: '10px', paddingTop: '6px' }}>
                                                                                 <p style={{ textAlign: 'end', fontSize: '14px', fontWeight: '500', paddingBottom: '10px' }}>Total Amount Payable   :</p>
-                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', paddingBottom: '10px', width: '100px' }}>1425500 AED</p>
+                                                                                <p style={{ textAlign: 'end', fontWeight: '500', fontSize: '14px', paddingBottom: '10px', width: '100px' }}>{subtotal + vatAmount} AED</p>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -234,6 +233,7 @@ function InvoiceTemplate({invoice}) {
                 </div>
                 <div className='invopice-card-section-design'>
                     <InvoiceCardDesign />
+                </div>
                 </div>
             </div >
         </div >
