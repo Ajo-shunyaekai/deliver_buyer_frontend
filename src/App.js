@@ -36,19 +36,24 @@ import InvoiceDesign from './components/pay/invoiceDesign.js';
 import CustomModal from './components/pay/CustomModal.js';
 import InvoiceCardDesign from './components/pay/InvoiceCardDesign.js'
 import ProductDetailsCard from './components/ProductDetailsCard.js';
+
+
 function App() {
-
-
   const [open, setOpen] = useState(true)
 
   const dragWindow = () => {
     setOpen(!open)
   }
 
+  function ScrollToTop() {
+    useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
+  }
+
   return (
     <>
       <div className='App'>
-
         <Router>
           <Sidebar>
             <Routes>

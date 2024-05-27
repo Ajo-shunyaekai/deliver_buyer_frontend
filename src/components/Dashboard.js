@@ -16,15 +16,47 @@ import MonthlyBar from './chart/MonthlyBar';
 import ConversionChart from '../components/chart/ConversionChart';
 import SearchEngineChart from './chart/SearchEngineChart'
 import DirectlyChart from './chart/DirectlyChart'
+import { postRequestWithToken } from '../api/Requests';
+
+
 const Dashboard = () => {
 
-    const [countryData, setCountryData] = useState([]);
+    const [countryData, setCountryData]   = useState([]);
     const [activeButton, setActiveButton] = useState('1h');
+    const [orderSummary, setOrderSummary] = useState()
+
     const handleButtonClick = (value) => {
         setActiveButton(value);
     };
-    return (
 
+    useEffect(() => {
+        const obj = {
+            buyer_id  : "BUY-jmn98sdanx",
+        }
+
+        postRequestWithToken('buyer/orders-seller-country', obj, async (response) => {
+            if (response.code === 200) {
+                setCountryData(response?.result)
+            } else {
+               console.log('error in orders-seller-country api',response);
+            }
+        })
+    },[])
+
+    useEffect(() => {
+        const obj = {
+            buyer_id  : "BUY-jmn98sdanx",
+        }
+        postRequestWithToken('buyer/orders-summary-details', obj, async (response) => {
+            if (response.code === 200) {
+                setOrderSummary(response?.result)
+            } else {
+               console.log('error in orders-summary-details api',response);
+            }
+        })
+    },[])
+    
+    return (
         <>
             <div className='dashboard-section'>
                 <div className='dashboard-heading'>Dashboard</div>
@@ -40,19 +72,19 @@ const Dashboard = () => {
                                     <Link to='/completed-orders'>
                                         <div className='top-content-section'>
                                             <div className='top-head'>Completed Orders</div>
-                                            <div className='top-text'>20</div>
+                                            <div className='top-text'>{orderSummary?.completedCount[0]?.count || 10}</div>
                                         </div>
                                     </Link>
                                     <Link to='/ongoing-orders'>
                                         <div className='top-content-section'>
                                             <div className='top-head'>Ongoing Orders</div>
-                                            <div className='top-text'>50</div>
+                                            <div className='top-text'>{orderSummary?.activeCount[0]?.count || 20}</div>
                                         </div>
                                     </Link>
                                     <Link to='/pending-orders'>
                                         <div className='top-content-section'>
                                             <div className='top-head'>Pending Orders</div>
-                                            <div className='top-text'>100</div>
+                                            <div className='top-text'>{orderSummary?.pendingCount[0]?.count || 30}</div>
                                         </div>
                                     </Link>
                                 </div>
@@ -74,7 +106,7 @@ const Dashboard = () => {
                             <div className='cart-top-left-section'>
                                 <div className='left-head'>Total Purchase</div>
                                 <div className='circular-process'>
-                                    <CircularBar />
+                                    <CircularBar totalPurchase = {orderSummary?.totalPurchaseAmount[0]?.total_purchase}/>
                                 </div>
                             </div>
                         </div>

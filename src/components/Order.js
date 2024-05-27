@@ -18,7 +18,7 @@ const Order = () => {
     const [orderList, setOrderList]     = useState([])
     const [totalOrders, setTotalOrders] = useState()
     const [currentPage, setCurrentPage] = useState(1); 
-    const ordersPerPage = 1;
+    const ordersPerPage = 2;
 
     const handleLinkClick = (link) => {
         setActiveLink(link);

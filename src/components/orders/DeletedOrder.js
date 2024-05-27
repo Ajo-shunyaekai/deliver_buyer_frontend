@@ -136,8 +136,7 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                                         <th className="order-container-th"><div className="order-container-head">Action</div></th>
                                     </tr>
                                 </thead>
-                                <tbody className='order-container-tbody'>
-                                    {
+                                     {  
                                         orderList?.map((order,i) => {
 
                                             const totalQuantity = order.items.reduce((total, item) => {
@@ -145,8 +144,9 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                                               }, 0);
 
                                               const orderedDate = moment(order.created_at).format("DD/MM/YYYY")
-
-                                            return (
+                                            return (   
+                                            <tbody className='order-container-tbody'>
+                                                
                                                 <tr className="order-section-tr">
                                                 <td className='order-section-td'>
                                                     <div className="order-section-heading">{order.order_id}</div>
@@ -176,13 +176,12 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                                                         </div>
                                                     </div>
                                                 </td>
-                                            </tr>
-                                            )
-                                        })
-                                    }
-                                   
-                                </tbody>
-
+                                                </tr>
+                                                    
+                                            </tbody>
+                                           )
+                                       })
+                                    }   
                                 {/* <tbody className='order-container-tbody'>
                                     <tr className="order-section-tr">
                                         <td className='order-section-td'>

@@ -9,7 +9,6 @@ import moment from 'moment/moment';
 
 function InvoiceTemplate({invoice}) {
     const { orderId }                     = useParams()
-    // const navigate = useNavigate()
     const [orderDetails, setOrderDetails] = useState()
 
     useEffect(() => {

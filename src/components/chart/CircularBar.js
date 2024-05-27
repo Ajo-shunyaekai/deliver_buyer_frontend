@@ -5,7 +5,7 @@ import Dashboard from '../../style/dashboard.css';
 
 const initialPercentage = 55;
 
-function CircularBar() {
+function CircularBar({ totalPurchase }) {
     const [percentage, setPercentage] = useState(initialPercentage);
 
     return (
@@ -13,7 +13,7 @@ function CircularBar() {
             <div className='circular-bar-container'>
                 <CircularProgressbar
                     value={percentage}
-                    text={`39,500`}
+                    text={totalPurchase}
                     strokeWidth={5}
                     styles={{
                         path: {

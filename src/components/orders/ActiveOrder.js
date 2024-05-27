@@ -236,7 +236,7 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                         </div>
                         {/* End the table section code */}
                         {
-                            modal === true ? <OrderCancel setModal={setModal} /> : ''
+                            modal === true ? <OrderCancel setModal={setModal} orderId = {selectedOrderId}  activeLink = { activeLink}/> : ''
                         }
                         <div className='pagi-container'>
                             <Pagination

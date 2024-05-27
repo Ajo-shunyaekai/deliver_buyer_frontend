@@ -135,7 +135,7 @@ const SupplierDetails = () => {
                             </div>
                         </div>
                         <div className='supplier-details-bottom-table-section'>
-                            <SupplyOrderList />
+                            <SupplyOrderList orderList = {buyerSupplierOrder?.orderList}/>
                         </div>
                     </div>
                 </div>

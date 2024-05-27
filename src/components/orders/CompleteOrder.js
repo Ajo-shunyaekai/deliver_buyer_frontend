@@ -16,12 +16,12 @@ import moment from 'moment/moment';
 
 
 const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handlePageChange, activeLink}) => {
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal]                     = useState(false)
     const [selectedOrderId, setSelectedOrderId] = useState()
 
     const showModal = (orderId) => {
@@ -29,96 +29,6 @@ const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, hand
         setModal(!modal)
     }
 
-
-    // Alloted Order JSOn file
-    const [activeOrders, setActiveOrders] = useState([
-        {
-            "order_id": "3654646",
-            "date": {
-                "date": "12/12/2019",
-                // "time": "10:00 am"
-            },
-            "source_destination": {
-                // "source": "Abu Dhabi - United Arab Emirates",
-                "destination": "Pharmaceuticals Pvt. Ltd"
-            },
-            "number_of_TRWB": 4,
-            "commodity": {
-                "name": "Steel",
-                "quantity": "(20 Ton)"
-            },
-            "status": "Delivered"
-        },
-        {
-            "order_id": "000002",
-            "date": {
-                "date": "12/12/2019",
-                // "time": "10:00 am"
-            },
-            "source_destination": {
-                // "source": "Abu Dhabi - United Arab Emirates",
-                "destination": "Pharmaceuticals Pvt. Ltd"
-            },
-            "number_of_TRWB": 4,
-            "commodity": {
-                "name": "Steel",
-                "quantity": "(20 Ton)"
-            },
-            "status": "Delivered"
-        },
-        {
-            "order_id": "000003",
-            "date": {
-                "date": "12/12/2019",
-                // "time": "10:00 am"
-            },
-            "source_destination": {
-                // "source": "Abu Dhabi - United Arab Emirates",
-                "destination": "Pharmaceuticals Pvt. Ltd"
-            },
-            "number_of_TRWB": 4,
-            "commodity": {
-                "name": "Steel",
-                "quantity": "(20 Ton)"
-            },
-            "status": "Delivered"
-        },
-        {
-            "order_id": "000004",
-            "date": {
-                "date": "12/12/2019",
-                // "time": "10:00 am"
-            },
-            "source_destination": {
-                // "source": "Abu Dhabi - United Arab Emirates",
-                "destination": "Pharmaceuticals Pvt. Ltd"
-            },
-            "number_of_TRWB": 4,
-            "commodity": {
-                "name": "Steel",
-                "quantity": "(20 Ton)"
-            },
-            "status": "Delivered"
-        },
-    ]);
-
-
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const ordersPerPage = 2; 
-    // Logic to calculate pagination indexes
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-
-    // Handle page change
-    // const handlePageChange = (pageNumber) => {
-    //     setCurrentPage(pageNumber);
-    // };
-
-    // Calculate total pages
-    const totalPages = Math.ceil(activeOrders.length / ordersPerPage);
-
-    // pagination end
     return (
         <>
             <div className='order-main-container'>
@@ -140,7 +50,6 @@ const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, hand
                                         <th className="order-container-th"><div className="order-container-head">Action</div></th>
                                     </tr>
                                 </thead>
-                                <tbody className='order-container-tbody'>
                                 {
                                     orderList?.map((order,i) => {
                                         const totalQuantity = order.items.reduce((total, item) => {
@@ -148,43 +57,42 @@ const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, hand
                                           }, 0);
                                           const orderedDate = moment(order.created_at).format("DD/MM/YYYY")
                                         return (
-                                            <tr className="order-section-tr">
-                                                <td className='order-section-td'>
-                                                    <div className="order-section-heading">{order.order_id}</div>
-                                                </td>
-                                                <td className='order-section-td'>
-                                                    <div className="order-section-heading">{orderedDate}</div>
-                                                </td>
-                                                <td className='order-section-tds'>
-                                                    <div className="order-section-heading">{order.supplier?.supplier_name}</div>
-                                                </td>
-                                                <td className='order-section-td'>
-                                                    <div className="order-section-heading">{totalQuantity}</div>
-                                                </td>
-                                                <td className='order-section-td'>
-                                                    <div className="order-section-heading">{order.order_status === 'completed' ? 'Delivered': ''}</div>
-                                                </td>
-                                                <td className='order-section-button-cont'>
-                                                    <div className='order-section-button'>
-                                                        <Link to={`/order-details/${order.order_id}`}>
-                                                            <div className='order-section-view'>
-                                                                <RemoveRedEyeOutlinedIcon className='order-section-eye' />
+                                                <tbody className='order-container-tbody'>
+                                                    <tr className="order-section-tr">
+                                                        <td className='order-section-td'>
+                                                            <div className="order-section-heading">{order.order_id}</div>
+                                                        </td>
+                                                        <td className='order-section-td'>
+                                                            <div className="order-section-heading">{orderedDate}</div>
+                                                        </td>
+                                                        <td className='order-section-tds'>
+                                                            <div className="order-section-heading">{order.supplier?.supplier_name}</div>
+                                                        </td>
+                                                        <td className='order-section-td'>
+                                                            <div className="order-section-heading">{totalQuantity}</div>
+                                                        </td>
+                                                        <td className='order-section-td'>
+                                                            <div className="order-section-heading">{order.order_status === 'completed' ? 'Delivered': ''}</div>
+                                                        </td>
+                                                        <td className='order-section-button-cont'>
+                                                            <div className='order-section-button'>
+                                                                <Link to={`/order-details/${order.order_id}`}>
+                                                                    <div className='order-section-view'>
+                                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
+                                                                    </div>
+                                                                </Link>
+
+                                                                <div className='order-section-delete' onClick={() => showModal(order.order_id)}>
+                                                                    <HighlightOffIcon className='order-section-off' />
+                                                                </div>
                                                             </div>
-                                                        </Link>
-
-                                                        <div className='order-section-delete' onClick={() => showModal(order.order_id)}>
-                                                            <HighlightOffIcon className='order-section-off' />
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        })
                                 }
-                                    
-                                </tbody>
-
-                                {/* <tbody className='order-container-tbody'>
+                                            {/* <tbody className='order-container-tbody'>
                                     <tr className="order-section-tr">
                                         <td className='order-section-td'>
                                             <div className="order-section-heading">18452025</div>
@@ -251,7 +159,7 @@ const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, hand
                         </div>
                         {/* End the table section code */}
                         {
-                            modal === true ? <OrderCancel setModal={setModal} orderId={selectedOrderId} activeLink ={activeLink}/> : ''
+                            modal === true ? <OrderCancel setModal={setModal} orderId = {selectedOrderId}  activeLink = { activeLink}/> : ''
                         }
                         <div className='pagi-container'>
                             <Pagination

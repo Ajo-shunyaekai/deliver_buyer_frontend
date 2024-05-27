@@ -4,18 +4,44 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import orderCancel from '../../style/orderCancel.css';
 import CloseIcon from '@mui/icons-material/Close';
+import { postRequestWithToken } from '../../api/Requests';
 
-const OrderCancel = ({ setModal }) => {
+const OrderCancel = ({ setModal, orderId,  activeLink  }) => {
     console.log('caa');
     const [open, setOpen] = useState(true);
+    const [reason, setReason] = useState('');
+    const [error, setError] = useState('');
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
         setModal(false)
     };
 
+    const handleReasonChange = (e) => {
+        setReason(e.target.value);
+    };
+
     const handleCancel = () => {
-        // window.alert('submitted')
+        if (reason.trim() === '') {
+            setError('Reason is required');
+            return;
+        }
+        setError('');
+
+        const obj = {
+            buyer_id   : "BUY-jmn98sdanx",
+            order_id   : orderId,
+            order_type : activeLink,
+            reason     : reason
+        }
+
+        // postRequestWithToken('buyer/order/cancel-order', obj, async (response) => {
+        //     if (response.code === 200) {
+
+        //     } else {
+        //        console.log('error in order cancel api',response);
+        //     }
+        //   })
         setModal(false)
     }
 
@@ -24,7 +50,7 @@ const OrderCancel = ({ setModal }) => {
         <Box sx={{ width: 350 }} role="presentation" >
             <div className="order-cancel-container">
                 <div className="order-cancel-header">
-                    <div className="order-cancel-heading">Order ID : 22585
+                    <div className="order-cancel-heading">Order ID : {orderId}
                     </div>
                     <CloseIcon onClick={toggleDrawer(false)} style={{ fontSize: '20px', color: '#5e676f' }} />
                 </div>
@@ -35,7 +61,14 @@ const OrderCancel = ({ setModal }) => {
 
                 <div className="order-textarea-heading">
                     <span>Reason</span>
-                    <textarea name="" id="" rows="2" className=" order-textarea" />
+                    <textarea 
+                    name="" 
+                    id="" rows="2" 
+                    className=" order-textarea" 
+                    value={reason}
+                    onChange={handleReasonChange}
+                    />
+                    {error && <div className="error-message" style={{color:'red'}}>{error}</div>}
                 </div>
 
                 <div className="order-btn-container">
