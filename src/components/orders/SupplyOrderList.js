@@ -6,7 +6,7 @@ import moment from 'moment/moment';
 
 
 const SupplyOrderList = ({orderList}) => {
-    console.log('orderList',orderList);
+
     return (
         <div className="supply-card-body">
             <div>
