@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import order from '../style/order.css';
 import order_list from '../assest/dashboard/order_list.svg'
 import OrderCancel from '../components/orders/OrderCancel';
@@ -12,8 +12,8 @@ import { postRequestWithToken } from '../api/Requests';
 
 
 const Order = () => {
+     const navigate = useNavigate()
 
-    // Active class apply
     const [activeLink, setActiveLink]   = useState('active'); 
     const [orderList, setOrderList]     = useState([])
     const [totalOrders, setTotalOrders] = useState()
@@ -52,8 +52,15 @@ const Order = () => {
     };
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+    if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+      navigate("/login");
+      return;
+    }
         const obj = {
-            buyer_id  : "BUY-jmn98sdanx",
+            buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage,
             filterKey : activeLink,
             page_no   : currentPage, 
             limit     : ordersPerPage,

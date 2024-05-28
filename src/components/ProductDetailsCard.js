@@ -13,7 +13,7 @@ const ProductDetailsCard = ({similarMedicines, onMedicineClick}) => {
                     <div className='product-details-card-section' key={i}>
                     <div className='product-details-card-img-container'>
                         <div className='product-details-card-img-cont-sec'>
-                            <img src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${medicine.medicine_image[0]}`}  />
+                            <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${medicine.medicine_image[0]}`}  />
                         </div>
                         <div className='product-details-card-image-button-cont' onClick={() => onMedicineClick(medicine.medicine_id,medicine.medicine_name)}>
                             View Details

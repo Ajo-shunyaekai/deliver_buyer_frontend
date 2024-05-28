@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DashboardOrders from '../../style/dashboardorders.css';
 import Table from 'react-bootstrap/Table';
 import Pagination from "react-js-pagination";
@@ -13,6 +13,7 @@ import moment from 'moment/moment';
 
 
 const PendingOrders = () => {
+    const navigate = useNavigate()
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -93,19 +94,29 @@ const PendingOrders = () => {
     ]);
 
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const ordersPerPage = 2;
-    const indexOfLastOrder = currentPage * ordersPerPage;
+    const [currentPage, setCurrentPage]     = useState(1);
+    const [ordersPerPage, setOrdersPerPage] = useState(2)
+    // const ordersPerPage = 2;
+    const indexOfLastOrder  = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentOrders     = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
     const totalPages = Math.ceil(activeOrders.length / ordersPerPage);
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const obj = {
-            buyer_id  : "BUY-jmn98sdanx",
+            buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage ,
             filterKey : 'pending',
             page_no   : currentPage, 
             limit     : ordersPerPage,

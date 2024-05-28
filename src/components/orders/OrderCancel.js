@@ -5,12 +5,14 @@ import Button from '@mui/material/Button';
 import orderCancel from '../../style/orderCancel.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { postRequestWithToken } from '../../api/Requests';
+import { useNavigate } from 'react-router-dom';
 
 const OrderCancel = ({ setModal, orderId,  activeLink  }) => {
-    console.log('caa');
-    const [open, setOpen] = useState(true);
+    const navigate = useNavigate()
+
+    const [open, setOpen]     = useState(true);
     const [reason, setReason] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError]   = useState('');
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -22,14 +24,22 @@ const OrderCancel = ({ setModal, orderId,  activeLink  }) => {
     };
 
     const handleCancel = () => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+    if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+      navigate("/login");
+      return;
+    }
         if (reason.trim() === '') {
             setError('Reason is required');
             return;
         }
         setError('');
 
+
         const obj = {
-            buyer_id   : "BUY-jmn98sdanx",
+            buyer_id   : buyerIdLocalStorage || buyerIdSessionStorage,
             order_id   : orderId,
             order_type : activeLink,
             reason     : reason

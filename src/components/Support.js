@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import styles from '../style/support.module.css';
 import FaqSupport from './sections/FaqSupport';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const Support = () => {
-    const [feedbackVisible, setFeedbackVisible] = useState(true); // Set feedbackVisible to true by default
+
+    const navigate = useNavigate()
+
+    const [feedbackVisible, setFeedbackVisible]   = useState(true);
     const [complaintVisible, setComplaintVisible] = useState(false);
-    const [activeButton, setActiveButton] = useState('feedback'); // Set activeButton to 'feedback' by default
+    const [activeButton, setActiveButton]         = useState('feedback'); 
 
     const [isTypingOrderId, setIsTypingOrderId]          = useState(false); 
     const [isTypingComplaint, setIsTypingComplaint]      = useState(false); 
@@ -94,8 +97,16 @@ const Support = () => {
     };
 
       const handleFeedback = (e) => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+            navigate("/login");
+            return;
+        }
+
         e.preventDefault();
-        feedbackData.buyer_id     = 'BUY-jmn98sdanx';
+        feedbackData.buyer_id     = buyerIdSessionStorage || buyerIdLocalStorage
         feedbackData.support_type = 'feedback';
     
         postRequestWithToken('buyer/order/submit-order-feedback', feedbackData, async (response) => {
@@ -111,8 +122,16 @@ const Support = () => {
       };
     
       const handleComplaint = (e) => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+    
+            if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+                navigate("/login");
+                return;
+            }
+
         e.preventDefault();
-        complaintData.buyer_id     = 'BUY-jmn98sdanx';
+        complaintData.buyer_id     = buyerIdSessionStorage || buyerIdLocalStorage
         complaintData.support_type = 'complaint';
     
         postRequestWithToken('buyer/order/submit-order-complaint', complaintData, async (response) => {

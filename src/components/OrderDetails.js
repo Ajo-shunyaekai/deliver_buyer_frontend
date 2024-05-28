@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Orderdetails from '../style/orderdetails.css'
 import AssignDriver from './details/AssignDriver';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const OrderDetails = () => {
     const { orderId } = useParams()
+    const navigate    = useNavigate()
 
     const [activeButton, setActiveButton] = useState('1h');
 
@@ -15,7 +16,18 @@ const OrderDetails = () => {
     const [orderDetails, setOrderDetails] = useState()
 
     useEffect(() => {
-        const obj = {order_id: orderId}
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
+        const obj = {
+            order_id : orderId,
+            buyer_id : buyerIdSessionStorage || buyerIdLocalStorage
+        }
 
         postRequestWithToken('buyer/order/order-details', obj, async (response) => {
             if (response.code === 200) {

@@ -35,13 +35,28 @@ const Sidebar = ({ children, dragWindow }) => {
 
     // Add full screen code
     const [isFullScreen, setIsFullScreen] = useState(false);
+    
+    useEffect(() => {
+        const handleFullScreenChange = () => {
+            const isCurrentlyFullScreen = document.fullscreenElement !== null;
+            setIsFullScreen(isCurrentlyFullScreen);
+        };
+
+        document.addEventListener('fullscreenchange', handleFullScreenChange);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            document.removeEventListener('fullscreenchange', handleFullScreenChange);
+        };
+    }, []);
+
     const toggleFullScreen = () => {
         if (!isFullScreen) {
             document.documentElement.requestFullscreen();
         } else {
             document.exitFullscreen();
         }
-        setIsFullScreen(!isFullScreen);
+        // setIsFullScreen(!isFullScreen);
     };
 
     // Notification and profile dropdown code here
@@ -93,8 +108,6 @@ const Sidebar = ({ children, dragWindow }) => {
         };
     }, []);
 
-
-
     // Mobile sidebar
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = (newOpen) => () => {
@@ -103,8 +116,14 @@ const Sidebar = ({ children, dragWindow }) => {
 
     const toggleAccordion = () => {
         setIsDropdown(!isDropdown)
-
     };
+
+    const handleSignout = () => {
+        // setIsProfileOpen(!isProfileOpen);
+        // localStorage.clear()
+        // sessionStorage.clear()
+        // navigate('/login')
+    }
 
     {/* Mobile sidebar */ }
     const DrawerList = (
@@ -207,7 +226,7 @@ const Sidebar = ({ children, dragWindow }) => {
                         <div className={`${styles.nav_search} ${styles.nav_search_one}`}>
                             <SearchOutlinedIcon className={styles.nav_icon_color} />
                             <input type="text" placeholder='Search products...' className={styles.product_search_input} />
-                        </div>
+                        </div> 
                         <div className={styles.nav_notifi_right}>
                             <CropFreeOutlinedIcon className={styles.nav_icon_color} onClick={toggleFullScreen} />
                             <SearchOutlinedIcon className={styles.nav_icon_color_two} onClick={toggleSearchBar} />
@@ -284,7 +303,7 @@ const Sidebar = ({ children, dragWindow }) => {
                                     <div className={styles.profile_wrapper}>
                                         <div className={styles.profile_text}>
                                             <Link to='#'>
-                                                vikrant
+                                                {localStorage.getItem('buyer_name') || sessionStorage.getItem('buyer_name')}
                                             </Link>
                                         </div>
                                         <div className={styles.profile_wrapper_mid}>
@@ -302,7 +321,7 @@ const Sidebar = ({ children, dragWindow }) => {
                                             </div>
                                         </div>
 
-                                        <div className={styles.profile_sign_out}>
+                                        <div className={styles.profile_sign_out} onClick={() => handleSignout()}>
                                             Sign out
                                         </div>
                                     </div>

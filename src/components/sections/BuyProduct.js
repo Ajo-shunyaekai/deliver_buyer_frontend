@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import buyproduct from '../../style/buyproduct.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Generics from '../../assest/Buy/generics.svg'
 import Orignals from '../../assest/Buy/orignals.svg'
 import Biosimilars from '../../assest/Buy/biosimilars.svg'
@@ -12,6 +12,8 @@ import MedicineOne from '../../assest/Buy/paracetamol.png';
 import { postRequestWithToken } from '../../api/Requests';
 
 const BuyProduct = ({active}) => {
+    const navigate = useNavigate()
+    
     const [medicineList, setMedicineList] = useState([])
     const [inputValue, setInputValue]     = useState('')
     const [searchKey, setSearchKey]       = useState('')
@@ -36,8 +38,17 @@ const BuyProduct = ({active}) => {
     };
 
     useEffect(() => {
+
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const obj = {
-            buyer_id: 'BUY-p480xquscz',
+            buyer_id: buyerIdSessionStorage|| buyerIdLocalStorage,
             searchKey: searchKey
          }
 
@@ -390,7 +401,7 @@ const BuyProduct = ({active}) => {
                                 <div className='buy-product-card-section'>
                                 <div className='buy-product-card-first-section-right'>
                                     <div className='buy-product-card-first-medicine-image'>
-                                        <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${firstImage}`}  alt="Medicine" /> 
+                                        <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`}  alt="Medicine" /> 
                                     </div>
                                     <div className='buy-product-card-first-button-container'>
                                         <Link to={`/medicine-details/${medicine.medicine_id}`}>

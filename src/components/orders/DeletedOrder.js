@@ -20,7 +20,7 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal]                     = useState(false)
     const [selectedOrderId, setSelectedOrderId] = useState(null);
 
     const showModal = (orderId) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WorldMap from "react-svg-worldmap";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import dashboards from '../style/dashboard.css'
 import trending from "../assest/trendingup.svg"
 import Arrow from "../assest/arrow.svg"
@@ -17,26 +17,40 @@ import ConversionChart from '../components/chart/ConversionChart';
 import SearchEngineChart from './chart/SearchEngineChart'
 import DirectlyChart from './chart/DirectlyChart'
 import { postRequestWithToken } from '../api/Requests';
+import {countryToCodeMapping, convertCountryToCode} from '../assest/countryCodes/countryCode'
 
-
+  
 const Dashboard = () => {
+    const navigate = useNavigate()
 
-    const [countryData, setCountryData]   = useState([]);
-    const [activeButton, setActiveButton] = useState('1h');
-    const [orderSummary, setOrderSummary] = useState()
+    const [countryData, setCountryData]     = useState([]);
+    const [activeButton, setActiveButton]   = useState('1h');
+    const [orderSummary, setOrderSummary]   = useState()
+    const [sellerCountry, setSellerCountry] = useState()
 
     const handleButtonClick = (value) => {
         setActiveButton(value);
     };
 
     useEffect(() => {
+
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const obj = {
-            buyer_id  : "BUY-jmn98sdanx",
+            buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage
         }
 
         postRequestWithToken('buyer/orders-seller-country', obj, async (response) => {
             if (response.code === 200) {
-                setCountryData(response?.result)
+                setSellerCountry(response?.result)
+                const convertedData = convertCountryToCode(response?.result);
+                setCountryData(convertedData);
             } else {
                console.log('error in orders-seller-country api',response);
             }
@@ -44,9 +58,18 @@ const Dashboard = () => {
     },[])
 
     useEffect(() => {
-        const obj = {
-            buyer_id  : "BUY-jmn98sdanx",
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
         }
+
+        const obj = {
+            buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage
+        }
+
         postRequestWithToken('buyer/orders-summary-details', obj, async (response) => {
             if (response.code === 200) {
                 setOrderSummary(response?.result)
@@ -155,17 +178,17 @@ const Dashboard = () => {
                         <div className='right-head'>Your seller countries</div>
                         <div className='right-country-section'>
                             <div className='country-sect'>
-                                <span className='country-names'>USA</span>
-                                <span className='country-price'>$2340</span>
+                                <span className='country-names'>{countryData[0]?.country}</span>
+                                <span className='country-price'>{countryData[0]?.value} AED</span>
                             </div>
                             <div className='country-sect'>
-                                <span className='country-name'>UK</span>
-                                <span className='country-price'>$2345</span>
+                                <span className='country-name'>{countryData[1]?.country}</span>
+                                <span className='country-price'>{countryData[1]?.value} AED</span>
                             </div>
-                            <div className='country-sect'>
+                            {/* <div className='country-sect'>
                                 <span className='country-name'>India</span>
                                 <span className='country-price'>$1234</span>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

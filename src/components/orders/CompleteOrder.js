@@ -16,10 +16,6 @@ import moment from 'moment/moment';
 
 
 const CompleteOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handlePageChange, activeLink}) => {
-    // const [show, setShow] = useState(false);
-
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
 
     const [modal, setModal]                     = useState(false)
     const [selectedOrderId, setSelectedOrderId] = useState()

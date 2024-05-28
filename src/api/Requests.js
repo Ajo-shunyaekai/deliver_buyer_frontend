@@ -25,8 +25,8 @@ export const postRequestWithToken = async (URL, requestData, callback) => {
             data            : requestData,
             // withCredentials : true,
             headers : {
-                // "access_token" : sessionStorage.getItem('token') || localStorage.getItem('token'),
-                access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiVGh1IE1heSAwMiAyMDI0IDExOjM2OjE2IEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsImJ1eWVySWQiOiJCVVktcDQ4MHhxdXNjeiIsImlhdCI6MTcxNDYyOTk3Nn0.NADTShvxaTLQBizjnmA9-NC1v-jFcFcLqrx5yOwAP8g',
+                "access_token" : sessionStorage.getItem('buyer_token') || localStorage.getItem('buyer_token'),
+                // access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiVGh1IE1heSAwMiAyMDI0IDExOjM2OjE2IEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsImJ1eWVySWQiOiJCVVktcDQ4MHhxdXNjeiIsImlhdCI6MTcxNDYyOTk3Nn0.NADTShvxaTLQBizjnmA9-NC1v-jFcFcLqrx5yOwAP8g',
                 "Content-Type" : "application/json"
             } 
         });
@@ -51,7 +51,7 @@ export const postRequestWithFile = async (URL, requestData, callback) => {
             url     : URL,
             data    : requestData,
             headers : {
-                "access_token" : sessionStorage.getItem('token') || localStorage.getItem('token'),
+                "access_token" : sessionStorage.getItem('buyer_token') || localStorage.getItem('buyer_token'),
                 "Content-Type" : "multipart/form-data"
             }
         });

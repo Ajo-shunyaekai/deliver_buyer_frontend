@@ -6,15 +6,24 @@ import card3 from '../assest/companycard/card3.svg'
 import card4 from '../assest/companycard/card4.svg'
 import card5 from '../assest/companycard/card5.svg'
 import card6 from '../assest/companycard/card6.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { postRequestWithToken } from '../api/Requests'
 
 const MySuplier = () => {
+    const navigate = useNavigate()
+
     const [mySuppliers, setMySuppliers] = useState([])
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
             const obj = {
-                buyer_id: 'BUY-p480xquscz',
+                buyer_id: buyerIdSessionStorage || buyerIdLocalStorage
             }
 
             postRequestWithToken('buyer/supplier-list', obj, async (response) => {
@@ -42,7 +51,7 @@ const MySuplier = () => {
                             </div>
                             <div className='mysupplier-image-section'>
                                 {/* <img src={card1} /> */}
-                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplierImage_files/${supplier.supplier_image[0]}`} />
+                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplier/supplierImage_files/${supplier.supplier_image[0]}`} />
                             </div>
                         </div>
                         <div className='mysupplier-card-first-section'>

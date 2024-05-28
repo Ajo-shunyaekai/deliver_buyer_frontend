@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../../style/pendingInvoice.css';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
@@ -10,8 +10,11 @@ import InvoiceTemplate from '../pay/invoiceDesign';
 
 
 const PendingInvoice = ({invoiceList}) => {
+    
+    const navigate = useNavigate()
+
     const [showModal, setShowModal] = useState(false);
-    const handleShowModal = () => setShowModal(true);
+    const handleShowModal  = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
     //invoice download
@@ -38,6 +41,17 @@ const PendingInvoice = ({invoiceList}) => {
             document.body.removeChild(element);
         });
     };
+
+    useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
+    },[])
 
     return (
         <div className='pending-invo-container' >

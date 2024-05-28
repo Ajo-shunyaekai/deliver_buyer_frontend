@@ -19,7 +19,19 @@ const ProductDetails = () => {
     const [similarMedicinesList, setSimilarMedicinesList] = useState([])
 
     useEffect(() => {
-        const obj = {medicine_id: medId}
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+        
+        const obj = {
+            medicine_id : medId,
+            buyer_id    : buyerIdSessionStorage || buyerIdLocalStorage
+        }
+        
         postRequestWithToken('buyer/medicine/medicine-details', obj, async (response) => {
             if (response.code === 200) {
                 setDetails(response.result)
@@ -113,7 +125,7 @@ const ProductDetails = () => {
                                 {/* <div className="product-details-section-two-img"> */}
                                         {/* {data.medicine_image?.map((image, j) => (
                                             <div className="product-details-sec-img-left" key={j}>
-                                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/product_files/${image}`} alt={`${data.medicine_name} ${j}`} className="responsive-image" />
+                                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${image}`} alt={`${data.medicine_name} ${j}`} className="responsive-image" />
                                             </div>
                                 
                                         ))} */}

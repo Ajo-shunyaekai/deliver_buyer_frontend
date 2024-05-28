@@ -12,16 +12,6 @@ const Buy = () => {
         setActiveButton(button);
     };
 
-     // useEffect(() => {
-    //     const obj = {buyer_id: 'BUY-p480xquscz'}
-    //     postRequestWithToken('buyer/supplier-list', obj, async (response) => {
-    //         if (response.code === 200) {
-    //             setSupplierList(response.result)
-    //         } else {
-    //            console.log();
-    //         }
-    //       })
-    // },[])
 
     return (
         <>

@@ -3,18 +3,30 @@ import Supplierdetails from '../style/supplierdetails.css'
 import SupplyOrderList from './orders/SupplyOrderList'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneInTalkOutlinedIcon from '@mui/icons-material/PhoneInTalkOutlined';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const SupplierDetails = () => {
     const { supplierId } = useParams()
+    const navigate       = useNavigate()
 
     const [supplier, setSupplier]                     = useState()
     const [buyerSupplierOrder, setBuyerSupplierOrder] = useState()
     // const [orderCount, setOrderCount]                 = useState()
 
     useEffect(() => {
-        const obj = {supplier_id: supplierId}
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
+        const obj = {
+            supplier_id : supplierId,
+            buyer_id    : buyerIdSessionStorage || buyerIdLocalStorage
+        }
         postRequestWithToken('buyer/supplier-details', obj, async (response) => {
             if (response.code === 200) {
                 setSupplier(response.result)
@@ -25,6 +37,14 @@ const SupplierDetails = () => {
     },[])
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const fetchBuyerSupplierOrder = () => {
             const obj = {
                 buyer_id    : 'BUY-jmn98sdanx',
@@ -43,9 +63,6 @@ const SupplierDetails = () => {
 
         fetchBuyerSupplierOrder()
     },[])
-
-    console.log('buyerSupplierOrder',buyerSupplierOrder);
-    // console.log('orderCount',orderCount);
 
 
     return (

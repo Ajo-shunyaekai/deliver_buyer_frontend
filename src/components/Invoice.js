@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../style/invoice.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PendingInvoice from '../components/invoice/PendingInvoice';
 import PaidInvoice from '../components/invoice/CompleteInvoice';
@@ -8,6 +8,7 @@ import OngoingInvoice from '../components/invoice/OngoingInvoice';
 import { postRequestWithToken } from '../api/Requests';
 
 const Invoice = () => {
+    const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
 
     const headings = ['Pending Invoices', 'Paid Invoices'];
@@ -26,8 +27,16 @@ const Invoice = () => {
     };
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const obj = {
-            buyer_id  : "BUY-jmn98sdanx",
+            buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage,
             filterKey : activeIndex === 0 ? 'pending' : activeIndex === 1 ? 'completed' : '',
             page_no   : currentPage, 
             limit     : invoicesPerPage,

@@ -14,12 +14,13 @@ import moment from 'moment/moment';
 
 
 const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handlePageChange,  activeLink }) => {
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal]                     = useState(false)
     const [selectedOrderId, setSelectedOrderId] = useState(null);
 
     const showModal = (orderId) => {
@@ -97,9 +98,9 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
     // Pagination Code Start
     // const [currentPage, setCurrentPage] = useState(1);
     // const ordersPerPage = 2;
-    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfLastOrder  = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentOrders     = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
     // const handlePageChange = (pageNumber) => {
     //     setCurrentPage(pageNumber);
     // };

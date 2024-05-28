@@ -3,12 +3,15 @@ import Orderdetails from '../style/orderdetails.css'
 import WorldMap from "react-svg-worldmap";
 import OrderDetailsCircularBar from './chart/OrderDetailsCircularBar';
 import ProductList from './details/ProductList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const PendingDetails = () => {
+    const navigate    = useNavigate()
     const { orderId } = useParams()
+
     const [activeButton, setActiveButton] = useState('1h');
+
     const handleButtonClick = (value) => {
         setActiveButton(value);
     };
@@ -16,7 +19,18 @@ const PendingDetails = () => {
     const [orderDetails, setOrderDetails] = useState()
 
     useEffect(() => {
-        const obj = {order_id: orderId}
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+        
+        const obj = {
+            order_id : orderId,
+            buyer_id : buyerIdSessionStorage || buyerIdLocalStorage
+        }
 
         postRequestWithToken('buyer/order/order-details', obj, async (response) => {
             if (response.code === 200) {

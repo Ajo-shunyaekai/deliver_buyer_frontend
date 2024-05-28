@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import buy from '../../style/buy.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Search from '../../assest/Buy/search-icon.svg'
 import card1 from '../../assest/companycard/card1.svg'
@@ -13,11 +13,14 @@ import ArrowCard from '../../assest/companycard/arrowcard.svg'
 import { postRequestWithToken } from '../../api/Requests';
 
 const BuySeller = ({active}) => {
-    const [showFormDropdown, setShowFormDropdown] = useState(false);
-    const [showRecommendedUseDropdown, setShowRecommendedUseDropdown] = useState(false);
+    const navigate = useNavigate()
+
+    const [showFormDropdown, setShowFormDropdown]                       = useState(false);
+    const [showRecommendedUseDropdown, setShowRecommendedUseDropdown]   = useState(false);
     const [showCountryOfOriginDropdown, setShowCountryOfOriginDropdown] = useState(false);
-    const [showGMPApprovalsDropdown, setShowGMPApprovalsDropdown] = useState(false);
-    const [openDropdown, setOpenDropdown] = useState(null);
+    const [showGMPApprovalsDropdown, setShowGMPApprovalsDropdown]       = useState(false);
+
+    const [openDropdown, setOpenDropdown]   = useState(null);
     const [supplierList, setSupplierList]   = useState([])
     const [inputValue, setInputValue]       = useState('');
     const [searchKey, setSearchKey]         = useState('')
@@ -45,9 +48,17 @@ const BuySeller = ({active}) => {
     };
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         if(active === 'seller') {
             const obj = {
-                buyer_id  :  'BUY-p480xquscz',
+                buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage,
                 searchKey : searchKey,
                 filterCountry
             }
@@ -63,8 +74,16 @@ const BuySeller = ({active}) => {
     },[searchKey, filterCountry])
 
     useEffect(() => {
+        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
+        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
+
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
+
         const obj = {
-            buyer_id: 'BUY-p480xquscz'
+            buyer_id: buyerIdSessionStorage || buyerIdLocalStorage,
         }
         postRequestWithToken('buyer/supplier/get-filter-values', obj, async (response) => {
             if (response.code === 200) {
@@ -303,7 +322,7 @@ const BuySeller = ({active}) => {
                             </div>
                             <div className='buy-seller-copmany-img'>
                                 {/* <img src={card1} /> */}
-                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplierImage_files/${supplier.supplier_image[0]}`} />
+                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplier/supplierImage_files/${supplier.supplier_image[0]}`} />
                             </div>
                         </div>
                         <div className='buy-seller-company-content-section'>
