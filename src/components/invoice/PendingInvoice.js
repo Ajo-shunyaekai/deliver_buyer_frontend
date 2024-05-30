@@ -57,18 +57,24 @@ const PendingInvoice = ({invoiceList}) => {
         <div className='pending-invo-container' >
             <div className='table-responsive mh-2 50'>
                 <table className="table table-theme table-row v-middle" style={{ borderCollapse: 'separate', borderSpacing: '0 10px' }}>
-                    <thead>
-                        <tr>
-                            <th className="text-muted invoice-th">Invoice No.</th>
-                            <th className="text-muted invoice-th">Order ID</th>
-                            <th className="text-muted invoice-th">Customer Name</th>
-                            <th className="text-muted invoice-th">Amount</th>
-                            <th className="text-muted invoice-th">Status</th>
-                            <th className="text-muted invoice-th">Action</th>
-                        </tr>
-                    </thead>
+                    {
+                        invoiceList && invoiceList.length > 0 ? (
+                            <thead>
+                                <tr>
+                                    <th className="text-muted invoice-th">Invoice No.</th>
+                                    <th className="text-muted invoice-th">Order ID</th>
+                                    <th className="text-muted invoice-th">Customer Name</th>
+                                    <th className="text-muted invoice-th">Amount</th>
+                                    <th className="text-muted invoice-th">Status</th>
+                                    <th className="text-muted invoice-th">Action</th>
+                                </tr>
+                            </thead>
+                        ) : ''
+                    }
+                    
                     <tbody className='pending-invoies-tbody-section'>
                     {
+                        invoiceList && invoiceList.length > 0 ? (
                             invoiceList?.map((invoice,i) => {
                                 return (
                         <tr data-id="9" className='table-row v-middle'>
@@ -117,6 +123,10 @@ const PendingInvoice = ({invoiceList}) => {
                         </tr>
                       )
                     })
+                        ) :  
+                        <tr>
+                        <td colSpan="7" className="text-center">No Completed invoices available</td>
+                       </tr>
                 }
                 
                     </tbody>

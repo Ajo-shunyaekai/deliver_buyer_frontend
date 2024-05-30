@@ -39,6 +39,12 @@ const BuySeller = ({active}) => {
         setSearchKey(inputValue)
     }   
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleProductSearch();
+        }
+    };
+
     const handleCountry = (country) => {
         setFilterCountry(country)
     }
@@ -102,7 +108,10 @@ const BuySeller = ({active}) => {
             </div>
             {/* start the search container code */}
             <div className='buy-seller-search-container'>
-                <input className='buy-seller-search-input' type='text' placeholder='Search Seller' onChange={(e) => handleInputChange(e)}/>
+                <input className='buy-seller-search-input' type='text' placeholder='Search Seller' 
+                onChange={(e) => handleInputChange(e)}
+                onKeyDown={handleKeyDown}
+                />
                 <div className='buy-seller-search' onClick={() => handleProductSearch() }>
                     <img className='buy-seller-search-icon' src={Search} />
                     Search
@@ -312,6 +321,7 @@ const BuySeller = ({active}) => {
                 </div> */}
                  
                  {
+                    supplierList && supplierList.length > 0 ? (
                     supplierList?.map((supplier,i) => {
                         return (
                         <div className='buy-seller-company-cards'>
@@ -343,6 +353,7 @@ const BuySeller = ({active}) => {
                         )
                         
                     })
+                    ) : 'No data found'
                 }
 
             </div>

@@ -47,24 +47,24 @@ const MySuplier = () => {
                         <div className='mysupplier-card-first-uppar-section'>
                             <div className='mysupplier-card-content-section'>
                                 <div className='mysupplier-name-head'>{supplier.supplier_name}</div>
-                                <div className='mysupplier-description'>License No: {supplier.license_no}</div>
+                                <div className='mysupplier-description'>License No: {supplier.license_no || 'LIC-097342'}</div>
                             </div>
                             <div className='mysupplier-image-section'>
                                 {/* <img src={card1} /> */}
-                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplier/supplierImage_files/${supplier.supplier_image[0]}`} />
+                                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplier/supplierImage_files/${supplier?.supplier_image[0]}`} />
                             </div>
                         </div>
                         <div className='mysupplier-card-first-section'>
                             <div className='mysupplier-card-heading'>Country Origin</div>
-                            <div className='mysupplier-card-text'>{supplier.country_of_origin}</div>
+                            <div className='mysupplier-card-text'>{supplier.country_of_origin || 'United Arab Emirated'}</div>
                         </div>
                         <div className='mysupplier-card-first-section'>
                             <div className='mysupplier-card-heading'>Contact Number</div>
-                            <div className='mysupplier-card-text'>{supplier.country_code} {supplier.mobile}</div>
+                            <div className='mysupplier-card-text'>{supplier.contact_person_country_code || +91} {supplier.contact_person_mobile_no || 9868708723}</div>
                         </div>
                         <div className='mysupplier-card-first-section'>
                             <div className='mysupplier-card-heading'>Description</div>
-                            <div className='mysupplier-card-text'>{supplier.description}</div>
+                            <div className='mysupplier-card-text'>{supplier.description || 'test description'}</div>
                         </div>
                         <Link to={`/supplier-details/${supplier.supplier_id}`}>
                             <div className='mysupplier-card-button'>

@@ -126,7 +126,9 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                         {/* start the table section code */}
                         <div className='order-inner-container-section'>
                             <table className="table-container">
-                                <thead className='order-container-thead'>
+                                {
+                                    orderList && orderList.length > 0 ? (
+                                        <thead className='order-container-thead'>
                                     <tr className='order-container-tr'>
                                         <th className="order-container-th"><div className="order-container-head"> Order ID</div></th>
                                         <th className="order-container-th"> <div className="order-container-head"> Date</div></th>
@@ -136,7 +138,11 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                                         <th className="order-container-th"><div className="order-container-head">Action</div></th>
                                     </tr>
                                 </thead>
+                                    ) : ''
+                                }
+                                
                                      {  
+                                        orderList && orderList.length > 0 ? (
                                         orderList?.map((order,i) => {
 
                                             const totalQuantity = order.items.reduce((total, item) => {
@@ -181,6 +187,7 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                                             </tbody>
                                            )
                                        })
+                                        ) : 'no pending orders'
                                     }   
                                 {/* <tbody className='order-container-tbody'>
                                     <tr className="order-section-tr">
@@ -251,26 +258,31 @@ const PendingOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handl
                         {
                             modal === true ? <OrderCancel setModal={setModal} orderId = {selectedOrderId} activeLink = {activeLink} /> : ''
                         }
-                        <div className='pagi-container'>
-                            <Pagination
-                                activePage={currentPage}
-                                itemsCountPerPage={ordersPerPage}
-                                totalItemsCount={totalOrders}
-                                pageRangeDisplayed={5}
-                                onChange={handlePageChange}
-                                // onChange={onPageChange}
-                                itemClass="page-item"
-                                linkClass="page-link"
-                                prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
-                                nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
-                                hideFirstLastPages={true}
-                            />
-                            <div className='pagi-total'>
-                                <div className='pagi-total'>
-                                    Total Items: {totalOrders}
+                        {
+                            orderList && orderList.length > 0 ? (
+                                <div className='pagi-container'>
+                                    <Pagination
+                                        activePage={currentPage}
+                                        itemsCountPerPage={ordersPerPage}
+                                        totalItemsCount={totalOrders}
+                                        pageRangeDisplayed={5}
+                                        onChange={handlePageChange}
+                                        // onChange={onPageChange}
+                                        itemClass="page-item"
+                                        linkClass="page-link"
+                                        prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                                        nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                                        hideFirstLastPages={true}
+                                    />
+                                    <div className='pagi-total'>
+                                        <div className='pagi-total'>
+                                            Total Items: {totalOrders}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            ) : ''
+                        }
+                        
                     </div>
                 </div >
             </div >

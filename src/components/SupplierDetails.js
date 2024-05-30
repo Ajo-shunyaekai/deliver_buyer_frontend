@@ -73,56 +73,56 @@ const SupplierDetails = () => {
                         <div className='supplier-details-left-uppar-section'>
                             <div className='supplier-details-left-uppar-head'>{supplier?.supplier_name}</div>
                             <div className='supplier-details-left-inner-section'>
-                                <div className='supplier-details-left-inner-sec-text'>Supplier ID: {supplier?.supplier_id}</div>
+                                <div className='supplier-details-left-inner-sec-text'>Supplier ID: {supplier?.supplier_id || 'SUP-0987RF67R'}</div>
                                 <div className='supplier-details-left-inner-img-container'>
                                     <div className='supplier-details-left-inner-mobile-button'>
                                         <PhoneInTalkOutlinedIcon className='supplier-details-left-inner-icon' />
-                                        <span className='tooltip'>{supplier?.country_code} {supplier?.mobile}</span>
+                                        <span className='tooltip'>{supplier?.supplier_country_code || +971} {supplier?.supplier_mobile || 765765}</span>
                                     </div>
                                     <div className='supplier-details-left-inner-email-button'>
                                         <MailOutlineIcon className='supplier-details-left-inner-icon' />
-                                        <span className='tooltip'>{supplier?.email}</span>
+                                        <span className='tooltip'>{supplier?.supplier_email || 'supplier@gmail.com'}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className='supplier-details-description-section'>
                             <div className='supplier-details-description-head'>Description</div>
-                            <div className='supplier-details-description-content'>{supplier?.description}</div>
+                            <div className='supplier-details-description-content'>{supplier?.description || 'test description'}</div>
                         </div>
                         <div className='supllier-details-section'>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>License No.</div>
-                                <div className='supplier-details-inner-text'>{supplier?.license_no}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.license_no || 'LIC-98768732'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Address</div>
-                                <div className='supplier-details-inner-text'>{supplier?.supplier_address}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.supplier_address || '476 Udyog Vihar, Phase 5, Gurgaon'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Country of Origin</div>
-                                <div className='supplier-details-inner-text'>{supplier?.country_of_origin}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.country_of_origin || 'United Arab Emirated'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Contact Person Name:</div>
-                                <div className='supplier-details-inner-text'>{supplier?.contact_person_name}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.contact_person_name || 'Ashutosh Sharma'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Designation</div>
-                                <div className='supplier-details-inner-text'>{supplier?.designation}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.designation || 'Marketing Manager'}</div>
                             </div>
 
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Payment Terms</div>
-                                <div className='supplier-details-inner-text'>{supplier?.payment_terms}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.payment_terms || 'COD, Debit'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Est. Delivery Time</div>
-                                <div className='supplier-details-inner-text'>{supplier?.estimated_delivery_time}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.estimated_delivery_time || '12 days'}</div>
                             </div>
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Tags</div>
-                                <div className='supplier-details-inner-text'>{supplier?.tags}</div>
+                                <div className='supplier-details-inner-text'>{supplier?.tags || 'Tag1, Tag2'}</div>
                             </div>
                         </div>
                     </div>

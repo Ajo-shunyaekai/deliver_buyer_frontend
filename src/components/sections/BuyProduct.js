@@ -394,7 +394,8 @@ const BuyProduct = ({active}) => {
                         </div>
                     </div> */}
 
-{
+                     {  
+                       medicineList && medicineList.length > 0 ? (
                         medicineList?.map((medicine, i) => {
                             const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
                             return (
@@ -442,6 +443,7 @@ const BuyProduct = ({active}) => {
                             </div>
                             )
                         })
+                       ) : 'not data found'
                     }
                 </div>
             </div>

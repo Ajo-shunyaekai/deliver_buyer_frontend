@@ -117,17 +117,23 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                         {/* start the table section code */}
                         <div className='order-inner-container-section'>
                             <table className="table-container">
-                                <thead className='order-container-thead'>
-                                    <tr className='order-container-tr'>
-                                        <th className="order-container-th"><div className="order-container-head"> Order ID</div></th>
-                                        <th className="order-container-th"> <div className="order-container-head"> Date</div></th>
-                                        <th className="order-container-ths"><div className="order-container-heads">Supplier Name</div></th>
-                                        <th className="order-container-th"><div className="order-container-head">Quantity</div></th>
-                                        <th className="order-container-th"><div className="order-container-head">Status</div></th>
-                                        <th className="order-container-th"><div className="order-container-head">Action</div></th>
-                                    </tr>
-                                </thead>
                                 {
+                                     orderList && orderList.length > 0 ? (
+                                    <thead className='order-container-thead'>
+                                        <tr className='order-container-tr'>
+                                            <th className="order-container-th"><div className="order-container-head"> Order ID</div></th>
+                                            <th className="order-container-th"> <div className="order-container-head"> Date</div></th>
+                                            <th className="order-container-ths"><div className="order-container-heads">Supplier Name</div></th>
+                                            <th className="order-container-th"><div className="order-container-head">Quantity</div></th>
+                                            <th className="order-container-th"><div className="order-container-head">Status</div></th>
+                                            <th className="order-container-th"><div className="order-container-head">Action</div></th>
+                                        </tr>
+                                   </thead>
+                                     ) : ''
+                                }
+                                
+                                {
+                                    orderList && orderList.length > 0 ? (
                                     orderList?.map((order,i) => {
                                         const totalQuantity = order.items.reduce((total, item) => {
                                             return total + item.quantity;
@@ -168,6 +174,7 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                                 </tbody>
                                      )
                                     })
+                                    ) :'no active orders'
                                 }
 
                                 {/* <tbody className='order-container-tbody'>
@@ -239,7 +246,10 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                         {
                             modal === true ? <OrderCancel setModal={setModal} orderId = {selectedOrderId}  activeLink = { activeLink}/> : ''
                         }
-                        <div className='pagi-container'>
+
+                        {
+                            orderList && orderList.length > 0 ? (
+                                <div className='pagi-container'>
                             <Pagination
                                activePage={currentPage}
                                itemsCountPerPage={ordersPerPage}
@@ -259,6 +269,9 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                                 </div>
                             </div>
                         </div>
+                            ) : ''
+                        }
+                        
                     </div>
                 </div>
             </div >
