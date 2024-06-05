@@ -7,8 +7,11 @@ import ImageUploader from './ImageUploader';
 import SuccessModal from './SuccessModal';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { postRequestWithFile } from '../api/Requests';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         companyName        : '',
         companyAddress     : '',
@@ -18,9 +21,9 @@ const SignUp = () => {
         designation        : '',
         email              : '',
         mobile             : '',
-        paymentterms       : '',
-        delivertime        : '',
-        tags               : '',
+        // paymentterms       : '',
+        // delivertime        : '',
+        // tags               : '',
         originCountry      : '',
         operationCountries : [],
         companyLicenseNo   : '',
@@ -72,16 +75,16 @@ const SignUp = () => {
 
       };
 
-    const handleTagsChange = (event) => {
-        const { value } = event.target;
-        const tagsArray = value.split(',').map(tag => tag.trim());
-        if (tagsArray.length <= 5) {
-            setFormData(prevState => ({ ...prevState, tags: value }));
-            setErrors(prevState => ({ ...prevState, tags: '' }));
-        } else {
-            setErrors(prevState => ({ ...prevState, tags: 'You can only enter up to 5 tags' }));
-        }
-    };
+    // const handleTagsChange = (event) => {
+    //     const { value } = event.target;
+    //     const tagsArray = value.split(',').map(tag => tag.trim());
+    //     if (tagsArray.length <= 5) {
+    //         setFormData(prevState => ({ ...prevState, tags: value }));
+    //         setErrors(prevState => ({ ...prevState, tags: '' }));
+    //     } else {
+    //         setErrors(prevState => ({ ...prevState, tags: 'You can only enter up to 5 tags' }));
+    //     }
+    // };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -144,11 +147,11 @@ const SignUp = () => {
         if (!formData.companyLicenseNo) formErrors.companyLicenseNo                                 = 'Company License No. is required';
         if (!formData.companyTaxNo) formErrors.companyTaxNo                                         = 'Company Tax No. is required';
         if (!isChecked) formErrors.terms                                                            = 'You must agree to the terms and conditions';
-        if (!formData.paymentterms) formErrors.paymentterms                                         = 'Payment Terms are required';
-        if (!formData.delivertime) formErrors.delivertime                                           = 'Estimated Delivery Time is required';
-        if (!formData.tags) formErrors.tags                                                         = 'Tags are required';
+        // if (!formData.paymentterms) formErrors.paymentterms                                         = 'Payment Terms are required';
+        // if (!formData.delivertime) formErrors.delivertime                                           = 'Estimated Delivery Time is required';
+        // if (!formData.tags) formErrors.tags                                                         = 'Tags are required';
         if (!formData.description) formErrors.description                                           = 'Description is required';
-        if (formData.tags.split(',').map(tag => tag.trim()).length > 5) formErrors.tags             = 'You can only enter up to 5 tags';
+        // if (formData.tags.split(',').map(tag => tag.trim()).length > 5) formErrors.tags             = 'You can only enter up to 5 tags';
         if (formData.description.length > 1000) formErrors.description                              = 'Description cannot exceed 1000 characters';
         if (!formData.taxImage) formErrors.taxImage                                                 = 'Tax image is required'; 
         if (!formData.logoImage) formErrors.logoImage                                               = 'Logo image is required'; 
@@ -162,19 +165,19 @@ const SignUp = () => {
     const handleSubmit = () => {
         if (validateForm()) {
             const regObj = {
-                supplier_name           : formData.companyName,
+                buyer_name           : formData.companyName,
                 description             : formData.description,
-                supplier_address        : formData.companyAddress,
-                supplier_email          : formData.companyEmail,
-                supplier_mobile_no      : companyPhone,
+                buyer_address        : formData.companyAddress,
+                buyer_email          : formData.companyEmail,
+                buyer_mobile      : companyPhone,
                 license_no              : formData.companyLicenseNo,
                 country_of_origin       : formData.originCountry,
                 contact_person_name     : formData.contactPersonName,
                 designation             : formData.designation,
-                payment_terms           : formData.paymentterms,
-                tags                    : formData.tags,
-                supplier_image          : formData.logoImage,
-                estimated_delivery_time : formData.delivertime,
+                // payment_terms           : formData.paymentterms,
+                // tags                    : formData.tags,
+                buyer_image             : formData.logoImage,
+                // estimated_delivery_time : formData.delivertime,
                 license_image           : formData.licenseImage,
                 tax_image               : formData.taxImage,
                 contact_person_mobile   : mobile,
@@ -183,7 +186,7 @@ const SignUp = () => {
                 tax_no                  : formData.companyTaxNo
             }
 
-            postRequestWithFile('supplier/register', regObj, async (response) => {
+            postRequestWithFile('buyer/register', regObj, async (response) => {
                 if (response.code === 200) {
                     setFormData({
                         companyName: '',
@@ -194,9 +197,9 @@ const SignUp = () => {
                         designation: '',
                         email: '',
                         mobile: '',
-                        paymentterms: '',
-                        delivertime: '',
-                        tags: '',
+                        // paymentterms: '',
+                        // delivertime: '',
+                        // tags: '',
                         originCountry: '',
                         operationCountries: [],
                         companyLicenseNo: '',
@@ -217,7 +220,7 @@ const SignUp = () => {
                     setShowModal(true);
                     
                 } else {
-                   console.log('error in supplier/register api');
+                   console.log('error in buyer/register api');
                 }
             }) 
         }
@@ -245,6 +248,15 @@ const SignUp = () => {
         }
         return value;
     };
+
+    useEffect(() => {
+        if (
+          sessionStorage.getItem("buyer_id") !== undefined &&
+          sessionStorage.getItem("buyer_id")
+        ) {
+          navigate('/');
+        }
+      }, []);
 
     return (
         <>
@@ -365,7 +377,7 @@ const SignUp = () => {
                             {errors.mobile && <div className='signup__errors'>{errors.mobile}</div>}
                         </div>
 
-                        <div className='signup-form-section-div'>
+                        {/* <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>Est. Delivery Time</label>
                             <input
                                 className='signup-form-section-input'
@@ -376,8 +388,8 @@ const SignUp = () => {
                                 onChange={handleChange}
                             />
                             {errors.delivertime && <div className='signup__errors'>{errors.delivertime}</div>}
-                        </div>
-                        <div className='signup-form-section-div'>
+                        </div> */}
+                        {/* <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>Tags</label>
                             <input
                                 className='signup-form-section-input'
@@ -388,7 +400,7 @@ const SignUp = () => {
                                 onChange={handleTagsChange}
                             />
                             {errors.tags && <div className='signup__errors'>{errors.tags}</div>}
-                        </div>
+                        </div> */}
                         <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>Country of Origin</label>
                             <select
@@ -396,6 +408,7 @@ const SignUp = () => {
                                 name="originCountry"
                                 value={formData.originCountry}
                                 onChange={handleChange}
+                                // multiple
                             >
                                 <option value="" disabled>Select your country</option>
                                 {countries.map((country, index) => (
@@ -442,7 +455,7 @@ const SignUp = () => {
                             />
                             {errors.companyTaxNo && <div className='signup__errors'>{errors.companyTaxNo}</div>}
                         </div>
-                        <div className='signup-form-section-div'>
+                        {/* <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>Payment Terms</label>
                             <textarea
                                 className='signup-form-section-input'
@@ -455,7 +468,7 @@ const SignUp = () => {
                                 onChange={handleChange}
                             />
                             {errors.paymentterms && <div className='signup__errors'>{errors.paymentterms}</div>}
-                        </div>
+                        </div> */}
                         <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>About Company</label>
                             <textarea

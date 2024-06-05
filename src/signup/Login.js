@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import logincss from '../style/login.css';
 import logo from '../assest/signup.svg';
 import { Link } from 'react-router-dom';
+import { postRequest } from '../api/Requests';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -35,14 +36,39 @@ const Login = () => {
         return newErrors;
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            // Navigate to dashboard
-            navigate('/dashboard');
+            let obj = {
+                email,
+                password
+            }
+            postRequest('buyer/login', obj, async(response) => {
+                if(response.code === 200) {
+                    sessionStorage.setItem('buyer_id',response.result.buyer_id)
+                    sessionStorage.setItem('buyer_name',response.result.buyer_name)
+                    sessionStorage.setItem('buyer_email',response.result.buyer_email)
+                    sessionStorage.setItem('buyer_country_code',response.result.buyer_country_code)
+                    sessionStorage.setItem('buyer_mobile',response.result.buyer_mobile)
+                    sessionStorage.setItem('contact_person_country_code',response.result.contact_person_country_code)
+                    sessionStorage.setItem('contact_person_mobile',response.result.contact_person_mobile)
+                    sessionStorage.setItem('contact_person_name',response.result.contact_person_name)
+                    sessionStorage.setItem('buyer_image',response.result.buyer_image)
+                    sessionStorage.setItem('license_image',response.result.license_image)
+                    sessionStorage.setItem('tax_image',response.result.tax_image)
+                    sessionStorage.setItem('token',response.result.token)
+                    setTimeout(() => {
+                        navigate("/");
+                      }, 1000);
+                } else {
+                    console.log('error while login')
+                }
+            })
+            
         }
     };
 
@@ -69,6 +95,15 @@ const Login = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    useEffect(() => {
+        if (
+          sessionStorage.getItem("buyer_id") !== undefined &&
+          sessionStorage.getItem("buyer_id")
+        ) {
+          navigate('/');
+        }
+      }, []);
 
     return (
         <div className='login-main-container'>

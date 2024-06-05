@@ -41,6 +41,7 @@ import ImageUploader from './signup/ImageUploader.js';
 import SuccessModal from './signup/SuccessModal.js';
 import Login from './signup/Login.js';
 
+
 function IncludeSidebar() {
   return (
     <div>
@@ -83,16 +84,6 @@ function IncludeSidebar() {
 }
 
 function App() {
-
-useEffect(() => {
-  sessionStorage.setItem('buyer_name','Pranav')
-  sessionStorage.setItem('buyer_id','BUY-jmn98sdanx')
-  sessionStorage.setItem('buyer_email','buyer1@gmail.org')
-  sessionStorage.setItem('buyer_mobile','8129197512')
-  sessionStorage.setItem('buyer_token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiTW9uIEFwciAxNSAyMDI0IDEyOjQ5OjM0IEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsImJ1eWVySWQiOiJCVVktam1uOThzZGFueCIsImlhdCI6MTcxMzE2NTU3NH0.HvJHPx6WA09qcMedTVVeTpuqlsXOSfTDEjWlU7v1kJQ')
-
-},[])
-
   return (
     <>
       <div className='App'>

@@ -119,10 +119,10 @@ const Sidebar = ({ children, dragWindow }) => {
     };
 
     const handleSignout = () => {
-        // setIsProfileOpen(!isProfileOpen);
-        // localStorage.clear()
-        // sessionStorage.clear()
-        // navigate('/login')
+        setIsProfileOpen(!isProfileOpen);
+        localStorage.clear()
+        sessionStorage.clear()
+        navigate('/login')
     }
 
     {/* Mobile sidebar */ }
