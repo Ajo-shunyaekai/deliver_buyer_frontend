@@ -47,7 +47,7 @@ const SupplierDetails = () => {
 
         const fetchBuyerSupplierOrder = () => {
             const obj = {
-                buyer_id    : 'BUY-jmn98sdanx',
+                buyer_id    : buyerIdSessionStorage || buyerIdLocalStorage,
                 supplier_id : supplierId
             }
     
@@ -60,11 +60,10 @@ const SupplierDetails = () => {
                 }
             })
         }
-
         fetchBuyerSupplierOrder()
     },[])
 
-
+    
     return (
         <>
             <div className='supplier-details-container'>
