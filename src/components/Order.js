@@ -43,9 +43,6 @@ const Order = () => {
                 break;
         }
     };
-    // pagination end
-
-
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
