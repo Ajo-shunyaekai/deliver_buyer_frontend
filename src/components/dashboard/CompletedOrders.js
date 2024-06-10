@@ -32,7 +32,6 @@ const CompletedOrders = () => {
     const [orderList, setOrderList]     = useState([])
     const [totalOrders, setTotalOrders] = useState()
 
-
     // Alloted Order JSOn file
     const [activeOrders, setActiveOrders] = useState([
         {
@@ -96,7 +95,6 @@ const CompletedOrders = () => {
             "status": "Order Placed"
         },
     ]);
-
 
     const [currentPage, setCurrentPage] = useState(1);
     const ordersPerPage     = 2;

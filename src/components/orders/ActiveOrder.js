@@ -12,7 +12,6 @@ import OrderDetails from '../OrderDetails'
 import moment from 'moment/moment';
 
 
-
 const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handlePageChange,  activeLink }) => {
 
     const [show, setShow] = useState(false);
@@ -27,6 +26,7 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
         setSelectedOrderId(orderId)
         setModal(!modal)
     }
+
     const [activeOrders, setActiveOrders] = useState([
         {
             "order_id": "3654646",
