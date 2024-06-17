@@ -5,12 +5,12 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import moment from 'moment/moment';
 
 
-const SupplyOrderList = ({orderList}) => {
+const SupplyOrderList = ({orderList, totalOrders, currentPage, ordersPerPage, handleOrderPageChange}) => {
 
     return (
         <div className="supply-card-body">
             <div>
-                <div className="table-assign-supply-heading">Order List</div>
+                {/* <div className="table-assign-supply-heading">Order List</div> */}
             </div>
             <div className='supply-order-list-main-section'>
                 <table className="supply-table">

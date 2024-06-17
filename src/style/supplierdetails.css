@@ -1,8 +1,11 @@
 .supplier-details-container {
   width: 100%;
   height: 100vh;
-  overflow-x: scroll;
-  max-width: 90%;
+  overflow: scroll;
+  background-attachment: fixed;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 1480px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
@@ -37,7 +40,26 @@
   border-color: transparent;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   flex-direction: column;
-  row-gap: 4px;
+  row-gap: 8px;
+}
+.supplier-details-company-type-conatiner{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.supplier-details-company-type-button{
+  align-items: center;
+    background: linear-gradient(270deg, #00dcff, #0075ce);
+    border: none !important;
+    border-radius: 4px;
+    color: #fff;
+    column-gap: 8px;
+    cursor: pointer !important;
+    display: flex;
+    font-size: 14px;
+    outline: none !important;
+    padding: 4px 12px;
 }
 .supplier-details-description-section {
   display: flex;
@@ -49,6 +71,10 @@
   flex-direction: column;
   row-gap: 4px;
 }
+.supplier-details-left-supplier-container{
+  display: flex;
+  flex-direction: column;
+}
 .supplier-details-description-head {
   font-size: 14px;
   font-weight: 500;
@@ -59,11 +85,11 @@
 }
 .supplier-details-left-uppar-head {
   font-size: 20px;
+  line-height: 20px;
   font-weight: 500;
 }
 .supplier-details-left-inner-sec-text {
   font-size: 14px;
-  color: #99a0ac;
 }
 .supplier-details-left-inner-mobile-button {
   background-color: #31c971;
@@ -98,6 +124,7 @@
 .supplier-details-left-inner-img-container {
   display: flex;
   column-gap: 10px;
+  margin-right: 8px;
 }
 .supllier-details-section {
   display: flex;
@@ -160,9 +187,11 @@
   flex-direction: column;
 }
 .supplier-details-card-conteianer-head {
+  color: #5e676f !important;
   font-size: 14px;
   font-weight: 500;
   text-align: start;
+  cursor: pointer;
 }
 .supplier-details-card-conteianer-text {
   font-size: 14px;
@@ -178,6 +207,9 @@
   width: 24px;
 }
 /* Style the table container */
+.supply-table {
+  width: 100% !important;
+}
 .supply-button-td {
   width: 4vw;
 }
@@ -197,7 +229,7 @@
 .supply-card-body {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  /* row-gap: 20px; */
 }
 .table-assign-supply-heading {
   font-size: 18px;
@@ -211,11 +243,11 @@
 
 .supply-td {
   padding: 16px 20px;
-  width: 11vw;
+  width: 14vw;
 }
 .supply-tdss {
   padding: 16px 20px;
-  width: 12vw;
+  width: 14vw;
   font-size: 13px;
   font-weight: 500;
 }
@@ -260,8 +292,8 @@
   padding: 6px 10px !important;
   z-index: 1;
   position: absolute !important;
-  top: 5.4% !important; /* Position tooltip above the button */
-  left: 42% !important;
+  top: 3.8% !important;
+  left: 43% !important;
   transform: translateX(-50%) !important;
   opacity: 0 !important;
   transition: opacity 0 3s !important;
@@ -281,8 +313,53 @@
   visibility: visible !important;
   opacity: 1 !important;
 }
+/* Start the product section card code */
+.supplier-details-bottom-table-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+}
+.supplier-details-bottom-group-container{
+  display: flex;
+  column-gap: 20px;
+}
+.supplier-details-product-bottom {
+  border: none !important;
+  outline: none !important;
+  background-color: #f5f5f6;
+  color: #99a0ac;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.supplier-details-list-bottom {
+  border: none !important;
+  outline: none !important;
+  background-color: #ffffff;
+  color: #99a0ac;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.supplier-details-product-bottom.active, .supplier-details-list-bottom.active {
+  background-color: #e1e1e4;
+  border-color: #dadade;
+}
+/* End the product section card code */
+
 
 /* start the media query */
+@media screen and (max-width: 1590px) {
+  .supplier-details-left-inner-container {
+      width: 54%;
+  }
+  }
 @media screen and (max-width: 1420px) {
   .supplier-details-container {
     max-width: 100%;
@@ -296,7 +373,7 @@
 }
 @media screen and (max-width: 1250px) {
   .supplier-details-left-inner-container {
-    width: 44%;
+    width: 50%;
   }
   .supllier-details-section {
     padding: 20px 20px;
@@ -314,7 +391,6 @@
   }
   .supply-td {
     padding: 16px 20px;
-    width: 10vw;
   }
 }
 @media screen and (max-width: 992px) {
@@ -334,10 +410,10 @@
     width: 49%;
   }
   .supply-td {
-    width: 24vw;
+    width: 30vw;
   }
   .supply-tdss {
-    width: 24vw;
+    width: 30vw;
   }
   .supply-card-body {
     margin-bottom: 50px;

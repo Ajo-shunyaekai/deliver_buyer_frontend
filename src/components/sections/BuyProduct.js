@@ -416,7 +416,7 @@ const BuyProduct = ({active}) => {
                                 <div className='buy-product-card-first-section'>
                                     <div className='buy-product-card-first-left'>
                                         <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
-                                        <div className='buy-product-card-first-copmany-description'>{medicine.drugs_name}</div>
+                                        <div className='buy-product-card-first-copmany-description'>{medicine.drugs_name || 'paracetamol' }</div>
                                     </div>
                                     <div className='buy-product-card-second-section'>
                                         <div className='buy-product-card-second-head'>Country of origin</div>

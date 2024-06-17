@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
 import styles from '../style/support.module.css';
 import FaqSupport from './sections/FaqSupport';
-import { Link, useNavigate } from 'react-router-dom';
-import { postRequestWithToken } from '../api/Requests';
+import SupportImageUpload from './SupportImageUpload'
 
 const Support = () => {
-
-    const navigate = useNavigate()
-
-    const [feedbackVisible, setFeedbackVisible]   = useState(true);
+    const [feedbackVisible, setFeedbackVisible] = useState(true); 
     const [complaintVisible, setComplaintVisible] = useState(false);
-    const [activeButton, setActiveButton]         = useState('feedback'); 
-
-    const [isTypingOrderId, setIsTypingOrderId]          = useState(false); 
-    const [isTypingComplaint, setIsTypingComplaint]      = useState(false); 
-    const [isTypingFeedOrderId, setIsTypingFeedOrderId]  = useState(false)
-    const [isTypingFeedback, setIsTypingFeedback]        = useState(false)
-
+    const [activeButton, setActiveButton] = useState('feedback'); 
 
     const toggleFeedbackForm = () => {
         setFeedbackVisible(true);
@@ -30,122 +20,64 @@ const Support = () => {
         setActiveButton('complaint');
     };
 
-    const initialFeedbackData = {
-        order_id : '',
-        feedback : '',
-      };
-    
-      const initialComplaintData = {
-        order_id  : '',
-        complaint : '',
-      };
-    
-      const initialFeedbackErrors  = {};
-      const initialComplaintErrors = {};
-    
-      const [feedbackData, setFeedbackData]       = useState(initialFeedbackData);
-      const [complaintData, setComplaintData]     = useState(initialComplaintData);
-      const [feedbackErrors, setFeedbackErrors]   = useState(initialFeedbackErrors);
-      const [complaintErrors, setComplaintErrors] = useState(initialComplaintErrors);
 
-    const validateFeedbackForm = () => {
-      const errors = {};
-      if (!feedbackData.order_id) {
-          errors.order_id = 'Order ID is required';
-      }
-      if (!feedbackData.feedback) {
-          errors.feedback = 'Feedback text is required';
-      }
-      setFeedbackErrors(errors);
-      return Object.keys(errors).length === 0;
-    };
 
-    const validateFeedbackOrderId = (order_id) => {
-        const error = !order_id ? 'Order ID is required' : null;
-        setFeedbackErrors((prevErrors) => ({ ...prevErrors, order_id: error }));
-        setIsTypingFeedOrderId(false);
-    };
+    // Form Validation
+    const [orderId, setOrderId] = useState('');
+    const [feedback, setFeedback] = useState('');
+    const [errors, setErrors] = useState({});
 
-    const validateFeedback = (feedback) => {
-        const error = !feedback ? 'Feedback text is required' : null;
-        setFeedbackErrors((prevErrors) => ({ ...prevErrors, feedback: error }));
-        setIsTypingFeedback(false);
-    };
-
-    const validateComplaintOrderId = (order_id) => {
-        const error = !order_id ? 'Order ID is required' : null;
-        setComplaintErrors((prevErrors) => ({ ...prevErrors, order_id: error }));
-        setIsTypingOrderId(false);
-    };
-
-    const validateComplaint = (complaint) => {
-        const error = !complaint ? 'Complaint text is required' : null;
-        setComplaintErrors((prevErrors) => ({ ...prevErrors, complaint: error }));
-        setIsTypingComplaint(false);
-    };
-
-    const validateComplaintForm = () => {
+    const validate = () => {
         const errors = {};
-        if (!complaintData.order_id) {
-            errors.order_id = 'Order ID is required';
+        if (!orderId) {
+            errors.orderId = 'Order ID is required';
         }
-        if (!complaintData.complaint) {
-            errors.complaint = 'Complaint text is required';
+        if (!feedback) {
+            errors.feedback = 'Feedback is required';
         }
-        setComplaintErrors(errors);
-        return Object.keys(errors).length === 0;
+        return errors;
     };
 
-      const handleFeedback = (e) => {
-        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
-        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
-
-        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
-            navigate("/login");
-            return;
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = validate();
+        if (Object.keys(errors).length === 0) {
+            // Form is valid, submit the form
+            console.log({ orderId, feedback });
+        } else {
+            // Form is invalid, set errors
+            setErrors(errors);
         }
+    };
 
-        e.preventDefault();
-        feedbackData.buyer_id     = buyerIdSessionStorage || buyerIdLocalStorage
-        feedbackData.support_type = 'feedback';
+    // Complaint form
     
-        postRequestWithToken('buyer/order/submit-order-feedback', feedbackData, async (response) => {
-          if (response.code === 200) {
-            setFeedbackData(initialFeedbackData);
-            setFeedbackErrors(initialFeedbackErrors);
-            setIsTypingFeedOrderId(false);
-            setIsTypingFeedback(false);
-          } else {
-            console.log(response.message);
-          }
-        });
-      };
-    
-      const handleComplaint = (e) => {
-        const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
-        const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
-    
-            if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
-                navigate("/login");
-                return;
-            }
+    const [compOrderId, setcompOrderId] = useState('');
+    const [compfeedback, setcompfeedback] = useState('');
+    const [compErrors, setcompErrors] = useState({});
 
-        e.preventDefault();
-        complaintData.buyer_id     = buyerIdSessionStorage || buyerIdLocalStorage
-        complaintData.support_type = 'complaint';
-    
-        postRequestWithToken('buyer/order/submit-order-complaint', complaintData, async (response) => {
-          if (response.code === 200) {
-            setComplaintData(initialComplaintData);
-            setComplaintErrors(initialComplaintErrors);
-            setIsTypingOrderId(false);
-            setIsTypingComplaint(false);
-          } else {
-            console.log(response.message);
-          }
-        });
-      };
+    const compValidate = () => {
+        const compErrors = {};
+        if (!compOrderId) {
+            compErrors.compOrderId = 'Order ID is required';
+        }
+        if (!compfeedback) {
+            compErrors.compfeedback = 'Feedback is required';
+        }
+        return compErrors;
+    };
 
+    const complaintSubmit = (event) => {
+        event.preventDefault();
+        const compErrors = compValidate(); // Call compValidate instead of validate
+        if (Object.keys(compErrors).length === 0) {
+            // Form is valid, submit the form
+            console.log({ compOrderId, compfeedback }); // Log the correct variables
+        } else {
+            // Form is invalid, set errors
+            setcompErrors(compErrors);
+        }
+    };
 
     return (
         <>
@@ -166,70 +98,42 @@ const Support = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* {
-                                feedbackVisible && (
-                                  
-                                    <div className={styles[`form-container`]}>
-                                    <div className={styles[`form-heading`]}>Feedback Form</div>
-                                    <form onSubmit={(e) => {
-                                            e.preventDefault();
-
-                                            if (validateFeedbackForm()) {
-                                                handleFeedback(e);
-                                            }
-                                        }}>
-                                        <div className={styles[`form-container`]}>
-                                            <input type="text" placeholder="Enter your order Id" className={styles[`form-input`]} 
-                                             value={feedbackData.order_id}
-                                             onChange={(e) => setFeedbackData({ ...feedbackData, order_id: e.target.value })}
-                                             onInput={() => setIsTypingFeedOrderId(true)}
-                                             onBlur={(e) => validateFeedbackOrderId(e.target.value)}
-                                            />
-                                            {feedbackErrors.order_id && !isTypingFeedOrderId && <div className="error-message" style={{color: 'red'}}>{feedbackErrors.order_id}</div>}
-                                            <textarea placeholder="Enter your feedback" className={styles[`form-input`]} 
-                                             value={feedbackData.feedback}
-                                             onChange={(e) => setFeedbackData({ ...feedbackData, feedback: e.target.value })}
-                                             onInput={() => setIsTypingFeedback(true)}
-                                             onBlur={(e) => validateFeedback(e.target.value)}
-                                            />
-                                            {feedbackErrors.feedback && !isTypingFeedback && <p className="error-message" style={{color: 'red'}}>{feedbackErrors.feedback}</p>}
-                                            <input type="submit" value="Submit" className={styles[`form-submit-btn`]} />
-                                        </div>
-                                    </form>
-                                   </div>
-                                )
-                            } */}
                             {
                                 feedbackVisible && (
-                                    <div className={styles['form-container']}>
-                                        <div className={styles['form-heading']}>Feedback Form</div>
-                                        <form onSubmit={(e) => {
-                                            e.preventDefault();
-                                            if (validateFeedbackForm()) {
-                                                handleFeedback(e);
-                                            }
-                                        }}>
-                                            <div className={styles['form-container']}>
-                                                <input
+                                    <div className={styles[`form-main-container`]}>
+                                        <div className={styles[`form-heading`]}>Feedback Form</div>
+                                        <form className={styles['form-main-form-section']}  onSubmit={handleSubmit}>
+                                            <div className={styles[`form-container`]}>
+                                                <div className={styles['form-support-main-section']}>
+                                                    <div className={styles['form-cont-input-sec']}>
+                                                    <input
                                                     type="text"
                                                     placeholder="Enter your order Id"
-                                                    className={styles['form-input']}
-                                                    value={feedbackData.order_id}
-                                                    onChange={(e) => setFeedbackData({ ...feedbackData, order_id: e.target.value })}
-                                                    onInput={() => setIsTypingFeedOrderId(true)}
-                                                    onBlur={(e) => validateFeedbackOrderId(e.target.value)}
-                                                />
-                                                {feedbackErrors.order_id && !isTypingFeedOrderId && <div className="error-message" style={{ color: 'red' }}>{feedbackErrors.order_id}</div>}
-                                                <textarea
+                                                    className={styles[`form-input`]}
+                                                    value={orderId}
+                                                    onChange={(e) => setOrderId(e.target.value)}/>
+                                                    {errors.orderId && <div className={styles['error-message']}>{errors.orderId}</div>}
+                                                    </div>
+                                                    
+                                                    <div className={styles['form-support-textarea']}>
+                                                    <textarea
                                                     placeholder="Enter your feedback"
-                                                    className={styles['form-input']}
-                                                    value={feedbackData.feedback}
-                                                    onChange={(e) => setFeedbackData({ ...feedbackData, feedback: e.target.value })}
-                                                    onInput={() => setIsTypingFeedback(true)}
-                                                    onBlur={(e) => validateFeedback(e.target.value)}
-                                                />
-                                                {feedbackErrors.feedback && !isTypingFeedback && <p className="error-message" style={{ color: 'red' }}>{feedbackErrors.feedback}</p>}
-                                                <input type="submit" value="Submit" className={styles['form-submit-btn']} />
+                                                    className={styles[`form-textarea`]}
+                                                    rows={4}
+                                                    value={feedback}
+                                                    onChange={(e) => setFeedback(e.target.value)}/>
+                                                        {errors.feedback && <div className={styles['error-message']}>{errors.feedback}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className={styles['form-support-image']}>
+                                                    <SupportImageUpload />
+                                                </div>
+                                            </div>
+                                            <div className={styles[`form-submit-btn-cont`]} >
+                                            <button type="submit" className={styles['form-submit-btn']}>Submit</button>
+
+                                                {/* <span className={styles['form-submit-btn']}>Submit</span> */}
                                             </div>
                                         </form>
                                     </div>
@@ -237,43 +141,43 @@ const Support = () => {
                             }
                             {
                                 complaintVisible && (
-                                    // <div className={styles[`form-container`]}>
-                                    //     <div className={styles[`form-heading`]}>Complaint Form</div>
-                                    //     <form>
-                                    //         <div className={styles[`form-container`]}>
-                                    //             <input type="text" placeholder="Enter your order Id" className={styles[`form-input`]} />
-                                    //             <textarea placeholder="Enter your complaint" className={styles[`form-input`]} />
-                                    //             <input type="submit" value="Submit" className={styles[`form-submit-btn`]} />
-                                    //         </div>
-                                    //     </form>
-                                    // </div>
-                                    <div className={styles[`form-container`]}>
+                                    <div className={styles[`form-main-container`]}>
                                         <div className={styles[`form-heading`]}>Complaint Form</div>
-                                         <form onSubmit={(e) => {
-                                                e.preventDefault();
+                                        <form className={styles['form-main-form-section']} onSubmit={complaintSubmit}>
+                                        <div className={styles['form-container']}>
+                                            <div className={styles['form-support-main-section']}>
+                                                <div className={styles['form-cont-input-sec']}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter your order Id"
+                                                        className={styles['form-input']}
+                                                        value={compOrderId}
+                                                        onChange={(e) => setcompOrderId(e.target.value)}
+                                                    />
+                                                    {compErrors.compOrderId && <div className={styles['error-message']}>{compErrors.compOrderId}</div>}
+                                                </div>
 
-                                                if (validateComplaintForm()) {
-                                                    handleComplaint(e);
-                                                }
-                                            }}>
-                                            <div className={styles[`form-container`]}>
-                                                <input type="text" placeholder="Enter your order Id" className={styles[`form-input`]}
-                                                value={complaintData.order_id}
-                                                onChange={(e) => setComplaintData({ ...complaintData, order_id: e.target.value })}
-                                                onInput={() => setIsTypingOrderId(true)}
-                                                onBlur={(e) => validateComplaintOrderId(e.target.value)}
-                                                />
-                                              {complaintErrors.order_id && !isTypingOrderId && <div className="error-message" style={{color: 'red'}}>{complaintErrors.order_id}</div>}
-                                                <textarea placeholder="Enter your complaint" className={styles[`form-input`]} 
-                                                 value={complaintData.complaint}
-                                                 onChange={(e) => setComplaintData({ ...complaintData, complaint: e.target.value })}
-                                                 onInput={() => setIsTypingComplaint(true)}
-                                                 onBlur={(e) => validateComplaint(e.target.value)}
-                                                 />
-                                               {complaintErrors.complaint && !isTypingComplaint && <div className="error-message" style={{color: 'red'}}>{complaintErrors.complaint}</div>}
-                                                <input type="submit" value="Submit" className={styles[`form-submit-btn`]} />
+                                                <div className={styles['form-support-textarea']}>
+                                                    <textarea
+                                                        placeholder="Enter your complaint"
+                                                        className={styles['form-textarea']}
+                                                        rows={4}
+                                                        value={compfeedback} // Corrected the variable name
+                                                        onChange={(e) => setcompfeedback(e.target.value)}
+                                                    />
+                                                    {compErrors.compfeedback && <div className={styles['error-message']}>{compErrors.compfeedback}</div>}
+                                                </div>
                                             </div>
-                                        </form>
+
+                                            <div className={styles['form-support-image']}>
+                                                <SupportImageUpload />
+                                            </div>
+                                        </div>
+                                        <div className={styles['form-submit-btn-cont']}>
+                                            <button type="submit" className={styles['form-submit-btn']}>Submit</button> 
+                                            {/* Changed to button and added type="submit" */}
+                                        </div>
+                                    </form>
                                     </div>
                                 )
                             }

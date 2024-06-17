@@ -11,7 +11,10 @@ ul {
   width: 100%;
   max-width: 90%;
   height: 100vh;
-  overflow-y: scroll;
+  overflow: scroll;
+  background-attachment: fixed;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -76,6 +79,9 @@ ul {
   column-gap: 20px;
   row-gap: 20px;
   margin: 20px 0px;
+}
+.buy-seller-name-images {
+  width: 16px;
 }
 .buy-seller-card {
   background-color: #ffffff;
@@ -213,6 +219,9 @@ ul {
 }
 .buy-seller-company-name-text {
   font-size: 13px;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
 }
 .buy-seller-copmany-img img {
   width: 60px;
@@ -224,6 +233,7 @@ ul {
   column-gap: 50px;
 }
 .buy-seller-company-country-name {
+  width: 120px;
   font-size: 15px;
   font-weight: 500;
 }

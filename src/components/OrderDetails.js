@@ -40,21 +40,21 @@ const OrderDetails = () => {
     
     return (
         <div className='order-details-container'>
-            <div className='order-details-conatiner-heading'>Order ID: <span>{orderDetails?.order_id}</span></div>
+            <div className='order-details-conatiner-heading'>Order ID: <span>{orderDetails?.order_id || '987456321'}</span></div>
             <div className='order-details-section'>
                 <div className='order-details-left-section'>
                     <div className='order-details-top-inner-section'>
                         <div className='order-details-left-inner-section-container'>
                             <div className='order-details-left-top-containers'>
-                                <Link to='/supplier-details'>
+                                <Link to='/supplier-details/86756'>
                                     <div className='order-details-top-order-cont'>
                                         <div className='order-details-left-top-main-heading'> Seller Name</div>
-                                        <div className='order-details-left-top-main-contents'> {orderDetails?.supplier?.supplier_name}</div>
+                                        <div className='order-details-left-top-main-contents'> {orderDetails?.supplier?.supplier_name || 'Pharmaceuticals Pvt Ltd'}</div>
                                     </div>
                                 </Link>
                                 <div className='order-details-top-order-cont'>
                                     <div className='order-details-left-top-main-heading'> Order Status</div>
-                                    <div className='order-details-left-top-main-contents'> {orderDetails?.order_status}</div>
+                                    <div className='order-details-left-top-main-contents'> {orderDetails?.order_status || 'In-Transit'}</div>
                                 </div>
                                 <div className='order-details-top-order-cont'>
                                     <div className='order-details-left-top-main-heading-button'> Tracking</div>
@@ -123,11 +123,11 @@ const OrderDetails = () => {
                     <div className='order-details-payment-terms-cont'>
                         <div className='order-details-payment-first-terms-cont'>
                             <div className='order-details-payment-first-terms-heading'>Payment Terms</div>
-                            <div className='order-details-payment-first-terms-text'>{orderDetails?.payment_terms}</div>
+                            <div className='order-details-payment-first-terms-text'>{orderDetails?.payment_terms || '20 Days'}</div>
                         </div>
                         <div className='order-details-payment-first-terms-cont'>
                             <div className='order-details-payment-first-terms-heading'>Est. Delivery Time</div>
-                            <div className='order-details-payment-first-terms-text'>{orderDetails?.est_delivery_time}</div>
+                            <div className='order-details-payment-first-terms-text'>{orderDetails?.est_delivery_time || '15 Days'}</div>
                         </div>
                     </div>
                     <div className='order-details-payment-detention-cont'>
@@ -150,15 +150,15 @@ const OrderDetails = () => {
                         <div className='order-details-right-details-row-one'>
                             <div className='order-details-right-pickupdata'>
                                 <div className='order-details-right-pickdata-head'>Consignor Name</div>
-                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.consignor_name}</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.consignor_name || 'Surya Kumar sharma'}</div>
                             </div>
                             <div className='order-details-right-pickupdata'>
                                 <div className='order-details-right-pickdata-head'>Phone No.</div>
-                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.mobile_no}</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.mobile_no || '+971 563658956'}</div>
                             </div>
                             <div className='order-details-right-pickupdata-address'>
                                 <div className='order-details-right-pickdata-head'>Address</div>
-                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.address}</div>
+                                <div className='order-details-right-pickdata-text'>{orderDetails?.shipping_details?.address || 'Financial Center Rd, Along Sheik zayed road, Dubai 22155.'}</div>
                             </div>
                         </div>
                         {/* <hr className='order-details-right-pickupdata-hr' />

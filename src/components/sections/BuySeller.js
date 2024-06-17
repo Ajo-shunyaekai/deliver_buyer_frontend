@@ -9,6 +9,7 @@ import card3 from '../../assest/companycard/card3.svg'
 import card4 from '../../assest/companycard/card4.svg'
 import card5 from '../../assest/companycard/card5.svg'
 import card6 from '../../assest/companycard/card6.svg'
+import Verified from '../../assest/verified-icon.svg'
 import ArrowCard from '../../assest/companycard/arrowcard.svg'
 import { postRequestWithToken } from '../../api/Requests';
 
@@ -328,7 +329,10 @@ const BuySeller = ({active}) => {
                         <div className='buy-seller-company-container'>
                             <div className='buy-seller-copmany-contents'>
                                 <div className='buy-seller-copmany-name'>{supplier.supplier_name}</div>
-                                <div className='buy-seller-company-name-text'>License No: {supplier.license_no}</div>
+                                <div className='buy-seller-company-name-text'>
+                                <img src={Verified} className='buy-seller-name-images' />
+                                Verified
+                                </div>
                             </div>
                             <div className='buy-seller-copmany-img'>
                                 {/* <img src={card1} /> */}
