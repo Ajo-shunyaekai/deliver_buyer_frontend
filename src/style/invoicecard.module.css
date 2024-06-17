@@ -10,14 +10,14 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
 .invoice-card-section {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
-  row-gap: 14px;
+  gap: 0.9rem;
 }
 .invoice-card-conts {
   display: flex;

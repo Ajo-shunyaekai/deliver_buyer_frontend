@@ -37,9 +37,16 @@ import CustomModal from './components/pay/CustomModal.js';
 import InvoiceCardDesign from './components/pay/InvoiceCardDesign.js'
 import ProductDetailsCard from './components/ProductDetailsCard.js';
 import SignUp from './signup/SignUp.js';
+import SupplierCompleted from './components/supplier/SuplierCompleted.js'
+import SupplierActive from './components/supplier/SupplierActive.js'
+import SupplierPending from './components/supplier/SupplierPending.js'
 import ImageUploader from './signup/ImageUploader.js';
 import SuccessModal from './signup/SuccessModal.js';
 import Login from './signup/Login.js';
+import Buy2ndMarket from './components/sections/Buy2ndMarket.js'
+import MarketProductDetails from './components/MarketProductDetails.js';
+import SupplyProductList from './components/orders/SupplyProductList.js'
+import SupplierPurchaseInvoice from './components/pay/SupplierPurchaseInvoice.js'
 
 
 function IncludeSidebar() {
@@ -77,6 +84,13 @@ function IncludeSidebar() {
               <Route path="/custom-modal" element={<CustomModal />} />
               <Route path="/invoice-card-design" element={<InvoiceCardDesign />} />
               <Route path="/product-details-card" element={<ProductDetailsCard />} />
+              <Route path="/supplier-completed/:supplierId" element={<SupplierCompleted />} />
+              <Route path="/supplier-active/:supplierId" element={<SupplierActive />} />
+              <Route path="/supplier-pending/:supplierId" element={<SupplierPending />} />
+              <Route path="/supply-product-list" element={<SupplyProductList />} />
+              <Route path="/buy-2nd-market" element={<Buy2ndMarket />} />
+              <Route path="/market-product-details" element={<MarketProductDetails />} />  
+              <Route path="/supplier-purchase-invoice" element={<SupplierPurchaseInvoice />} />  
             </Routes>
        </Sidebar>
     </div>

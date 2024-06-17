@@ -78,10 +78,10 @@ const ProductDetails = () => {
                                 <div className="product-details-section-one">
                                     <div className="product-details-sec-one-left">
                                         <h4 >
-                                        {data.medicine_name}
+                                        {data.medicine_name} <span className='product-details-stength'> (500mg)</span>
                                         </h4>
                                         <p class="font-semibold text-[12px] leading-[21px] md:text-[16px] md:leading-[28px] text-gray-700 m-0">
-                                        {data.composition} 
+                                        {data.composition} 125 mg, 250 mg
                                         </p>
                                     </div>
 
@@ -107,8 +107,24 @@ const ProductDetails = () => {
                                                 <div className='product-details-two-left-text'>Dossier status :</div>
                                                 <div className='product-details-two-right-text'>{data.dossier_status}</div>
                                             </div>
+                                            <div className="product-details-two">
+                                                <div className='product-details-two-left-text'>Type of form :</div>
+                                                <div className='product-details-two-right-text'>Tablet</div>
+                                            </div>
+                                            <div className="product-details-two">
+                                                <div className='product-details-two-left-text'>Stocked in :</div>
+                                                <div className='product-details-two-right-text'>1500</div>
+                                            </div>
                                         </div>
                                         <div className="product-details-sec-two-left">
+                                        <div className="product-details-two">
+                                            <div className='product-details-two-left-text'>Product category :</div>
+                                            <div className='product-details-two-right-text'>Nutraceuticals</div>
+                                        </div>
+                                          <div className="product-details-two">
+                                            <div className='product-details-two-left-text'>Shelf life :</div>
+                                            <div className='product-details-two-right-text'>36 Month</div>
+                                          </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Country of origin :</div>
                                                 <div className='product-details-two-right-text'>{data?.supplier?.country_of_origin}</div>
@@ -148,9 +164,10 @@ const ProductDetails = () => {
 
                                 <div className='product-details-container'>
                                     <div className="product-range-container">
-                                        <div className="product-range-heading">Quantity</div>
-                                        <div className="product-range-heading">Unit Price</div>
-                                        <div className="product-range-heading">Est. Delivery Time</div>
+                                    <div className="product-range-heading">Quantity</div>
+                                    <div className="product-range-heading">Unit Price</div>
+                                    <div className="product-range-heading">Total Price</div>
+                                    <div className="product-range-heading">Est. Delivery Time</div>
                                     </div>
 
                                     {
@@ -158,6 +175,7 @@ const ProductDetails = () => {
                                                     return (
                                                         <div className="product-range-details">
                                                             <div className="product-range-text"> <input className="product-range-input" type=" text" value={info.quantity} /> </div>
+                                                            <div className="product-range-text"><input className="product-range-input" type="text" value="24 AED" /> </div>
                                                             <div className="product-range-text"><input className="product-range-input" type="text" value={info.unit_price} /> </div>
                                                             <div className="product-range-text"> <input className="product-range-input" type="text" value={info.est_delivery_days} /></div>
                                                         </div>
@@ -232,19 +250,20 @@ const ProductDetails = () => {
                                             <div className='product-details-inner-copmany-head'>License No. :</div>
                                             <div className='product-details-inner-copmany-text'>{data?.supplier?.license_no}</div>
                                         </div>
+                                     
+                                    </div>
+                                    <div className='product-details-company-conatiner'>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Address :</div>
                                             <div className='product-details-inner-copmany-text'>{data?.supplier?.supplier_address}</div>
                                         </div>
-                                    </div>
-                                    <div className='product-details-company-conatiner'>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Payment Terms :</div>
                                             <div className='product-details-inner-copmany-text'>{data?.supplier?.payment_terms}</div>
                                         </div>
-                                        <div className='product-details-inner-company'>
+                                        {/* <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Est. Delivery Time :</div>
-                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.estimated_delivery_time}</div></div>
+                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.estimated_delivery_time}</div></div> */}
                                     </div>
                                 </div>
                                 {/* start the ecommerce card */}

@@ -1,72 +1,76 @@
 .order-cancel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    font-size: 20px;
-    color: #5e676f;
-    cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #5e676f;
+  cursor: pointer;
 }
 
 .order-cancel-content {
-    padding: 20px;
-    font-size: 16px;
-    color: #5e676f;
-    font-weight: 500;
+  padding: 20px;
+  font-size: 14px;
+  color: #5e676f;
+  font-weight: 500;
 }
 
 .order-textarea-heading {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding: 10px 20px;
 }
 
 .order-textarea-heading span {
-    font-size: 15px;
-    padding: 5px;
-    color: #5e676f;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 5px;
+  color: #5e676f;
 }
 
 textarea.order-textarea {
-    width: 300px;
-    border-color: rgba(135, 150, 165, 0.15);
-    border-radius: 5px;
+  width: 300px;
+  border: 1px solid #99a0ac;
+  border-radius: 4px;
+  outline: none !important;
+  padding: 6px 8px 4px 10px;
+  font-size: 14px;
+  color: #5e676f;
 }
 
 .order-btn-container {
-    width: 100%;
-    position: absolute;
-    bottom: 1rem;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 0px 20px;
-    cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 12px;
+  cursor: pointer;
 }
 
 .order-close-btn {
-    padding: 3px 25px;
-    border: 1px solid #f4c414;
-    border-radius: 5px;
-    color: #f4c414;
-}
-
-.order-close-btn:hover {
-    background-color: #f4c414;
-    color: #000000;
+  padding: 3px 25px;
+  border: 1px solid #f4c414;
+  background-color: #f4c414;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #fff;
 }
 
 .order-submit-btn {
-    padding: 3px 30px;
-    border: 1px solid #448bff;
-    border-radius: 5px;
-    color: #448bff;
-}
-
-.order-submit-btn:hover {
-    background-color: #448bff;
-    color: #ffffff;
+  color: #fff;
+  padding: 3px 25px;
+  border: 1px solid #31c971;
+  background-color: #31c971;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
 }
