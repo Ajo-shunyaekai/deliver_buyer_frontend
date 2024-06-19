@@ -91,6 +91,7 @@ const SignUp = () => {
         const options = countryList().getData();
         setCountries(options);
     }, []);
+    
     const companyTypeOptions = [
         
         { value: 'distributor', label: 'Distributor' },
@@ -106,7 +107,6 @@ const SignUp = () => {
             setErrors(prevState => ({ ...prevState, companyType: '' }));
         }
     };
-
 
     const options = [
         { value: 'generies', label: 'Generies' },
@@ -176,12 +176,18 @@ const SignUp = () => {
         if (!formData.companyAddress) formErrors.companyAddress = 'Company Address is required';
         if (!formData.companyEmail) formErrors.companyEmail = 'Company Email ID is required';
         if (formData.companyEmail && !validateEmail(formData.companyEmail)) formErrors.companyEmail = 'Invalid Company Email ID';
-        if (!companyPhone) formErrors.companyPhone = 'Company Phone No. is required';
+        // if (!companyPhone) formErrors.companyPhone = 'Company Phone No. is required';
+        if (!companyPhone || companyPhone.length <= 6) {
+            formErrors.companyPhone = 'Company phone no. is required';
+        }
         if (!formData.contactPersonName) formErrors.contactPersonName = 'Contact Person Name is required';
         if (!formData.designation) formErrors.designation = 'Designation is required';
         if (!formData.email) formErrors.email = 'Email ID is required';
         if (formData.email && !validateEmail(formData.email)) formErrors.email = 'Invalid Email ID';
-        if (!mobile) formErrors.mobile = 'Mobile No. is required';
+        // if (!mobile) formErrors.mobile = 'Mobile No. is required';
+        if (!mobile || mobile.length <= 6) {
+            formErrors.mobile = 'Mobile no. is required';
+        }
         if (!formData.originCountry) formErrors.originCountry = 'Country of Origin is required';
         if (!formData.operationCountries.length) formErrors.operationCountries = 'Country of Operation is required';
         if (!formData.companyLicenseNo) formErrors.companyLicenseNo = 'Company License No. is required';
@@ -210,40 +216,72 @@ const SignUp = () => {
         }
     }, [resetUploaders]);
 
+
      const handleSubmit = () => {
-        if (validateForm()) {
-            const countryLabels = formData.operationCountries.map(country => {
+        if (validateForm() && isChecked) {
+
+            const formDataToSend = new FormData();
+
+            const countryLabels = formData.operationCountries?.map(country => {
                 return country ? country.label : '';
             });
-            const intrested = formData.interestedIn.map(data => {
+            console.log(formData?.interestedIn);
+            const interested = formData?.interestedIn?.map(data => {
                 return data ? data.label : ""
-            })
+            });
+            formDataToSend.append('buyer_type', formData.companyType?.label);
+            formDataToSend.append('buyer_name', formData.companyName);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('buyer_address', formData.companyAddress);
+            formDataToSend.append('buyer_email', formData.companyEmail);
+            formDataToSend.append('buyer_mobile', companyPhone);
+            formDataToSend.append('license_no', formData.companyLicenseNo);
+            // formDataToSend.append('license_expiry_date', formData.companyLicenseExpiry);
+            formDataToSend.append('country_of_origin', formData.originCountry);
+            formDataToSend.append('contact_person_name', formData.contactPersonName);
+            // formDataToSend.append('interested_in', interested);
+            interested.forEach(item => formDataToSend.append('interested_in[]', item));
+            formDataToSend.append('approx_yearly_purchase_value', formData.yearlyPurchaseValue);
+            formDataToSend.append('license_expiry_date', formData.companyLicenseExpiry);
+            formDataToSend.append('designation', formData.designation);
+            // formDataToSend.append('payment_terms', formData.paymentterms);
+            // formDataToSend.append('tags', formData.tags);
+            // formDataToSend.append('estimated_delivery_time', formData.delivertime);
+            formDataToSend.append('contact_person_mobile', mobile);
+            formDataToSend.append('contact_person_email', formData.email);
+            // formDataToSend.append('country_of_operation', countryLabels);
+            countryLabels.forEach(item => formDataToSend.append('country_of_operation[]', item));
+            formDataToSend.append('tax_no', formData.companyTaxNo);
+            Array.from(formData.logoImage).forEach(file => formDataToSend.append('buyer_image', file));
+            Array.from(formData.licenseImage).forEach(file => formDataToSend.append('license_image', file));
+            Array.from(formData.taxImage).forEach(file => formDataToSend.append('tax_image', file));
+            Array.from(formData.certificateImage).forEach(file => formDataToSend.append('certificate_image', file));
 
-            const regObj = {
-                buyer_type: formData.companyType?.label,
-                buyer_name: formData.companyName,
-                description: formData.description,
-                buyer_address: formData.companyAddress,
-                buyer_email: formData.companyEmail,
-                buyer_mobile: companyPhone,
-                license_no: formData.companyLicenseNo,
-                country_of_origin: formData.originCountry,
-                contact_person_name: formData.contactPersonName,
-                interested_in  : intrested,
-                designation: formData.designation,
-                approx_yearly_purchase_value : formData.yearlyPurchaseValue,
-                license_expiry_date : formData.companyLicenseExpiry,
-                tags: formData.tags,
-                buyer_image: formData.logoImage,
-                license_image: formData.licenseImage,
-                certificate_image: formData.certificateImage,
-                tax_image: formData.taxImage,
-                contact_person_mobile: mobile,
-                contact_person_email: formData.email,
-                country_of_operation: countryLabels,
-                tax_no: formData.companyTaxNo
-            }
-            postRequestWithFile('buyer/register', regObj, async (response) => {
+            // const regObj = {
+            //     buyer_type: formData.companyType?.label,
+            //     buyer_name: formData.companyName,
+            //     description: formData.description,
+            //     buyer_address: formData.companyAddress,
+            //     buyer_email: formData.companyEmail,
+            //     buyer_mobile: companyPhone,
+            //     license_no: formData.companyLicenseNo,
+            //     country_of_origin: formData.originCountry,
+            //     contact_person_name: formData.contactPersonName,
+            //     interested_in  : interested,
+            //     designation: formData.designation,
+            //     approx_yearly_purchase_value : formData.yearlyPurchaseValue,
+            //     license_expiry_date : formData.companyLicenseExpiry,
+            //     tags: formData.tags,
+            //     buyer_image: formData.logoImage,
+            //     license_image: formData.licenseImage,
+            //     certificate_image: formData.certificateImage,
+            //     tax_image: formData.taxImage,
+            //     contact_person_mobile: mobile,
+            //     contact_person_email: formData.email,
+            //     country_of_operation: countryLabels,
+            //     tax_no: formData.companyTaxNo
+            // }
+            postRequestWithFile('buyer/register', formDataToSend, async (response) => {
                 if (response.code === 200) {
                     setFormData({
                         companyType: '',
