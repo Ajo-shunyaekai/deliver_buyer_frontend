@@ -17,14 +17,12 @@ const Login = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        // Email validation
         if (!email) {
             newErrors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.email = 'Email address is invalid';
         }
 
-        // Password validation
         if (!password) {
             newErrors.password = 'Password is required';
         } else if (!/(?=.*[A-Z])/.test(password)) {
