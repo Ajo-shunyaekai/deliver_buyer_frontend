@@ -8,11 +8,21 @@ import card5 from '../assest/companycard/card5.svg'
 import card6 from '../assest/companycard/card6.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { postRequestWithToken } from '../api/Requests'
+import Pagination from 'react-js-pagination'
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 const MySuplier = () => {
     const navigate = useNavigate()
 
     const [mySuppliers, setMySuppliers] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems]   = useState()
+    const itemsPerPage = 4; 
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     useEffect(() => {
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
@@ -23,17 +33,20 @@ const MySuplier = () => {
         return;
         }
             const obj = {
-                buyer_id: buyerIdSessionStorage || buyerIdLocalStorage
+                buyer_id: buyerIdSessionStorage || buyerIdLocalStorage,
+                pageNo : currentPage,
+                pageSize : itemsPerPage
             }
 
             postRequestWithToken('buyer/supplier-list', obj, async (response) => {
                 if (response.code === 200) {
-                    setMySuppliers(response.result)
+                    setMySuppliers(response.result.suppliers)
+                    setTotalItems(response.result.totalItems)
                 } else {
                    console.log();
                 }
               })
-    },[])
+    },[currentPage])
 
     return (
         <>
@@ -220,6 +233,26 @@ const MySuplier = () => {
                             </div>
                         </Link>
                     </div> */}
+                </div>
+
+                <div className='mysupplier-pagination-section-main'>
+                    <div className='pagi-container'>
+                        <Pagination
+                            activePage={currentPage}
+                            itemsCountPerPage={itemsPerPage}
+                            totalItemsCount={totalItems}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                            nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                            hideFirstLastPages={true}
+                        />
+                        <div className='pagi-total'>
+                            Total Items: {totalItems}
+                        </div>
+                    </div>
                 </div>
             </div >
         </>

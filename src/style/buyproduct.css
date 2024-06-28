@@ -1,7 +1,6 @@
 .buy-product-main-container {
   background: linear-gradient(to left, #f5f5f7, #e1f2ff);
   margin-top: 25px;
-  margin-bottom: 100px;
   border-radius: 4px;
   padding: 50px 30px;
   display: flex;
@@ -9,6 +8,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 24px;
+}
+.buy-product-pagination-section{
+  margin-bottom: 8rem;
 }
 .buy-product-main-section-container {
   display: flex;

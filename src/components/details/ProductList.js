@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Pagination from 'react-js-pagination';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 const ProductList = ({orderItems}) => {
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 1; 
+
+    const activeOrders = [
+        { productId: 'PR1234567', productName: 'Paracetamol', quantity: 200, totalAmount: '500 AED' },
+        { productId: 'PR1234567', productName: 'Paracetamol', quantity: 200, totalAmount: '500 AED' },
+        { productId: 'PR1234567', productName: 'Paracetamol', quantity: 200, totalAmount: '500 AED' },
+    ];
+
+    const data = orderItems && orderItems.length > 0 ? orderItems : activeOrders;
+
+    const indexOfLastOrder  = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders     = data.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    
     return (
         <div className="card-body">
             <div>
@@ -9,130 +32,77 @@ const ProductList = ({orderItems}) => {
             </div>
             <table className="table">
                 <tbody>
-                {
-                        orderItems?.map((item,i) => {
-                            return (
+       
+
+    {
+        currentOrders?.map((item,i) => {
+            return (
                     <tr>
-                        <td className='tables-tds'>
+                        <td className='tables-td'>
                             <div className="table-g-section-content">
-                                {/* <span className="table-g-driver-name">Product ID</span> */}
-                                <span className="table-g-not-names">{item.product_id}</span>
+                            
+                                <span className="table-g-not-names">{item.product_id || item.productId}</span>
                             </div>
                         </td>
-                        <td className='tables-tds-cont' >
+                        <td className='tables-td-cont' >
                             <div className="table-second-container">
-                                <span className="table-g-section">{item.product_name.charAt(0)}</span>
+                                <span className="table-g-section">{item?.product_name?.charAt(0) || item?.productName?.charAt(0) }</span>
                                 <div className="table-g-section-content">
                                     <span className="table-g-driver-name">Product Name</span>
-                                    <span className="table-g-not-name">{item.product_name} ({item.drugs_name}) </span>
+                                    <span className="table-g-not-name">{item.product_name || item.product_name} ({item.composition || 'Claritin'}) </span>
                                 </div>
                             </div>
                         </td>
-                        <td className='tables-tds'>
+                        <td className='tables-td'>
                             <div className="table-g-section-content">
                                 <span className="table-g-driver-name">Quantity</span>
-                                <span className="table-g-not-name">{item.quantity}</span>
+                                <span className="table-g-not-name">{item.quantity || item.quantity}</span>
                             </div>
                         </td>
-                        <td className='tables-tds'>
+                        <td className='tables-td'>
                             <div className="table-g-section-content">
                                 <span className="table-g-driver-name">Price</span>
-                                <span className="table-g-not-name">{item.price}</span>
+                                <span className="table-g-not-name">{item.price || item.totalAmount}</span>
                             </div>
                         </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                                {/* <span className="table-g-driver-name">Status</span> */}
-                                <span className="table-g-not-name-buttons">Pending</span>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-       )
-    })
-}
 
-                    {/* <tr>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                               
-                                <span className="table-g-not-names">PR1234567</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds-cont' >
-                            <div className="table-second-container">
-                                <span className="table-g-section">G</span>
-                                <div className="table-g-section-content">
-                                    <span className="table-g-driver-name">Product Name</span>
-                                    <span className="table-g-not-name">Paracetamol (acetaminophen) </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                                <span className="table-g-driver-name">Quantity</span>
-                                <span className="table-g-not-name">200</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                                <span className="table-g-driver-name">Price</span>
-                                <span className="table-g-not-name">500 AED</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                               
-                                <span className="table-g-not-name-buttons">Pending</span>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> */}
-
-
-                    {/* <tr>
                         <td className='tables-tds'>
                             <div className="table-g-section-content">
                               
-                                <span className="table-g-not-names">PR1234567</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds-cont' >
-                            <div className="table-second-container">
-                                <span className="table-g-section">G</span>
-                                <div className="table-g-section-content">
-                                    <span className="table-g-driver-name">Product Name</span>
-                                    <span className="table-g-not-name">Paracetamol (acetaminophen) </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                                <span className="table-g-driver-name">Quantity</span>
-                                <span className="table-g-not-name">200</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                                <span className="table-g-driver-name">Price</span>
-                                <span className="table-g-not-name">500 AED</span>
-                            </div>
-                        </td>
-                        <td className='tables-tds'>
-                            <div className="table-g-section-content">
-                               
                                 <span className="table-g-not-name-buttons">Pending</span>
                             </div>
                         </td>
+                        
                         <td>
+
                         </td>
-                    </tr> */}
+                    </tr>
+                )
+          })
+    }
+
+
 
 
                 </tbody>
             </table>
+            <div className='pagi-container'>
+                <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={ordersPerPage}
+                    totalItemsCount={data.length}
+                    pageRangeDisplayed={5}
+                    onChange={handlePageChange}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                    nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                    hideFirstLastPages={true}
+                />
+                <div className='pagi-total'>
+                    <div>Total Items: {data.length}</div>
+                </div>
+            </div>
         </div>
     )
 }

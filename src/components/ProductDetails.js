@@ -68,20 +68,20 @@ const ProductDetails = () => {
         <>
             <div className='main-product-details-container'>
 
-            {
-                details?.map((data,i) => {
-                    const strengths = data.inventory.strength?.join(', ');
-                    return (
+            {/* {
+                details?.map((data,i) => { */}
+                    {/* const strengths = details.inventory.strength?.join(', '); */}
+                    {/* return ( */}
                         <div className="product-details-cover">
 
                             <div className='product-details-container-main'>
                                 <div className="product-details-section-one">
                                     <div className="product-details-sec-one-left">
                                         <h4 >
-                                        {data.medicine_name} <span className='product-details-stength'> (500mg)</span>
+                                        {details?.medicine_name} <span className='product-details-stength'> (500mg)</span>
                                         </h4>
                                         <p class="font-semibold text-[12px] leading-[21px] md:text-[16px] md:leading-[28px] text-gray-700 m-0">
-                                        {data.composition} 125 mg, 250 mg
+                                        {details?.composition} 125 mg, 250 mg
                                         </p>
                                     </div>
 
@@ -97,15 +97,15 @@ const ProductDetails = () => {
                                         <div className="product-details-sec-two-left">
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Shipping time :</div>
-                                                <div className='product-details-two-right-text'>{data?.shipping_time}</div>
+                                                <div className='product-details-two-right-text'>{details?.shipping_time}</div>
                                             </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Dossier type :</div>
-                                                <div className='product-details-two-right-text'>{data.dossier_type}</div>
+                                                <div className='product-details-two-right-text'>{details?.dossier_type}</div>
                                             </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Dossier status :</div>
-                                                <div className='product-details-two-right-text'>{data.dossier_status}</div>
+                                                <div className='product-details-two-right-text'>{details?.dossier_status}</div>
                                             </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Type of form :</div>
@@ -127,11 +127,11 @@ const ProductDetails = () => {
                                           </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>Country of origin :</div>
-                                                <div className='product-details-two-right-text'>{data?.supplier?.country_of_origin}</div>
+                                                <div className='product-details-two-right-text'>{details?.supplier?.country_of_origin}</div>
                                             </div>
                                             <div className="product-details-two">
                                                 <div className='product-details-two-left-text'>GMP approvals :</div>
-                                                <div className='product-details-two-right-text'>{data.gmp_approvals}</div>
+                                                <div className='product-details-two-right-text'>{details?.gmp_approvals}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@ const ProductDetails = () => {
 
                                 <div className='product-details-container'>
                                 {/* <div className="product-details-section-two-img"> */}
-                                        {/* {data.medicine_image?.map((image, j) => (
+                                        {/* {details.medicine_image?.map((image, j) => (
                                             <div className="product-details-sec-img-left" key={j}>
                                                 <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${image}`} alt={`${data.medicine_name} ${j}`} className="responsive-image" />
                                             </div>
@@ -171,7 +171,7 @@ const ProductDetails = () => {
                                     </div>
 
                                     {
-                                                data?.inventory_info?.map((info,k) => {
+                                                details?.inventory_info?.map((info,k) => {
                                                     return (
                                                         <div className="product-range-details">
                                                             <div className="product-range-text"> <input className="product-range-input" type=" text" value={info.quantity} /> </div>
@@ -213,20 +213,20 @@ const ProductDetails = () => {
                                     <div className="product-details-country-section">
                                         <div className="product-details-county">
                                             <div className='product-details-four-left-text'>Registered in :</div>
-                                            <div className='product-details-four-right-text'> <CountryDetails countryData = {data.registered_in} /></div>
+                                            <div className='product-details-four-right-text'> <CountryDetails countryData = {details?.registered_in} /></div>
                                         </div>
                                         <div className="product-details-county">
                                             <div className='product-details-four-left-text'>Tags :</div>
-                                            <div className='product-details-four-right-text'>{data?.tags}</div>
+                                            <div className='product-details-four-right-text'>{details?.tags}</div>
                                         </div>
                                         <div className="product-details-county">
                                             <div className='product-details-four-left-text'>Available for :</div>
-                                            <div className='product-details-four-right-text'>{data?.available_for}</div>
+                                            <div className='product-details-four-right-text'>{details?.available_for}</div>
                                         </div>
                                         <div className="product-details-county">
                                             <div className='product-details-four-left-text'>Comments :</div>
                                             <div className='product-details-four-right-text'>
-                                            {data.description}
+                                            {details?.description}
                                             </div>
                                         </div>
                                     </div>
@@ -234,8 +234,8 @@ const ProductDetails = () => {
                                 <div className='product-details-containers'>
 
                                     <div className="product-details-mfg-container">
-                                        <div className="product-details-mfg-heading">{data?.supplier?.supplier_name}</div>
-                                        <div className="product-details-mfg-details">{data?.supplier?.description}</div>
+                                        <div className="product-details-mfg-heading">{details?.supplier?.supplier_name}</div>
+                                        <div className="product-details-mfg-details">{details?.supplier?.description}</div>
                                     </div>
 
                                 </div>
@@ -244,22 +244,22 @@ const ProductDetails = () => {
                                     <div className='product-details-company-conatiner'>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Supplier Name :</div>
-                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.supplier_name}</div>
+                                            <div className='product-details-inner-copmany-text'>{details?.supplier?.supplier_name}</div>
                                         </div>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>License No. :</div>
-                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.license_no}</div>
+                                            <div className='product-details-inner-copmany-text'>{details?.supplier?.license_no}</div>
                                         </div>
                                      
                                     </div>
                                     <div className='product-details-company-conatiner'>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Address :</div>
-                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.supplier_address}</div>
+                                            <div className='product-details-inner-copmany-text'>{details?.supplier?.supplier_address}</div>
                                         </div>
                                         <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Payment Terms :</div>
-                                            <div className='product-details-inner-copmany-text'>{data?.supplier?.payment_terms}</div>
+                                            <div className='product-details-inner-copmany-text'>{details?.supplier?.payment_terms}</div>
                                         </div>
                                         {/* <div className='product-details-inner-company'>
                                             <div className='product-details-inner-copmany-head'>Est. Delivery Time :</div>
@@ -273,9 +273,9 @@ const ProductDetails = () => {
                                 {/* end the ecommerce card */}
                             </div>
                         </div>
-                  )
-                })
-            }
+                  {/* ) */}
+                {/* })
+            } */}
             </div>
         </>
     )

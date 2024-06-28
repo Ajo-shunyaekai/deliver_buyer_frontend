@@ -10,6 +10,9 @@ import Arrow from '../../assest/Buy/arrow.svg'
 import Search from '../../assest/Buy/search-icon.svg'
 import MedicineOne from '../../assest/Buy/paracetamol.png';
 import { postRequestWithToken } from '../../api/Requests';
+import Pagination from 'react-js-pagination';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 const BuyProduct = ({active}) => {
     const navigate = useNavigate()
@@ -17,7 +20,10 @@ const BuyProduct = ({active}) => {
     const [medicineList, setMedicineList] = useState([])
     const [inputValue, setInputValue]     = useState('')
     const [searchKey, setSearchKey]       = useState('')
-    // const active = 'product';
+    const [filterCategory, setFilterCategory] = useState('')
+    const [currentPage, setCurrentPage]   = useState(1);
+    const [totalItems, setTotalitems]     = useState()
+    const itemsPerPage = 2;
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value)
@@ -37,6 +43,14 @@ const BuyProduct = ({active}) => {
         }
     };
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleCategoryFilter = (category) => {
+        setFilterCategory(category)
+    }
+
     useEffect(() => {
 
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
@@ -48,49 +62,57 @@ const BuyProduct = ({active}) => {
         }
 
         const obj = {
-            buyer_id: buyerIdSessionStorage|| buyerIdLocalStorage,
-            searchKey: searchKey
+            buyer_id      : buyerIdSessionStorage|| buyerIdLocalStorage,
+            medicine_type : 'new',
+            category_name : filterCategory,
+            searchKey     : searchKey,
+            pageNo        : currentPage, 
+            pageSize      : itemsPerPage
          }
 
         if(active === 'product') {
             postRequestWithToken('buyer/medicine/medicine-list', obj, async (response) => {
                 if (response.code === 200) {
-                    setMedicineList(response.result)
+                    setMedicineList(response.result.data)
+                    setTotalitems(response.result.totalItems)
                 } else {
                    console.log('error in medicine list api',response);
                 }
               })
         }
-    },[searchKey])
+    },[searchKey, currentPage, filterCategory])
+
+   
+
 
     return (
         <>
             <div className='buy-product-main-section-container'>
                 <div className='buy-seller-main-heading'>Lorem Ipsum is simply dummy text</div>
                 <div className='buy-seller-pharma-card'>
-                    <div className='buy-seller-card'>
+                    <div className='buy-seller-card' onClick={() => handleCategoryFilter('Generics')}>
                         <div className='buy-seller-card-img'>
                             <img className='buy-seller-img-one' src={Generics} />
                         </div>
-                        <div className='buy-seller-card-head'>Generies</div>
+                        <div className='buy-seller-card-head'>Generics</div>
                         <div className='buy-seller-card-content'>Lorem ipsum is placeholder text
                             commonly used in the graphic,</div>
                         <div className='buy-seller-arrow-img'>
                             <img src={Arrow} />
                         </div>
                     </div>
-                    <div className='buy-seller-card'>
+                    <div className='buy-seller-card' onClick={() => handleCategoryFilter('Originals')}>
                         <div className='buy-seller-card-img'>
                             <img className='buy-seller-img-two' src={Orignals} />
                         </div>
-                        <div className='buy-seller-card-head'>Orignals</div>
+                        <div className='buy-seller-card-head'>Originals</div>
                         <div className='buy-seller-card-content'>Lorem ipsum is placeholder text
                             commonly used in the graphic,</div>
                         <div className='buy-seller-arrow-img'>
                             <img src={Arrow} />
                         </div>
                     </div>
-                    <div className='buy-seller-card'>
+                    <div className='buy-seller-card'  onClick={() => handleCategoryFilter('Biosimilars')}>
                         <div className='buy-seller-card-img'>
                             <img className='buy-seller-img-three' src={Biosimilars} />
                         </div>
@@ -101,7 +123,7 @@ const BuyProduct = ({active}) => {
                             <img src={Arrow} />
                         </div>
                     </div>
-                    <div className='buy-seller-card'>
+                    <div className='buy-seller-card' onClick={() => handleCategoryFilter('Medical Devices')}>
                         <div className='buy-seller-card-img'>
                             <img className='buy-seller-img-four' src={MedicalDevices} />
                         </div>
@@ -112,7 +134,7 @@ const BuyProduct = ({active}) => {
                             <img src={Arrow} />
                         </div>
                     </div>
-                    <div className='buy-seller-card'>
+                    <div className='buy-seller-card' onClick={() => handleCategoryFilter('Nutraceutical')}>
                         <div className='buy-seller-card-img'>
                             <img className='buy-seller-img-five' src={Nutraceutical} />
                         </div>
@@ -397,6 +419,7 @@ const BuyProduct = ({active}) => {
                      {  
                        medicineList && medicineList.length > 0 ? (
                         medicineList?.map((medicine, i) => {
+                            console.log('medicine',medicine);
                             const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
                             return (
                                 <div className='buy-product-card-section'>
@@ -445,6 +468,26 @@ const BuyProduct = ({active}) => {
                         })
                        ) : 'not data found'
                     }
+                </div>
+
+                <div className='buy-product-pagination-section'>
+                    <div className='pagi-container'>
+                        <Pagination
+                            activePage={currentPage}
+                            itemsCountPerPage={itemsPerPage}
+                            totalItemsCount={totalItems}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                            nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                            hideFirstLastPages={true}
+                        />
+                        <div className='pagi-total'>
+                            Total Items: {totalItems}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

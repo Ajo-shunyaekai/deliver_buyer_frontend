@@ -4,13 +4,41 @@ import BuySeller from '../components/sections/BuySeller';
 import BuyProduct from './sections/BuyProduct';
 import Buy2ndMarket from './sections/Buy2ndMarket';
 import { postRequestWithToken } from '../api/Requests';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Buy = () => {
-    const [activeButton, setActiveButton] = useState('seller'); // Initialize activeButton with 'seller'
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    // Function to handle button click and set active button
+    const getActiveButtonFromPath = (path) => {
+        switch (path) {
+            case '/buy/seller':
+                return 'seller';
+            case '/buy/product':
+                return 'product';
+            case '/buy/market':
+                return 'market';
+            default:
+                return 'seller';
+        }
+    };
+
+    const activeButton = getActiveButtonFromPath(location.pathname);
+
     const handleButtonClick = (button) => {
-        setActiveButton(button);
+        switch (button) {
+            case 'seller':
+                navigate('/buy/seller');
+                break;
+            case 'product':
+                navigate('/buy/product');
+                break;
+            case 'market':
+                navigate('/buy/market');
+                break;
+            default:
+                navigate('/buy/seller');
+        }
     };
 
 
@@ -19,7 +47,6 @@ const Buy = () => {
             <div className='buy-main-container'>
                 <div className='buy-main-heading'>Buy</div>
                 <div className='buy-button-section'>
-                    {/* Buttons with click handlers */}
                     <div className={`buy-button-one ${activeButton === 'seller' ? 'active' : ''}`} onClick={() => handleButtonClick('seller')}>
                         By Seller
                     </div>
@@ -30,7 +57,6 @@ const Buy = () => {
                    Secondary Market
                     </div>
                 </div>
-                {/* Conditional rendering based on activeButton state */}
                 {activeButton === 'seller' && <BuySeller active={activeButton}/>}
                 {activeButton === 'product' && <div>
                     <BuyProduct active = {activeButton}/>

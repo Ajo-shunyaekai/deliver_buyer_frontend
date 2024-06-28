@@ -3,6 +3,9 @@ import Supplierdetails from '../../style/supplierdetails.css'
 import { Link } from 'react-router-dom';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import moment from 'moment/moment';
+import Pagination from 'react-js-pagination';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 
 const SupplyOrderList = ({orderList, totalOrders, currentPage, ordersPerPage, handleOrderPageChange}) => {
@@ -186,6 +189,23 @@ const SupplyOrderList = ({orderList, totalOrders, currentPage, ordersPerPage, ha
                         </tr> */}
                     </tbody>
                 </table>
+            </div>
+            <div className='pagi-container'>
+                <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={ordersPerPage}
+                    totalItemsCount={totalOrders}
+                    pageRangeDisplayed={5}
+                    onChange={handleOrderPageChange}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                    nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                    hideFirstLastPages={true}
+                />
+                <div className='pagi-total'>
+                    Total Items: {totalOrders}
+                </div>
             </div>
         </div>
     )
