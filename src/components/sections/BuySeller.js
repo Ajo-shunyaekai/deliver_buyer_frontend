@@ -12,6 +12,10 @@ import card6 from '../../assest/companycard/card6.svg'
 import Verified from '../../assest/verified-icon.svg'
 import ArrowCard from '../../assest/companycard/arrowcard.svg'
 import { postRequestWithToken } from '../../api/Requests';
+import Pagination from 'react-js-pagination';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
+
 
 const BuySeller = ({active}) => {
     const navigate = useNavigate()
@@ -27,6 +31,14 @@ const BuySeller = ({active}) => {
     const [searchKey, setSearchKey]         = useState('')
     const [countryOrigin, setCountryOrigin] = useState()
     const [filterCountry, setFilterCountry] = useState('')
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems]   = useState()
+    const itemsPerPage = 2
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value)
@@ -67,18 +79,21 @@ const BuySeller = ({active}) => {
             const obj = {
                 buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage,
                 searchKey : searchKey,
-                filterCountry
+                filterCountry,
+                pageNo : currentPage,
+                pageSize : itemsPerPage
             }
 
             postRequestWithToken('buyer/supplier-list', obj, async (response) => {
                 if (response.code === 200) {
-                    setSupplierList(response.result)
+                    setSupplierList(response.result.suppliers)
+                    setTotalItems(response.result.totalItems)
                 } else {
                    console.log('error in supplier list api',response);
                 }
               })
             }
-    },[searchKey, filterCountry])
+    },[searchKey, filterCountry, currentPage])
 
     useEffect(() => {
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
@@ -91,6 +106,7 @@ const BuySeller = ({active}) => {
 
         const obj = {
             buyer_id: buyerIdSessionStorage || buyerIdLocalStorage,
+            
         }
         postRequestWithToken('buyer/supplier/get-filter-values', obj, async (response) => {
             if (response.code === 200) {
@@ -104,7 +120,6 @@ const BuySeller = ({active}) => {
     return (
         <>
             <div className='buy-seller-container'>
-
 
             </div>
             {/* start the search container code */}
@@ -164,162 +179,6 @@ const BuySeller = ({active}) => {
             </div>
             {/* start the card section code */}
             <div className='buy-seller-company-card-section'>
-                {/* <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card1} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div >
-                <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card2} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div>
-                <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card3} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div>
-                <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card4} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div>
-                <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card5} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div>
-                <div className='buy-seller-company-cards'>
-                    <div className='buy-seller-company-container'>
-                        <div className='buy-seller-copmany-contents'>
-                            <div className='buy-seller-copmany-name'>Company Name</div>
-                            <div className='buy-seller-company-name-text'>Lorem ipsum dolor sit amet,</div>
-                        </div>
-                        <div className='buy-seller-copmany-img'>
-                            <img src={card6} />
-                        </div>
-                    </div>
-                    <div className='buy-seller-company-content-section'>
-                        <div className='buy-seller-company-country-name'>Country of Origin</div>
-                        <div className='buy-seller-company-counrty-flag'>India</div>
-                    </div>
-                    <div className='buy-seller-company-description'>
-                        <div className='buy-seller-company-description-text'>Discription</div>
-                        <div className='buy-seller-company-short-description'>Lorem ipsum dolor sit amet, consectetur
-                            adipiscin elit, sed do eiusmod tempor
-                            incididunt</div>
-                    </div>
-                    <Link to='/supplier-details'>
-                        <div className='buy-seller-company-card-button'>
-                            <div className='buy-seller-company-view'> View Details</div>
-                        </div>
-                    </Link>
-                </div> */}
                  
                  {
                     supplierList && supplierList.length > 0 ? (
@@ -338,6 +197,10 @@ const BuySeller = ({active}) => {
                                 {/* <img src={card1} /> */}
                                 <img src={`${process.env.REACT_APP_SERVER_URL}uploads/supplier/supplierImage_files/${supplier.supplier_image[0]}`} />
                             </div>
+                        </div>
+                        <div className='buy-seller-company-content-section'>
+                            <div className='buy-seller-company-country-name'>Tax No.</div>
+                            <div className='buy-seller-company-counrty-flag'>{supplier.tax_no || 'TX0324234'}</div>
                         </div>
                         <div className='buy-seller-company-content-section'>
                             <div className='buy-seller-company-country-name'>Country of Origin</div>
@@ -360,6 +223,26 @@ const BuySeller = ({active}) => {
                     ) : 'No data found'
                 }
 
+            </div>
+
+            <div className='buy-seller-pagination-container'>
+                <div className='pagi-container'>
+                    <Pagination
+                        activePage={currentPage}
+                        itemsCountPerPage={itemsPerPage}
+                        totalItemsCount={totalItems}
+                        pageRangeDisplayed={5}
+                        onChange={handlePageChange}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
+                            nextPageText={<KeyboardDoubleArrowRightIcon style={{ fontSize: '15px' }} />}
+                        hideFirstLastPages={true}
+                    />
+                    <div className='pagi-total'>
+                        Total Items: {totalItems}
+                    </div>
+                </div>
             </div>
         </>
     )

@@ -119,6 +119,7 @@ body {
   row-gap: 12px;
 }
 .bottom-head {
+  color: #5e676f !important;
   font-size: 0.825rem;
 }
 .bottom-text {

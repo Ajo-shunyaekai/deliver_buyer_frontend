@@ -28,29 +28,32 @@
 
 .uploaded-image {
   transition: transform 0.3s ease;
-  width: 100px;
-  height: auto;
+  width: 60px;
+ height: 60px;
 }
 
 .remove-icon {
   position: absolute;
   right: 10px;
+  top: 10px;
   cursor: pointer;
   width: 12px;
   height: 14px;
 }
 
 .upload-icon {
-  width: 36px;
+  width: 30px;
 }
 
 .image-uploader {
   position: relative;
+  top: 10px;
+  width: 20rem;
 }
 
 .upload-area {
   cursor: pointer;
-  padding: 24px 0px;
+  padding: 12px 0px;
   display: inline-block;
 }
 .upload-text {
@@ -119,4 +122,10 @@
   justify-content: start;
   align-items: start;
   gap: 1rem;
+}
+@media screen and (max-width: 1400px) {
+
+.upload-icon {
+  width: 24px;
+}
 }

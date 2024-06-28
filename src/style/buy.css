@@ -191,7 +191,6 @@ ul {
   align-items: center;
   flex-wrap: wrap;
   gap: 30px;
-  margin-bottom: 90px;
 }
 .buy-seller-company-cards {
   width: 34vw;
@@ -288,6 +287,9 @@ ul {
 .buy-button-two.active {
   background-color: #e1e1e4;
   border-color: #dadade;
+}
+.buy-seller-pagination-container{
+  margin-bottom: 8rem;
 }
 @media screen and (max-width: 1600px) {
   .buy-main-container {

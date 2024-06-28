@@ -73,7 +73,7 @@ const OrderCancel = ({ setModal, orderId,  activeLink  }) => {
                     <span>Reason</span>
                     <textarea 
                     name="" 
-                    id="" rows="2" 
+                    id="" rows="4" 
                     className=" order-textarea" 
                     value={reason}
                     onChange={handleReasonChange}

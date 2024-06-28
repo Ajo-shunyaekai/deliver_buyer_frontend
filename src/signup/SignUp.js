@@ -362,7 +362,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyName"
-                                placeholder="Enter the Company Name"
+                                placeholder="Enter Company Name"
                                 value={formData.companyName}
                                 onChange={handleChange}
                             />
@@ -375,7 +375,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyAddress"
-                                placeholder="Enter the Company Address"
+                                placeholder="Enter Company Address"
                                 value={formData.companyAddress}
                                 onChange={handleChange}
                             />
@@ -387,7 +387,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyEmail"
-                                placeholder="Enter the Company Email ID"
+                                placeholder="Enter Company Email ID"
                                 value={formData.companyEmail}
                                 onChange={handleChange}
                             />
@@ -417,7 +417,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="contactPersonName"
-                                placeholder="Enter the Contact Person Name"
+                                placeholder="Enter Contact Person Name"
                                 value={formData.contactPersonName}
                                 onChange={handleChange}
                             />
@@ -429,7 +429,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="designation"
-                                placeholder="Enter the Designation"
+                                placeholder="Enter Designation"
                                 value={formData.designation}
                                 onChange={handleChange}
                             />
@@ -441,7 +441,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="email"
-                                placeholder="Enter the Email ID"
+                                placeholder="Enter Email ID"
                                 value={formData.email}
                                 onChange={handleChange}
                             />
@@ -496,20 +496,11 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="yearlyPurchaseValue"
-                                placeholder="Enter the Approx. Yearly Purchase Value"
+                                placeholder="Enter Approx. Yearly Purchase Value"
                                 value={formData.yearlyPurchaseValue}
                                 onChange={handleChange}
                             />
                             {errors.yearlyPurchaseValue && <div className='signup__errors'>{errors.yearlyPurchaseValue}</div>}
-                        </div>
-                        <div className='signup-form-section-div'>
-                            <label className='signup-form-section-label'>Interested In</label>
-                            <MultiSelectDropdown
-                                options={options}
-                                value={selectedOptions}
-                                onChange={handleMultiSelectChange}
-                            />
-                             {errors.interestedIn && <div className='signup__errors'>{errors.interestedIn}</div>}
                         </div>
                         <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>Company License No.</label>
@@ -517,7 +508,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyLicenseNo"
-                                placeholder="Enter the License No."
+                                placeholder="Enter License No."
                                 value={formData.companyLicenseNo}
                                 onChange={handleChange}
                             />
@@ -529,7 +520,7 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyLicenseExpiry"
-                                placeholder="Enter the License Expiry Date"
+                                placeholder="Enter License Expiry Date"
                                 value={formData.companyLicenseExpiry}
                                 onChange={handleChange}
                             />
@@ -541,12 +532,22 @@ const SignUp = () => {
                                 className='signup-form-section-input'
                                 type="text"
                                 name="companyTaxNo"
-                                placeholder="Enter the Company Tax No."
+                                placeholder="Enter Company Tax No."
                                 value={formData.companyTaxNo}
                                 onChange={handleChange}
                             />
                             {errors.companyTaxNo && <div className='signup__errors'>{errors.companyTaxNo}</div>}
                         </div>
+                        <div className='signup-form-section-div'>
+                            <label className='signup-form-section-label'>Interested In</label>
+                            <MultiSelectDropdown
+                                options={options}
+                                value={selectedOptions}
+                                onChange={handleMultiSelectChange}
+                            />
+                             {errors.interestedIn && <div className='signup__errors'>{errors.interestedIn}</div>}
+                        </div>
+                       
                         <div className='signup-form-section-div'>
                             <label className='signup-form-section-label'>About Company</label>
                             <textarea
@@ -554,7 +555,7 @@ const SignUp = () => {
                                 name="description"
                                 rows="4"
                                 cols="50"
-                                placeholder='Enter the Description'
+                                placeholder='Enter Description'
                                 value={formData.description}
                                 onChange={handleChange}
                             />
@@ -566,7 +567,7 @@ const SignUp = () => {
                             {errors.licenseImage && <div className='signup__errors'>{errors.licenseImage}</div>}
                         </div>
                         <div className='signup-form-section-div'>
-                            <label className='signup-form-section-label'>Upload Tax Registraion Certificate</label>
+                            <label className='signup-form-section-label'>Upload Tax Registration Certificate</label>
                             <ImageUploaders onUploadStatusChange={handleImageUpload} imageType="tax" reset={resetUploaders} allowMultiple={true} />
                             {errors.taxImage && <div className='signup__errors'>{errors.taxImage}</div>}
                         </div>

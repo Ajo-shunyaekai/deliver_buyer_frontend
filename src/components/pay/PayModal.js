@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import UploadDocument from '../../components/pay/UploadDocument';
+import '../../style/custommodal.css'
+
+const injectStyles = () => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .custom-modal-style {
+           display:flex  !important;
+            padding: 0px !important;
+        }
+    `;
+    document.head.appendChild(style);
+};
 
 function PayModal({ showModal, handleClose }) {
     const [selectedDate, setSelectedDate] = useState(new Date()); 
     const [chequeImage, setChequeImage] = useState(null);
-
-    // const handleFileChange = event => {
-    //     const file = event.target.files[0];
-    //     setChequeImage(file);
-    // };
 
     const handleDateChange = date => {
         setSelectedDate(date);
@@ -183,10 +190,10 @@ function PayModal({ showModal, handleClose }) {
                 <Modal.Title>Add Payment Status</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='modal-payment-section'>
-                    <div className='modal-payment-form'>
-                        <label className='modal-class-head'>Mode of Payment</label>
-                        <select className='modal-pay-dropdown' 
+                <div className='modal-payment-section-invoice-cont'>
+                <div className='modal-payment-form-invoice-cont'>
+                <label className='modal-class-head-invoice-cont'>Mode of Payment</label>
+                        <select className='modal-pay-dropdown-invoice-cont' 
                             defaultValue="Select" 
                             value={modeOfPayment}
                             onChange={e => handleChange('modeOfPayment', e.target.value)}
@@ -199,10 +206,10 @@ function PayModal({ showModal, handleClose }) {
                         </select>
                         {errors.modeOfPayment && <span className="error">{errors.modeOfPayment}</span>}
                     </div>
-                    <div className='modal-payment-form'>
-                        <label className='modal-class-head'>Amount</label>
+                    <div className='modal-payment-form-invoice-cont'>
+                        <label className='modal-class-head-invoice-cont'>Amount</label>
                         <input 
-                            className='modal-class-input' 
+                            className='modal-class-input-invoice-cont' 
                             type='text' 
                             name='amount' 
                             placeholder='Enter the Amount' 
@@ -212,9 +219,9 @@ function PayModal({ showModal, handleClose }) {
                             autoComplete='off' />
                              {errors.amount && <span className="error">{errors.amount}</span>}
                     </div>
-                    <div className='modal-payment-form'>
-                        <label className='modal-class-head'>Transaction ID</label>
-                        <input className='modal-class-input' 
+                    <div className='modal-payment-form-invoice-cont'>
+                        <label className='modal-class-head-invoice-cont'>Transaction ID</label>
+                        <input className='modal-class-input-invoice-cont' 
                             type='text' 
                             name='amount' 
                             value={transactionId}
@@ -224,10 +231,10 @@ function PayModal({ showModal, handleClose }) {
                             autoComplete='off' />
                              {errors.transactionId && <span className="error">{errors.transactionId}</span>}
                     </div>
-                    <div className='modal-payment-form'>
-                        <label className='modal-class-head'>Date</label>
+                    <div className='modal-payment-form-invoice-cont'>
+                        <label className='modal-class-head-invoice-cont'>Date</label>
                         <input 
-                            className='modal-class-input' 
+                            className='modal-class-input-invoice-cont' 
                             type='text' 
                             // type='date' 
                             name='amount' 
@@ -239,23 +246,24 @@ function PayModal({ showModal, handleClose }) {
                              />
                              {errors.date && <span className="error">{errors.date}</span>}
                     </div>
-                    <div className='modal-payment-form'>
-                        <label className='modal-class-head'>Upload Image</label>
+                    <div className='modal-payment-form-invoice-cont'>
+                        <label className='modal-class-head-invoice-cont'>Upload Image</label>
                         <UploadDocument onUploadStatusChange={handleImageUploadStatus}/>
                         {errors.image && <span className="error">{errors.image}</span>}
                     </div>
                     {chequeImage && (
-                        <div className='modal-payment-form'>
+                        <div className='modal-payment-form-invoice-cont'>
                             <img src={URL.createObjectURL(chequeImage)} alt="Cheque" />
                         </div>
                     )}
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button className='modal-handle-save' onClick={handleSave}>Submit</Button>
-                <Button className='modal-handle-close' onClick={handleClose}>
+               
+                <Button className='modal-handle-close-invoice-cont' onClick={handleClose}>
                     Cancel
                 </Button>
+                <Button className='modal-handle-save-invoice-cont' onClick={handleSave}>Submit</Button>
             </Modal.Footer>
         </Modal>
     );

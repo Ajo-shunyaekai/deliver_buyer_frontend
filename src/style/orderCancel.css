@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px 14px;
   font-size: 18px;
   font-weight: 500;
   color: #5e676f;
@@ -10,10 +10,9 @@
 }
 
 .order-cancel-content {
-  padding: 20px;
+  padding: 10px 14px;
   font-size: 14px;
   color: #5e676f;
-  font-weight: 500;
 }
 
 .order-textarea-heading {
@@ -21,18 +20,19 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  padding: 10px 20px;
+  padding: 10px 14px;
 }
 
 .order-textarea-heading span {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 16px;
   font-weight: 500;
-  padding: 5px;
   color: #5e676f;
+  margin-bottom: 10px;
 }
 
 textarea.order-textarea {
-  width: 300px;
+  width: 322px;
   border: 1px solid #99a0ac;
   border-radius: 4px;
   outline: none !important;
@@ -46,7 +46,7 @@ textarea.order-textarea {
   position: absolute;
   bottom: 1rem;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   padding: 0px 12px;
@@ -54,23 +54,29 @@ textarea.order-textarea {
 }
 
 .order-close-btn {
-  padding: 3px 25px;
-  border: 1px solid #f4c414;
-  background-color: #f4c414;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  background-color: #ffffff;
+  border: 1px solid #5e676f;
+  color: #5e676f;
+  padding: 6px 22px;
   border-radius: 4px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
   font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
-  color: #fff;
 }
 
 .order-submit-btn {
-  color: #fff;
-  padding: 3px 25px;
-  border: 1px solid #31c971;
-  background-color: #31c971;
+  border: none !important;
+  outline: none !important;
+  background: linear-gradient(to left, #00dcff, #0075ce);
+  color: white;
+  padding: 6px 22px;
   border-radius: 4px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
   font-weight: 500;
-  cursor: pointer;
-}
+  font-size: 14px;
+} 
+

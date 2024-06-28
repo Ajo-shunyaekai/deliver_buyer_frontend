@@ -95,18 +95,11 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
             "status": "Order Placed"
         },
     ]);
-    // Pagination Code Start
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const ordersPerPage = 2;
+ 
     const indexOfLastOrder  = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders     = activeOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-    // const handlePageChange = (pageNumber) => {
-    //     setCurrentPage(pageNumber);
-    // };
-    // const totalPages = Math.ceil(activeOrders.length / ordersPerPage);
-
-    // pagination code end
+    
     return (
         <>
             <div className='order-main-container'>
@@ -177,69 +170,7 @@ const ActiveOrder = ({orderList, totalOrders, currentPage, ordersPerPage, handle
                                     ) :'no active orders'
                                 }
 
-                                {/* <tbody className='order-container-tbody'>
-                                    <tr className="order-section-tr">
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">18452025</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">12/12/2019</div>
-                                        </td>
-                                        <td className='order-section-tds'>
-                                            <div className="order-section-heading">Arihant Pharma Pvt. Ltd</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">4</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">Order Placed</div>
-                                        </td>
-                                        <td className='order-section-button-cont'>
-                                            <div className='order-section-button'>
-                                                <Link to='/order-details'>
-                                                    <div className='order-section-view'>
-                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
-                                                    </div>
-                                                </Link>
-                                                <div className='order-section-delete'>
-                                                    <HighlightOffIcon className='order-section-off' />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                                <tbody className='order-container-tbody'>
-                                    <tr className="order-section-tr">
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">18452025</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">12/12/2019</div>
-                                        </td>
-                                        <td className='order-section-tds'>
-                                            <div className="order-section-heading">Arihant Pharma Pvt. Ltd</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">4</div>
-                                        </td>
-                                        <td className='order-section-td'>
-                                            <div className="order-section-heading">Order Placed</div>
-                                        </td>
-                                        <td className='order-section-button-cont'>
-                                            <div className='order-section-button'>
-                                                <Link to='/order-details'>
-                                                    <div className='order-section-view'>
-                                                        <RemoveRedEyeOutlinedIcon className='order-section-eye' />
-                                                    </div>
-                                                </Link>
-                                                <div className='order-section-delete'>
-                                                    <HighlightOffIcon className='order-section-off' />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody> */}
+                                
                             </table>
                         </div>
                         {/* End the table section code */}

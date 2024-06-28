@@ -45,7 +45,7 @@ const SupplyProductList = ({productsData, totalProducts, currentPage,  productsP
   return (
     <div className='supply-product-list-main-sections'>
       <div className='supplier-product-card-main-section'>
-        {currentItems.map((product) => (
+        {/* {currentItems.map((product) => (
           <div key={product.id} className='supply-product-list-container'>
             <div className='supply-product-left-container'>
               <div className='supply-product-left-image-cont'>
@@ -82,8 +82,8 @@ const SupplyProductList = ({productsData, totalProducts, currentPage,  productsP
               </div>
             </div>
           </div>
-        ))}
-        {/* {
+        ))} */}
+      {
           productsData?.map((product, i) => {
             const firstImage = Array.isArray(product?.medicine_image) ? product.medicine_image[0] : null;
             return (
@@ -128,20 +128,19 @@ const SupplyProductList = ({productsData, totalProducts, currentPage,  productsP
             </div>
             )
           })
-        } */}
-       
+        } 
       </div>
       <div className='pagi-container'>
         <Pagination
-          activePage={currenttPage}
-          // activePage={currentPage}
-          itemsCountPerPage={itemsPerPage}
-          // itemsCountPerPage={productsPerPage}
-          totalItemsCount={productList.length}
-          // totalItemsCount={totalProducts}
+          // activePage={currenttPage}
+          activePage={currentPage}
+          // itemsCountPerPage={itemsPerPage}
+          itemsCountPerPage={productsPerPage}
+          // totalItemsCount={productList.length}
+          totalItemsCount={totalProducts}
           pageRangeDisplayed={5}
-          onChange={handlePageChange}
-          // onChange={handleProductPageChange}
+          // onChange={handlePageChange}
+          onChange={handleProductPageChange}
           itemClass="page-item"
           linkClass="page-link"
           prevPageText={<KeyboardDoubleArrowLeftIcon style={{ fontSize: '15px' }} />}
@@ -149,8 +148,8 @@ const SupplyProductList = ({productsData, totalProducts, currentPage,  productsP
           hideFirstLastPages={true}
         />
         <div className='pagi-total'>
-          Total Items: {productList.length}
-          {/* Total Items: {totalProducts} */}
+          {/* Total Items: {productList.length} */}
+          Total Items: {totalProducts}
         </div>
       </div>
     </div>

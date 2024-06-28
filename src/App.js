@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar.js';
 import Dashboard from './components/Dashboard';
 import Buy from './components/Buy'
@@ -55,10 +55,21 @@ function IncludeSidebar() {
        <Sidebar>
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/order" element={<Order />} />
-              <Route path="/buy" element={<Buy />} />
+              {/* <Route path="/order" element={<Order />} /> */}
+              <Route path="/order/active" element={<Order />} />
+              <Route path="/order/completed" element={<Order />} />
+              <Route path="/order/pending" element={<Order />} />
+              <Route path="/order" element={<Navigate to="/order/active" />} />
+              {/* <Route path="/buy" element={<Buy />} /> */}
+              <Route path="/buy/seller" element={<Buy />} />
+              <Route path="/buy/product" element={<Buy />} />
+              <Route path="/buy/market" element={<Buy />} />
+              <Route path="/buy" element={<Navigate to="/buy/seller" />} />
               <Route path="/my-supplier" element={<MySupplier />} />
-              <Route path="/invoice" element={<Invoice />} />
+              {/* <Route path="/invoice" element={<Invoice />} /> */}
+              <Route path="/invoice/pending" element={<Invoice />} />
+              <Route path="/invoice/paid" element={<Invoice />} />
+              <Route path="/invoice" element={<Navigate to="/invoice/pending" />} />
               <Route path="/support" element={<Support />} />
               <Route path="/active-order" element={<ActiveOrder />} />
               <Route path="/complete-order" element={<CompleteOrder />} />
@@ -70,7 +81,10 @@ function IncludeSidebar() {
               <Route path="/order-details/:orderId" element={<OrderDetails />} />
               <Route path="/pending-details/:orderId" element={<PendingDetails />} />
               <Route path="/medicine-details/:medicineId" element={<ProductDetails />} />
-              <Route path="/supplier-details/:supplierId" element={<SupplierDetails />} />
+              {/* <Route path="/supplier-details/:supplierId" element={<SupplierDetails />} /> */}
+              <Route path="/supplier-details/products/:supplierId" element={<SupplierDetails />} />
+              <Route path="/supplier-details/orders/:supplierId" element={<SupplierDetails />} />
+              <Route path="/supplier-details/:supplierId" element={<SupplierDetails />}  />
               <Route path="/completed-orders" element={<CompletedOrders />} />
               <Route path="/ongoing-orders" element={<OngoingOrders />} />
               <Route path="/supply-order-list" element={<SupplyOrderList />} />

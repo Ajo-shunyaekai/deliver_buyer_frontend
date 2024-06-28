@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import order from '../style/order.css';
 import order_list from '../assest/dashboard/order_list.svg'
 import OrderCancel from '../components/orders/OrderCancel';
@@ -12,35 +12,68 @@ import { postRequestWithToken } from '../api/Requests';
 
 
 const Order = () => {
+    const location  = useLocation();
      const navigate = useNavigate()
 
-    const [activeLink, setActiveLink]   = useState('active'); 
+    // const [activeLink, setActiveLink]   = useState('active'); 
     const [orderList, setOrderList]     = useState([])
     const [totalOrders, setTotalOrders] = useState()
     const [currentPage, setCurrentPage] = useState(1); 
-    const ordersPerPage = 2;
+    const ordersPerPage = 1;
+
+    // const handleLinkClick = (link) => {
+    //     setActiveLink(link);
+    //     setCurrentPage(1)
+        
+    //     switch (link) {
+    //         case 'alloted':
+                
+    //             break;
+    //         case 'active':
+                
+    //             break;
+
+    //         case 'completed':
+                
+    //             break;
+    //         case 'delete':
+                
+    //             break;
+           
+    //         default:
+    //             break;
+    //     }
+    // };
+    const getActiveLinkFromPath = (path) => {
+        
+        switch (path) {
+            case '/order/active':
+                return 'active';
+            case '/order/completed':
+                return 'completed';
+            case '/order/pending':
+                return 'pending';
+            default:
+                return 'active';
+        }
+    };
+
+    const activeLink = getActiveLinkFromPath(location.pathname);
 
     const handleLinkClick = (link) => {
-        setActiveLink(link);
         setCurrentPage(1)
-        // Here you can set the respective orders state variable based on the link clicked
         switch (link) {
-            case 'alloted':
-                // Set allotedOrders state
-                break;
             case 'active':
-                // Set activeOrders state
+                navigate('/order/active');
                 break;
-
             case 'completed':
-                // Set completeOrders state
+                navigate('/order/completed');
                 break;
-            case 'delete':
-                // Set deleteOrders state
+            case 'pending':
+                navigate('/order/pending');
                 break;
-            // Add cases for completed and deleted orders similarly
             default:
-                break;
+                navigate('/order/active');
         }
     };
 
@@ -52,10 +85,10 @@ const Order = () => {
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
         const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
 
-    if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
-      navigate("/login");
-      return;
-    }
+        if (!buyerIdSessionStorage && !buyerIdLocalStorage) {
+        navigate("/login");
+        return;
+        }
         const obj = {
             buyer_id  : buyerIdSessionStorage || buyerIdLocalStorage,
             filterKey : activeLink,
@@ -77,22 +110,9 @@ const Order = () => {
         <>
             <div className='order-main-container'>
                 <div className="order-name">
-                    {(() => {
-                        switch (activeLink) {
-                            case 'alloted':
-                                return 'Allotted Order';
-                            case 'active':
-                                return 'Active Orders';
-                            case 'completed':
-                                return 'Completed Orders';
-                            case 'pending':
-                                return 'Pending Orders';
-                            default:
-                                return 'Orders';
-                        }
-                    })()}
+                Orders
                 </div>
-                {/* <div className="order-name">Orders</div> */}
+               
                 <div className="order-container">
                     <div className="order-container-left">
                         <div onClick={() => handleLinkClick('active')} className={activeLink === 'active' ? 'active order-left-wrapper' : 'order-left-wrapper'}>

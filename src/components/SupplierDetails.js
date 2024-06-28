@@ -4,11 +4,43 @@ import SupplyOrderList from './orders/SupplyOrderList'
 import SupplyProductList from './orders/SupplyProductList';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneInTalkOutlinedIcon from '@mui/icons-material/PhoneInTalkOutlined';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { postRequestWithToken } from '../api/Requests';
 
 const SupplierDetails = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { supplierId } = useParams()
+
+    const getActiveButtonFromPath = (path) => {
+        switch (path) {
+            case `/supplier-details/products/${supplierId}`:
+                return 'products';
+            case `/supplier-details/orders/${supplierId}`:
+                return 'orders';
+            default:
+                return 'products';
+        }
+    };
+
+    const activeButton = getActiveButtonFromPath(location.pathname);
+
+    const handleButtonClick = (button) => {
+        switch (button) {
+            case 'products':
+                navigate(`/supplier-details/products/${supplierId}`);
+                setActiveTab('products');
+                break;
+            case 'orders':
+                navigate(`/supplier-details/orders/${supplierId}`);
+                setActiveTab('orders');
+                break;
+            default:
+                navigate(`/supply/products/${supplierId}`);
+                setActiveTab('products');
+        }
+    };
 
     const [activeTab, setActiveTab] = useState('products');
 
@@ -20,8 +52,7 @@ const SupplierDetails = () => {
         setActiveTab('orders');
     };
 
-    const { supplierId } = useParams()
-    const navigate       = useNavigate()
+   
 
     const [supplier, setSupplier]                     = useState()
 
@@ -171,27 +202,7 @@ const SupplierDetails = () => {
                             <div className='supplier-details-description-content'>{supplier?.description || 'test description'}</div>
                         </div>
                         <div className='supllier-details-section'>
-                            <div className='supplier-details-inner-section'>
-                                <div className='supplier-details-inner-head'>License No.</div>
-                                <div className='supplier-details-inner-text'>{supplier?.license_no || 'LIC-98768732'}</div>
-                            </div>
-                            <div className='supplier-details-inner-section'>
-                                <div className='supplier-details-inner-head'>Tax No.</div>
-                                <div className='supplier-details-inner-text'>5655565FDA6</div>
-                            </div>
-                            <div className='supplier-details-inner-section'>
-                                <div className='supplier-details-inner-head'>Address</div>
-                                <div className='supplier-details-inner-text'>{supplier?.supplier_address || '476 Udyog Vihar, Phase 5, Gurgaon'}</div>
-                            </div>
-                            <div className='supplier-details-inner-section'>
-                                <div className='supplier-details-inner-head'>Country of Origin</div>
-                                <div className='supplier-details-inner-text'>{supplier?.country_of_origin || 'United Arab Emirated'}</div>
-                            </div>
-                            <div className='supplier-details-inner-section'>
-                                <div className='supplier-details-inner-head'>Country of Operation</div>
-                                <div className='supplier-details-inner-text'>Dubai, London, Singapur</div>
-                            </div>
-                            <div className='supplier-details-inner-section'>
+                        <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Contact Person Name:</div>
                                 <div className='supplier-details-inner-text'>{supplier?.contact_person_name || 'Ashutosh Sharma'}</div>
                             </div>
@@ -207,6 +218,33 @@ const SupplierDetails = () => {
                                 <div className='supplier-details-inner-head'>Mobile No.</div>
                                 <div className='supplier-details-inner-text'>+971 1408767</div>
                             </div>
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>Address</div>
+                                <div className='supplier-details-inner-text'>{supplier?.supplier_address || '476 Udyog Vihar, Phase 5, Gurgaon'}</div>
+                            </div>
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>License No.</div>
+                                <div className='supplier-details-inner-text'>{supplier?.license_no || 'LIC-98768732'}</div>
+                            </div>
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>License Expiry Date</div>
+                                <div className='supplier-details-inner-text'>{supplier?.license_expiry_date || '12-08-26'}</div>
+                            </div>
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>Tax No.</div>
+                                <div className='supplier-details-inner-text'>5655565FDA6</div>
+                            </div>
+                            
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>Country of Origin</div>
+                                <div className='supplier-details-inner-text'>{supplier?.country_of_origin || 'United Arab Emirated'}</div>
+                            </div>
+                            <div className='supplier-details-inner-section'>
+                                <div className='supplier-details-inner-head'>Country of Operation</div>
+                                <div className='supplier-details-inner-text'>Dubai, London, Singapur</div>
+                            </div>
+                            
+                           
                             
                             <div className='supplier-details-inner-section'>
                                 <div className='supplier-details-inner-head'>Payment Terms</div>
@@ -257,7 +295,7 @@ const SupplierDetails = () => {
                             </div>
                         </div>
                         <div className='supplier-details-bottom-table-section'>
-                        <div className='supplier-details-bottom-group-container'>
+                        {/* <div className='supplier-details-bottom-group-container'>
                                 <button
                                     className={`supplier-details-product-bottom ${activeTab === 'products' ? 'active' : ''}`}
                                     onClick={showProducts}
@@ -268,6 +306,14 @@ const SupplierDetails = () => {
                                     className={`supplier-details-list-bottom ${activeTab === 'orders' ? 'active' : ''}`}
                                     onClick={showOrders}
                                 >
+                                    Previous Orders List
+                                </button>
+                            </div> */}
+                             <div className='supplier-details-bottom-group-container'>
+                                <button className={`supplier-details-product-bottom ${activeButton === 'products' ? 'active' : ''}`} onClick={() => handleButtonClick('products')}>
+                                    Products
+                                </button>
+                                <button className={`supplier-details-list-bottom ${activeButton === 'orders' ? 'active' : ''}`} onClick={() => handleButtonClick('orders')}>
                                     Previous Orders List
                                 </button>
                             </div>

@@ -112,18 +112,22 @@ const Dashboard = () => {
                                     </Link>
                                 </div>
                                 <div className='bottom-container'>
+                                <Link to='/invoice'>
                                     <div className='bottom-cart-cont'>
                                         <div className='bottom-head'>Payment Due:<span className='bottom-text'> 65</span></div>
                                         <div className='bottom-graph'>
                                             <ProgressBar />
                                         </div>
                                     </div>
+                                </Link>
+                                <Link to='/invoice/pending'>
                                     <div className='bottom-cart-cont'>
                                         <div className='bottom-head'> Invoice Due:<span className='bottom-text'> 25</span></div>
                                         <div className='bottom-graph'>
                                             <OrangeBar />
                                         </div>
                                     </div>
+                                    </Link>
                                 </div>
                             </div>
                             <div className='cart-top-left-section'>
