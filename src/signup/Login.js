@@ -46,6 +46,7 @@ const Login = () => {
                 password
             }
             postRequest('buyer/login', obj, async(response) => {
+                console.log('yesssss');
                 if(response.code === 200) {
                     sessionStorage.setItem('buyer_id',response.result.buyer_id)
                     sessionStorage.setItem('buyer_name',response.result.buyer_name)

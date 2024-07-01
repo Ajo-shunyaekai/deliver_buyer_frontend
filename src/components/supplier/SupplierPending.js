@@ -115,7 +115,7 @@ const SupplierPending = () => {
                                 </tr>
                             </thead>
                             <tbody className='bordered'>
-                                {currentOrders.map((order, index) => (
+                                {/* {currentOrders.map((order, index) => (
                                     <tr className='completed-table-row-container' key={index}>
                                         <td className='completed-table-row-item completed-table-order-1'>
                                             <div className='completed-table-text-color'>{order.order_id}</div>
@@ -140,12 +140,18 @@ const SupplierPending = () => {
                                             </Link>
                                         </td>
                                     </tr>
-                                ))}
-                                {/* {
+                                ))} */}
+                                {
                                     orderList?.map((order, i) => {
                                         const totalQuantity = order.items.reduce((total, item) => {
                                             return total + item.quantity;
                                           }, 0);
+                                          
+                                          const totalPrice = order.items.reduce((price, item) => {
+                                            const itemPrice = parseFloat(item.price.match(/[\d.]+/)[0]);
+                                            return price + itemPrice;
+                                          }, 0);
+
                                           const orderedDate = moment(order.created_at).format("DD/MM/YYYY")
                                         return (
                                             <tr className='completed-table-row-container' key={i}>
@@ -159,13 +165,13 @@ const SupplierPending = () => {
                                                     <div className='completed-table-text-color'>{totalQuantity}</div>
                                                 </td>
                                                 <td className='completed-table-row-item completed-table-order-2'>
-                                                    <div className='completed-table-text-color'>{order.order_price || '500 AED'}</div>
+                                                    <div className='completed-table-text-color'>{totalPrice || '500 AED'} AED</div>
                                                 </td>
                                                 <td className='completed-table-row-item completed-table-order-1'>
                                                     <div className='completed-table-text-color'>{order.order_status}</div>
                                                 </td>
                                                 <td className='completed-table-row-item completed-order-table-btn completed-table-order-1'>
-                                                    <Link to={`/order-details/${order.order_id}`}>
+                                                    <Link to={`/pending-details/${order.order_id}`}>
                                                         <div className='completed-order-table completed-order-table-view'>
                                                             <RemoveRedEyeOutlinedIcon className="table-icon" />
                                                         </div>
@@ -174,15 +180,15 @@ const SupplierPending = () => {
                                             </tr>
                                         )
                                     })
-                                } */}
+                                }
                             </tbody>
                         </Table>
                         <div className='completed-pagi-container'>
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={ordersPerPage}
-                                totalItemsCount={activeOrders.length}
-                                // totalItemsCount={totalOrders}
+                                // totalItemsCount={activeOrders.length}
+                                totalItemsCount={totalOrders}
                                 pageRangeDisplayed={5}
                                 onChange={handlePageChange}
                                 itemClass="page-item"
@@ -192,8 +198,8 @@ const SupplierPending = () => {
                                 hideFirstLastPages={true}
                             />
                             <div className='completed-pagi-total'>
-                                Total Items: {activeOrders.length}
-                                {/* Total Items: {totalOrders} */}
+                                {/* Total Items: {activeOrders.length} */}
+                                Total Items: {totalOrders}
                             </div>
                         </div>
                     </div>
