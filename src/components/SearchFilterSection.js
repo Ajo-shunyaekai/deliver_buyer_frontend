@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../style/searcjhfilter.css';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
-const SearchFilterSection = ({handlePriceRange, handleDeliveryTime, handleStockedIn}) => {
+const SearchFilterSection = ({handlePriceRange, handleDeliveryTime, handleStockedIn, handleQuantity, handleReset}) => {
     const [openDropdown, setOpenDropdown] = useState(null);
     const [checkedItems, setCheckedItems] = useState({
         price: {},
@@ -49,6 +49,8 @@ const SearchFilterSection = ({handlePriceRange, handleDeliveryTime, handleStocke
                 handleDeliveryTime(Object.keys(updatedCategory).filter(key => updatedCategory[key]));
             } else if (category === 'stockedIn') {
                 handleStockedIn(Object.keys(updatedCategory).filter(key => updatedCategory[key]));
+            } else if (category === 'totalQuantity') {
+                handleQuantity(Object.keys(updatedCategory).filter(key => updatedCategory[key]));
             }
 
             return updatedCheckedItems;
@@ -67,7 +69,9 @@ const SearchFilterSection = ({handlePriceRange, handleDeliveryTime, handleStocke
             deliveryTime: {},
             countryAvailableIn: {},
             stockedIn: {},
+            totalQuantity : {}
         });
+        handleReset()
         setAnyCheckboxChecked(false);
     };
 

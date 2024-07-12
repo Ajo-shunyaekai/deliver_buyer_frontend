@@ -24,10 +24,19 @@ const SearchsearchDetails = () => {
     const [priceRange, setPriceRange]     = useState([])
     const [deliveryTime, setDeliveryTime] = useState([])
     const [stockedIn, setStockedIn]       = useState([])
+    const [totalQuantity, setTotalQuantity] = useState([])
+    const [reset, setReset] = useState()
 
     console.log('priceRange',priceRange);
     console.log('deliveryTime',deliveryTime);
     console.log('stockedIn',stockedIn);
+    
+    const handleReset = () => {
+        setPriceRange([])
+        setDeliveryTime([])
+        setStockedIn([])
+        setTotalQuantity([])
+    }
 
     useEffect(() => {
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
@@ -64,6 +73,7 @@ const SearchsearchDetails = () => {
             price_range  : priceRange,
             delivery_time : deliveryTime,
             in_stock  :stockedIn,
+            quantity_range : totalQuantity,
             pageNo          : currentPage, 
             pageSize        : itemsPerPage
         }
@@ -75,7 +85,7 @@ const SearchsearchDetails = () => {
                console.log('error in similar-medicine-list api');
             }
           })
-    },[medicineName,medId, currentPage,priceRange, deliveryTime, stockedIn])
+    },[medicineName, medId, currentPage, priceRange, deliveryTime, stockedIn, totalQuantity])
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -152,6 +162,8 @@ const SearchsearchDetails = () => {
                               handlePriceRange = {setPriceRange}
                               handleDeliveryTime = {setDeliveryTime}
                               handleStockedIn = {setStockedIn}
+                              handleQuantity = {setTotalQuantity}
+                              handleReset = {handleReset}
                             />
                         </div>
                         {/* End the filter section */}

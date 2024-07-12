@@ -10,6 +10,7 @@
   gap: 24px;
 }
 .buy-product-pagination-section{
+  margin-top: 20px;
   margin-bottom: 8rem;
 }
 .buy-product-main-section-container {
@@ -27,6 +28,7 @@
   row-gap: 6px;
   border-radius: 4px;
   padding: 26px 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
 }
 .buy-product-card-first-section {
   display: flex;
@@ -103,6 +105,12 @@
   flex-direction: column;
   row-gap: 6px;
 }
+
+/* Start the search product list deisgn */
+.search-buy-product-list-container{
+  margin-bottom: 12rem;
+}
+/* End the search product list deisgn  */
 @media screen and (max-width: 1450px) {
   .buy-product-card-section {
     width: 36vw;
