@@ -182,8 +182,8 @@ const BuyProduct = ({active}) => {
             </div>
             <div className='buy-product-card-first-section'>
               <div className='buy-product-card-first-left'>
-                <div className='buy-product-card-first-company-name'>{medicine.medicine_name}</div>
-                <div className='buy-product-card-first-company-description'>{medicine.drugs_name || 'paracetamol'}</div>
+                <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
+                <div className='buy-product-card-first-copmany-description'>{medicine.composition || 'paracetamol'}</div>
               </div>
               <div className='buy-product-card-second-section'>
                 <div className='buy-product-card-second-head'>Country of origin</div>
@@ -231,8 +231,8 @@ const BuyProduct = ({active}) => {
             </div>
             <div className='buy-product-card-first-section'>
               <div className='buy-product-card-first-left'>
-                <div className='buy-product-card-first-company-name'>{medicine.medicine_name}</div>
-                <div className='buy-product-card-first-company-description'>{medicine.drugs_name || 'paracetamol'}</div>
+                <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
+                <div className='buy-product-card-first-copmany-description'>{medicine.drugs_name || 'paracetamol'}</div>
               </div>
               <div className='buy-product-card-second-section'>
                 <div className='buy-product-card-second-head'>Country of origin</div>
