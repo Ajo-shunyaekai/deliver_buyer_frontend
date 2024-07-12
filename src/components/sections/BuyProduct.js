@@ -19,7 +19,7 @@ const BuyProduct = ({active}) => {
     
     const [medicineList, setMedicineList] = useState([])
     const [inputValue, setInputValue]     = useState('')
-    const [searchKey, setSearchKey]       = useState('')
+    const [searchKey, setSearchKey]       = useState(null)
     const [filterCategory, setFilterCategory] = useState('')
     const [currentPage, setCurrentPage]   = useState(1);
     const [totalItems, setTotalitems]     = useState()
@@ -62,12 +62,13 @@ const BuyProduct = ({active}) => {
         }
 
         const obj = {
-            buyer_id      : buyerIdSessionStorage|| buyerIdLocalStorage,
-            medicine_type : 'new',
-            category_name : filterCategory,
-            searchKey     : searchKey,
-            pageNo        : currentPage, 
-            pageSize      : itemsPerPage
+            buyer_id        : buyerIdSessionStorage|| buyerIdLocalStorage,
+            medicine_type   : 'new',
+            medicine_status : 'accepted',
+            category_name   : filterCategory,
+            searchKey       : searchKey,
+            pageNo          : currentPage, 
+            pageSize        : itemsPerPage
          }
 
         if(active === 'product') {
@@ -158,316 +159,107 @@ const BuyProduct = ({active}) => {
                     </div>
                 </div>
                 <div className='buy-product-main-container'>
-                    {/* <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className='buy-product-card-section'>
-                        <div className='buy-product-card-first-section-right'>
-                            <div className='buy-product-card-first-medicine-image'>
-                                <img src={MedicineOne} alt="Medicine" />
-                            </div>
-                            <div className='buy-product-card-first-button-container'>
-                                <Link to='/product-details'>
-                                    <div className='buy-product-card-first-send-button'>
-                                        View Details
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className='buy-product-card-first-section'>
-                            <div className='buy-product-card-first-left'>
-                                <div className='buy-product-card-first-copmany-name'>Medicine Name</div>
-                                <div className='buy-product-card-first-copmany-description'>Drugs Name</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Country of origin</div>
-                                <div className='buy-product-card-second-text'>Dubai UAE</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Stocked in</div>
-                                <div className='buy-product-card-second-text'>450</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Type</div>
-                                <div className='buy-product-card-second-text'>EU CTU</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>Dossier Status</div>
-                                <div className='buy-product-card-second-text'>Ready to file</div>
-                            </div>
-                            <div className='buy-product-card-second-section'>
-                                <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                <div className='buy-product-card-second-text'>GU EMP</div>
-                            </div>
-
-                        </div>
-                    </div> */}
-
-                     {  
-                       medicineList && medicineList.length > 0 ? (
-                        medicineList?.map((medicine, i) => {
-                            console.log('medicine',medicine);
-                            const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
-                            return (
-                                <div className='buy-product-card-section'>
-                                <div className='buy-product-card-first-section-right'>
-                                    <div className='buy-product-card-first-medicine-image'>
-                                        <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`}  alt="Medicine" /> 
-                                    </div>
-                                    <div className='buy-product-card-first-button-container'>
-                                        <Link to={`/medicine-details/${medicine.medicine_id}`}>
-                                            <div className='buy-product-card-first-send-button'>
-                                                View Details
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
         
-                                <div className='buy-product-card-first-section'>
-                                    <div className='buy-product-card-first-left'>
-                                        <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
-                                        <div className='buy-product-card-first-copmany-description'>{medicine.drugs_name || 'paracetamol' }</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Country of origin</div>
-                                        <div className='buy-product-card-second-text'>{medicine.country_of_origin}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Stocked in</div>
-                                        <div className='buy-product-card-second-text'>{medicine.quantity}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Type</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_type}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Status</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_status}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                        <div className='buy-product-card-second-text'>{medicine.gmp_approvals}</div>
-                                    </div>
-        
-                                </div>
-                            </div>
-                            )
-                        })
-                       ) : 'not data found'
-                    }
+
+                {searchKey  ? (
+    medicineList && medicineList.length > 0 ? (
+      medicineList.map((medicine, i) => {
+        console.log('medicine', medicine);
+        const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
+        return (
+          <div className='buy-product-card-section' key={i}>
+            <div className='buy-product-card-first-section-right'>
+              <div className='buy-product-card-first-medicine-image'>
+                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt="Medicine" />
+              </div>
+              <div className='buy-product-card-first-button-container'>
+                <Link to={`/search-product-details/${medicine.medicine_id}`}>
+                  <div className='buy-product-card-first-send-button'>
+                    View Details
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div className='buy-product-card-first-section'>
+              <div className='buy-product-card-first-left'>
+                <div className='buy-product-card-first-company-name'>{medicine.medicine_name}</div>
+                <div className='buy-product-card-first-company-description'>{medicine.drugs_name || 'paracetamol'}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Country of origin</div>
+                <div className='buy-product-card-second-text'>{medicine.country_of_origin}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Stocked in</div>
+                <div className='buy-product-card-second-text'>{medicine.quantity}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Dossier Type</div>
+                <div className='buy-product-card-second-text'>{medicine.dossier_type}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Dossier Status</div>
+                <div className='buy-product-card-second-text'>{medicine.dossier_status}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>GMP Approvals</div>
+                <div className='buy-product-card-second-text'>{medicine.gmp_approvals}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    ) : 'no data found'
+  ) : (
+    medicineList && medicineList.length > 0 ? (
+      medicineList.map((medicine, i) => {
+        console.log('medicine', medicine);
+        const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
+        return (
+          <div className='buy-product-card-section' key={i}>
+            <div className='buy-product-card-first-section-right'>
+              <div className='buy-product-card-first-medicine-image'>
+                <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt="Medicine" />
+              </div>
+              <div className='buy-product-card-first-button-container'>
+                <Link to={`/medicine-details/${medicine.medicine_id}`}>
+                  <div className='buy-product-card-first-send-button'>
+                    View Details
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div className='buy-product-card-first-section'>
+              <div className='buy-product-card-first-left'>
+                <div className='buy-product-card-first-company-name'>{medicine.medicine_name}</div>
+                <div className='buy-product-card-first-company-description'>{medicine.drugs_name || 'paracetamol'}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Country of origin</div>
+                <div className='buy-product-card-second-text'>{medicine.country_of_origin}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Stocked in</div>
+                <div className='buy-product-card-second-text'>{medicine.quantity}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Dossier Type</div>
+                <div className='buy-product-card-second-text'>{medicine.dossier_type}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>Dossier Status</div>
+                <div className='buy-product-card-second-text'>{medicine.dossier_status}</div>
+              </div>
+              <div className='buy-product-card-second-section'>
+                <div className='buy-product-card-second-head'>GMP Approvals</div>
+                <div className='buy-product-card-second-text'>{medicine.gmp_approvals}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    ) : 'no data found'
+  )}
                 </div>
 
                 <div className='buy-product-pagination-section'>

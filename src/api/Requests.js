@@ -69,6 +69,7 @@ export const postRequestWithTokenAndFile = async (URL, requestData, callback) =>
             data    : requestData,
             headers : {
                 "access_token" : sessionStorage.getItem('token') || localStorage.getItem('token'),
+                "buyer_id"     :  sessionStorage.getItem('buyer_id') || localStorage.getItem('buyer_id'),
                 "Content-Type" : "multipart/form-data"
             }
         });

@@ -16,7 +16,7 @@ import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
-import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
+import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
 // Mobile sidebar
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -397,6 +397,10 @@ const Sidebar = ({ children, dragWindow }) => {
                         <Link to="/my-supplier" className={styles.sidebar_text} activeclassname={styles.active}>
                             <div className={styles.icon}><LocalShippingOutlinedIcon style={{ color: '#f4c414', fontSize: '20px' }} /></div>
                             <div style={{ display: isOpen ? "block" : "none" }} className={styles.sidebar_text}>My Supplier</div>
+                        </Link>
+                        <Link to="/subscription" className={styles.sidebar_text} activeclassname={styles.active}>
+                            <div className={styles.icon}><SubscriptionsOutlinedIcon style={{ color: '#14bae4', fontSize: '20px' }} /></div>
+                            <div style={{ display: isOpen ? "block" : "none" }} className={styles.sidebar_text}>Subscription</div>
                         </Link>
                         <Link to="/invoice" className={styles.sidebar_text} activeclassname={styles.active}>
                             <div className={styles.icon}><DescriptionOutlinedIcon style={{ color: '#F54394', fontSize: '20px' }} /></div>

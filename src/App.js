@@ -47,6 +47,12 @@ import Buy2ndMarket from './components/sections/Buy2ndMarket.js'
 import MarketProductDetails from './components/MarketProductDetails.js';
 import SupplyProductList from './components/orders/SupplyProductList.js'
 import SupplierPurchaseInvoice from './components/pay/SupplierPurchaseInvoice.js'
+import SendInquiry from './components/SendInquiry';
+import SearchProductDetails from './components/SearchProductDetails.js';
+import Subscription from './components/Subscription.js';
+import TableMembership from './components/membership/TableMembership.js';
+import SubscriptionMembership from './components/SubscriptionMembership.js';
+import SearchMarketProductDetails from './components/SearchMarketProductDetails.js';
 
 
 function IncludeSidebar() {
@@ -103,8 +109,15 @@ function IncludeSidebar() {
               <Route path="/supplier-pending/:supplierId" element={<SupplierPending />} />
               <Route path="/supply-product-list" element={<SupplyProductList />} />
               <Route path="/buy-2nd-market" element={<Buy2ndMarket />} />
-              <Route path="/market-product-details" element={<MarketProductDetails />} />  
+              <Route path="/market-product-details/:medicineId" element={<MarketProductDetails />} />  
               <Route path="/supplier-purchase-invoice" element={<SupplierPurchaseInvoice />} />  
+              <Route path="/send-inquiry" element={<SendInquiry/>} />
+              <Route path="/search-product-details/:medicineId" element={<SearchProductDetails/>} />
+              <Route path="/subscription" element={<Subscription/>} />
+              <Route path="/subscription-membership" element={<SubscriptionMembership/>} />
+              <Route path="/table-membership" element={<TableMembership/>} />
+              <Route path="/search-market-product-details/:medicineId" element={<SearchMarketProductDetails/>} /> 
+              {/* <Route path="/search-market-details-card" element={<SearchMarketDetailsCard/>} />  */}
             </Routes>
        </Sidebar>
     </div>
