@@ -294,6 +294,7 @@ const Support = () => {
             formData.append('order_id', orderId);
             formData.append('feedback', feedback);
             formData.append('support_type', 'feedback');
+            formData.append('user_type', 'buyer');
             Array.from(feedbackImages).forEach(file => formData.append('feedback_image', file))
 
             postRequestWithTokenAndFile('order/submit-order-feedback', formData, async (response) => {

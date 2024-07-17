@@ -25,10 +25,10 @@ const Login = () => {
 
         if (!password) {
             newErrors.password = 'Password is required';
-        } else if (!/(?=.*[A-Z])/.test(password)) {
-            newErrors.password = 'Password must contain at least one uppercase letter';
-        } else if (!/(?=.*[!@#$%^&*])/.test(password)) {
-            newErrors.password = 'Password must contain at least one special character';
+        // } else if (!/(?=.*[A-Z])/.test(password)) {
+        //     newErrors.password = 'Password must contain at least one uppercase letter';
+        // } else if (!/(?=.*[!@#$%^&*])/.test(password)) {
+        //     newErrors.password = 'Password must contain at least one special character';
         }
 
         return newErrors;

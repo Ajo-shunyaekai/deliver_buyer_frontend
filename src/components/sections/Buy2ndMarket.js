@@ -157,7 +157,7 @@ console.log('searchKey', searchKey);
                     </div>
                 </div>
                 <div className='buy-product-main-container'>
-                     {/* {  
+                     {  
                        medicineList && medicineList.length > 0 ? (
                         medicineList?.map((medicine, i) => {
                             console.log('medicine',medicine);
@@ -208,110 +208,9 @@ console.log('searchKey', searchKey);
                             )
                         })
                        ) : 'not data found'
-                    } */}
+                    }
 
 
-{searchKey ? (
-                        medicineList.map((medicine, i) => {
-                            console.log('searchKey !== null');
-                            const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
-                            return (
-                                <div className='buy-product-card-section' key={i}>
-                                <div className='buy-product-card-first-section-right'>
-                                    <div className='buy-product-card-first-medicine-image'>
-                                        {/* <img src={medicine.image} alt="Medicine" /> */}
-                                        <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt="Medicine" />
-                                    </div>
-                                    <div className='buy-product-card-first-button-container'>
-                                        {/* <Link to="/search-market-product-details/77"> */}
-                                        <Link to={`/search-market-product-details/${medicine.medicine_id}`}>
-                                            <div className='buy-product-card-first-send-button'>
-                                                View Details
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className='buy-product-card-first-section'>
-                                    <div className='buy-product-card-first-left'>
-                                        <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
-                                        <div className='buy-product-card-first-copmany-description'>{medicine.medicine_description}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Country of Origin</div>
-                                        <div className='buy-product-card-second-text'>{medicine.country_of_origin}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Stocked In</div>
-                                        <div className='buy-product-card-second-text'>{medicine.stocked_in?.join(', ')}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Type</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_type}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Status</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_status}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                        <div className='buy-product-card-second-text'>{medicine.gmp_approvals}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            )
-                            
-})
-                    ) : (
-                        medicineList?.map((medicine, i)=> {
-                            console.log('searchKey == null');
-                            const firstImage = Array.isArray(medicine?.medicine_image) ? medicine.medicine_image[0] : null;
-                            return (
-                                <div className='buy-product-card-section' key={i}>
-                                <div className='buy-product-card-first-section-right'>
-                                    <div className='buy-product-card-first-medicine-image'>
-                                        {/* <img src={medicine.image} alt="Medicine" /> */}
-                                        <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt="Medicine" />
-                                    </div>
-                                    <div className='buy-product-card-first-button-container'>
-                                        {/* <Link to="/market-product-details/98"> */}
-                                        <Link to={`/market-product-details/${medicine.medicine_id}`}>
-                                            <div className='buy-product-card-first-send-button'>
-                                                View Details
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className='buy-product-card-first-section'>
-                                    <div className='buy-product-card-first-left'>
-                                        <div className='buy-product-card-first-copmany-name'>{medicine.medicine_name}</div>
-                                        <div className='buy-product-card-first-copmany-description'>{medicine.description}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Country of Origin</div>
-                                        <div className='buy-product-card-second-text'>{medicine.country_of_origin}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Stocked In</div>
-                                        <div className='buy-product-card-second-text'>{medicine?.stocked_in?.join(', ')}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Type</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_type}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>Dossier Status</div>
-                                        <div className='buy-product-card-second-text'>{medicine.dossier_status}</div>
-                                    </div>
-                                    <div className='buy-product-card-second-section'>
-                                        <div className='buy-product-card-second-head'>GMP Approvals</div>
-                                        <div className='buy-product-card-second-text'>{medicine.gmp_approvals}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            )
-                            
-})
-                    )}
                 </div>
                 <div className='buy-product-pagination-section'>
                         <div className='pagi-container'>
