@@ -331,6 +331,7 @@ const Support = () => {
             formData.append('order_id', compOrderId);
             formData.append('complaint', compFeedback);
             formData.append('support_type', 'complaint');
+            formData.append('user_type', 'buyer');
             Array.from(compImages).forEach(file => formData.append('complaint_image', file))
 
             postRequestWithTokenAndFile('order/submit-order-complaint', formData, async (response) => {

@@ -276,7 +276,7 @@ const BuyProduct = ({active}) => {
                 <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt="Medicine" />
               </div>
               <div className='buy-product-card-first-button-container'>
-                <Link to={`/medicine-details/${medicine.medicine_id}`}>
+                <Link to={`/search-product-details/${medicine.medicine_id}`}>
                   <div className='buy-product-card-first-send-button'>
                     View Details
                   </div>
@@ -294,7 +294,7 @@ const BuyProduct = ({active}) => {
               </div>
               <div className='buy-product-card-second-section'>
                 <div className='buy-product-card-second-head'>Stocked in</div>
-                <div className='buy-product-card-second-text'>{medicine.quantity}</div>
+                <div className='buy-product-card-second-text'>{medicine.stocked_in?.join(', ')}</div>
               </div>
               <div className='buy-product-card-second-section'>
                 <div className='buy-product-card-second-head'>Dossier Type</div>
@@ -315,7 +315,6 @@ const BuyProduct = ({active}) => {
     ) : 'no data found'
   }
 </div>
-
 
                 <div className='buy-product-pagination-section'>
                     <div className='pagi-container'>

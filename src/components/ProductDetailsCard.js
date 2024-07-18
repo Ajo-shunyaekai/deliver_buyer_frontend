@@ -41,17 +41,17 @@ const ProductDetailsCard = ({similarMedicines, onMedicineClick, totalItems, curr
                 {similarMedicines?.data?.map((product,i) => {
                     const firstImage = Array.isArray(product?.medicine_image) ? product.medicine_image[0] : null;
                     return (
-                        <div key={product.id} className='product-details-card-section'>
+                        <div key={product.medicine_id} className='product-details-card-section'>
                         <div className='product-details-card-img-container'>
                             <div className='product-details-card-img-cont-sec'>
                                 {/* <img src={Tablet} alt={product.medicine_name} /> */}
                                 <img src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`} alt={`${product.medicine_name} ${i}`} className="responsive-image" />
                             </div>
-                            <Link to='#'>
-                                <div className='product-details-card-image-button-cont'>
+                            {/* <Link to='#'> */}
+                                <div className='product-details-card-image-button-cont' onClick={() => onMedicineClick(product.medicine_id, product.medicine_name)}>
                                     View Details
                                 </div>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                         <div className='product-details-card-right-container'>
                             <div className='product-details-card-upper-section'>
