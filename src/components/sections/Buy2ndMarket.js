@@ -169,7 +169,7 @@ console.log('searchKey', searchKey);
                                         <img  src={`${process.env.REACT_APP_SERVER_URL}uploads/medicine/product_files/${firstImage}`}  alt="Medicine" /> 
                                     </div>
                                     <div className='buy-product-card-first-button-container'>
-                                        <Link to={`/market-product-details/${medicine.medicine_id}`}>
+                                        <Link to={`/search-market-product-details/${medicine.medicine_id}`}>
                                             <div className='buy-product-card-first-send-button'>
                                                 View Details
                                             </div>

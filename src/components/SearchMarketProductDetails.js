@@ -53,6 +53,20 @@ const SearchMarketProductDetails = () => {
         }
     };
 
+    //filter state variables
+    const [priceRange, setPriceRange]     = useState([])
+    const [deliveryTime, setDeliveryTime] = useState([])
+    const [stockedIn, setStockedIn]       = useState([])
+    const [totalQuantity, setTotalQuantity] = useState([])
+    const [reset, setReset] = useState()
+
+    const handleReset = () => {
+        setPriceRange([])
+        setDeliveryTime([])
+        setStockedIn([])
+        setTotalQuantity([])
+    }
+
     useEffect(() => {
         const buyerIdSessionStorage = sessionStorage.getItem("buyer_id");
         const buyerIdLocalStorage   = localStorage.getItem("buyer_id");
@@ -86,6 +100,10 @@ const SearchMarketProductDetails = () => {
             status : 1,
             // supplier_id   : supplierId,
             medicine_name : medicineName,
+            price_range  : priceRange,
+            delivery_time : deliveryTime,
+            in_stock  :stockedIn,
+            quantity_range : totalQuantity,
             pageNo: 1,
             pageSize: 3
             // medicine_name : medicineName
@@ -98,7 +116,7 @@ const SearchMarketProductDetails = () => {
                console.log('error in similar-medicine-list api');
             }
           })
-    },[medicineName,medId, currentPage])
+    },[medicineName,medId, currentPage, priceRange, deliveryTime, stockedIn, totalQuantity])
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -188,7 +206,13 @@ const SearchMarketProductDetails = () => {
                         {/* End the description section */}
                         {/* Start the filter section */}
                         <div className='search-filter-section'>
-                            <SearchFilterSection />
+                            <SearchFilterSection 
+                                handlePriceRange = {setPriceRange}
+                                handleDeliveryTime = {setDeliveryTime}
+                                handleStockedIn = {setStockedIn}
+                                handleQuantity = {setTotalQuantity}
+                                handleReset = {handleReset}
+                            />
                         </div>
                         {/* End the filter section */}
                         {/* start the ecommerce card */}

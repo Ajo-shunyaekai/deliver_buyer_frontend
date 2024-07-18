@@ -77,7 +77,7 @@ const ProductDetails = () => {
                console.log('error in med details api');
             }
           })
-    },[medId])
+    },[medId, medicineName])
 
     // useEffect(() => {
     //     const obj = {
@@ -116,6 +116,7 @@ const ProductDetails = () => {
     },[medicineName,medId, currentPage])
 
     const handleMedicineClick = (newMedicineId, newMedicine) => {
+        
         setMedId(newMedicineId)
         setNewMedicineName(newMedicine)
         navigate(`/medicine-details/${newMedicineId}`);
